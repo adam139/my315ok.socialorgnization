@@ -322,7 +322,7 @@ class ContainerDownloadableListView(OrgnizationsView):
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               )
-        outhtml = """<table class="table table-striped table-bordered table-condensed"><thead>
+        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr><th class="span7">文件名称</th><th class="span3" >发布时间</th><th class="span2" >下载链接</th></tr>
         </thead><tbody>"""
         brainnum = len(braindata)
@@ -391,7 +391,7 @@ class ContainerTableListView(OrgnizationsView):
 #                             'sort_on': 'created'}                              
 #                                              )
         braindata = self.getATDocuments()
-        outhtml = """<table class="table table-striped table-bordered table-condensed"><thead>
+        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr><th class="span9">标题</th><th class="span3" >发布时间</th></tr>
         </thead><tbody>"""
         brainnum = len(braindata)
@@ -428,7 +428,7 @@ class AdminstrativePunishTableListView(ContainerTableListView):
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               )
-        outhtml = """<table class="table table-striped table-bordered table-condensed"><thead>
+        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr><th class="span9">社会组织名称</th><th class="span3" >发布时间</th></tr>
         </thead><tbody>"""
         brainnum = len(braindata)

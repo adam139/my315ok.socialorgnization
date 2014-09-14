@@ -97,7 +97,7 @@
                 		<h2>年检情况</h2>
                 	</div>
                 	<div tal:condition="num">
-                		<table width="100%" cellspacing="1" cellpadding="0" border="0" bgcolor="#cfcfcf" align="center">
+                		<table class="listing" width="100%" cellspacing="1" cellpadding="0" border="0" bgcolor="#cfcfcf" align="center">
                 			<thead>
                 				<tr>
                 					<th width="55%" valign="middle" height="25" bgcolor="#ededed" align="center">社会组织名称</th>
@@ -122,7 +122,7 @@
                 		<h2>行政许可历史</h2>
                 	</div>
                 	<div tal:condition="num">
-                		<table width="100%" cellspacing="1" cellpadding="0" border="0" bgcolor="#cfcfcf" align="center">
+                		<table class="listing" width="100%" cellspacing="1" cellpadding="0" border="0" bgcolor="#cfcfcf" align="center">
                 			<thead>
                 				<tr>
                 					<th width="50%" valign="middle" height="25" bgcolor="#ededed" align="center">社会组织名称</th>

@@ -316,7 +316,7 @@ class SiteRootOrgnizationListingView(Orgnizations_adminView):
 
     def getorgnizations(self,num=10):
  
-        """返回前num个conference
+        """返回前num个organizations
         """
 
         
@@ -332,6 +332,9 @@ class SiteRootOrgnizationListingView(Orgnizations_adminView):
                              'sort_on':'conference_passDate'})    
 
 class SiteRootAllOrgnizationListingView(SiteRootOrgnizationListingView):
+    """
+    AJAX 查询，返回分页结果
+    """
     grok.context(ISiteRoot)
     grok.template('allorgnization_listings')
     grok.name('allorgnization_listings')
