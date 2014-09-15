@@ -1,8 +1,11 @@
 #-*- coding: UTF-8 -*-
 from five import grok
+import json
 from zope.interface import Interface
+from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
 from plone.memoize.instance import memoize
+from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from my315ok.socialorgnization.browser.orgnization_listing import OrgnizationsView
 
@@ -313,15 +316,24 @@ class ContainerDownloadableListView(OrgnizationsView):
         return braindata 
 
     @memoize
-    def getDownloadFileList(self):
+    def getDownloadFileList(self,start=0,size=10):
         """获取行政许可列表"""
        
-        
-        braindata = self.catalog()({'object_provides':IATFile.__identifier__,
+        if size == 0:
+            braindata = self.catalog()({'object_provides':IATFile.__identifier__,
                              'path':"/".join(self.context.getPhysicalPath()),                                     
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               )
+        else:
+            braindata = self.catalog()({'object_provides':IATFile.__identifier__,
+                             'path':"/".join(self.context.getPhysicalPath()),                                     
+                             'sort_order': 'reverse',
+                             'sort_on': 'created',
+                             'b_start':start,
+                             'b_size':size}                              
+                                              )
+            
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr><th class="span7">文件名称</th><th class="span3" >发布时间</th><th class="span2" >下载链接</th></tr>
         </thead><tbody>"""
@@ -345,6 +357,51 @@ class ContainerDownloadableListView(OrgnizationsView):
         outhtml = outhtml + "</tbody></table>"
         return outhtml        
 
+class favoritemore(grok.View):
+    """AJAX action for click more.
+    """
+    
+    grok.context(IContainerTablelist)
+    grok.name('favoritemore')
+    grok.require('zope2.View')            
+    
+    def render(self):
+
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+        
+        form = self.request.form
+        formst = form['formstart']
+        formstart = int(formst)*10 
+        nextstart = formstart+10                
+        favorite_view = getMultiAdapter((self.context, self.request),name=u"view")
+        favoritenum = len(favorite_view.allitems())
+        
+        if nextstart>=favoritenum :
+            ifmore =  1
+        else :
+            ifmore = 0
+            
+        braindata = favorite_view.getATDocuments(formstart,10)      
+     
+        
+        outhtml = ""
+        brainnum = len(braindata)
+        for i in range(brainnum):
+            objurl = braindata[i].getURL()
+            objtitle = braindata[i].Title
+            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+          
+            out = """<tr>
+            <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
+            <td class="span3 item">%(pubtime)s</td>
+            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            outhtml = outhtml + out
+            
+        data = {'outhtml': outhtml,'ifmore':ifmore}
+    
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(data)
+
 class ContainerTableListView(OrgnizationsView):
     grok.context(IContainerTablelist)
     grok.template('container_table_list')
@@ -360,8 +417,7 @@ class ContainerTableListView(OrgnizationsView):
                              'sort_on': 'created'}                              
                                               )
  
-    def getATDocuments(self):
-        """获取所有页面"""
+    def allitems(self):
 
         try:
             from my315ok.products.product import Iproduct
@@ -378,10 +434,35 @@ class ContainerTableListView(OrgnizationsView):
                              'sort_on': 'created'}                              
                                               ) 
 
+        return braindata         
+        
+    def getATDocuments(self,start,size):
+        """获取所有页面"""
+
+        if size ==0:return self.allitems()
+        try:
+            from my315ok.products.product import Iproduct
+            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,Iproduct.__identifier__],
+                             'path':"/".join(self.context.getPhysicalPath()),                                  
+                             'sort_order': 'reverse',
+                             'sort_on': 'created',
+                             'b_start':start,
+                             'b_size':size}                              
+                                              ) 
+        except:
+            
+            braindata = self.catalog()({'object_provides':IATDocument.__identifier__,
+                             'path':"/".join(self.context.getPhysicalPath()),                                  
+                             'sort_order': 'reverse',
+                             'sort_on': 'created',
+                             'b_start':start,
+                             'b_size':size}                               
+                                              ) 
+
         return braindata 
 
     @memoize
-    def getTableList(self):
+    def getTableList(self,start,size):
         """获取行政许可列表"""
        
         
@@ -390,10 +471,12 @@ class ContainerTableListView(OrgnizationsView):
 #                             'sort_order': 'reverse',
 #                             'sort_on': 'created'}                              
 #                                              )
-        braindata = self.getATDocuments()
-        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-        <tr><th class="span9">标题</th><th class="span3" >发布时间</th></tr>
-        </thead><tbody>"""
+        braindata = self.getATDocuments(start,size)
+#        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
+#        <tr><th class="span9">标题</th><th class="span3" >发布时间</th></tr>
+#        </thead><tbody>"""
+        outhtml = ""
+        
         brainnum = len(braindata)
         
         for i in range(brainnum):
@@ -408,7 +491,7 @@ class ContainerTableListView(OrgnizationsView):
             <td class="span3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
             outhtml = outhtml + out
-        outhtml = outhtml + "</tbody></table>"
+#        outhtml = outhtml + "</tbody></table>"
         return outhtml 
 
 class AdminstrativePunishTableListView(ContainerTableListView):

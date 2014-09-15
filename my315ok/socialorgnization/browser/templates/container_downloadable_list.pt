@@ -32,10 +32,8 @@
 					</div>
        </div>
             
-       <div class="span12" tal:define="itemlist python:view.getDownloadFileList();num python:len(itemlist)">
-       	<div tal:condition="num" tal:content="structure python:itemlist">
-            		               		
-                	</div>    
+       <div class="span12" tal:define="itemlist python:view.getDownloadFileList(0,10);num python:len(itemlist)">
+       	<div tal:condition="num" tal:content="structure python:itemlist"></div>    
       </div>
       </section>          
     </tal:main-macro>
