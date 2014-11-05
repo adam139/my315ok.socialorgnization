@@ -1,30 +1,13 @@
 #-*- coding: UTF-8 -*-
 from five import grok
-import json
-
-from Acquisition import aq_inner
-from Products.CMFCore.utils import getToolByName
-
-from zope.i18n.interfaces import ITranslationDomain
-from zope.component import queryUtility
-from zope.component import getMultiAdapter
-
-from Products.CMFCore.interfaces import ISiteRoot
-from plone.app.layout.navigation.interfaces import INavigationRoot
 
 from my315ok.socialorgnization import _
-from z3c.form import form, field
-from plone.directives import form,dexterity
-
+from z3c.form import field
+from plone.directives import dexterity
 
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
-from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
-
-
-
-
 
 class EditOrgnizationSurvey(dexterity.EditForm):
     grok.name('ajaxedit')
