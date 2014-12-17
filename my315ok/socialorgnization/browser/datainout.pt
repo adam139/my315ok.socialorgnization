@@ -4,20 +4,17 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="context/prefs_main_template/macros/master"
-      i18n:domain="my315ok.socialorgnization">
-    
+      i18n:domain="my315ok.socialorgnization">    
 
 <metal:block metal:fill-slot="top_slot"
-             tal:define="dummy python:request.set('disable_border', 1)" />
+       tal:define="dummy python:request.set('disable_border', 1)" />
 
 <body>
     <div metal:fill-slot="prefs_configlet_main">
-
       <h1 class="documentFirstHeading"
           i18n:translate="">
-        Users In/Out
-      </h1>
-      
+        Organizations In/Out
+      </h1>      
       <tal:trans i18n:domain="plone">
         <a href=""
           class="link-parent"
@@ -28,7 +25,7 @@
       </tal:trans>
       
       <p class="discreet" i18n:translate="">
-          Users import and export as CSV files.
+          Organizations import and export as CSV files.
       </p>
         
       <form method="POST" action="#"  enctype="multipart/form-data"
@@ -49,7 +46,7 @@
             <div class="formHelp" i18n:translate="">
               Select your CSV file here. Please respect the syntax of the template available
               <tal:trans i18n:name="here">
-                <a href="" i18n:translate=""
+                <a href="" i18n:translate="" class="btn btn-primary"
                    tal:attributes="href string:${context/absolute_url}/@@datainout-getCSVTemplate">
                   here
                 </a>
@@ -61,41 +58,36 @@
           <div class="formControls"
                i18n:domain="plone">
             
-            <input class="destructive"
+            <input class="destructive btn btn-primary"
                    type="submit"
                    value="Cancel"
                    name="form.button.Cancel"
                    i18n:attributes="value label_cancel;"
                    />
-            <input class="standalone"
+            <input class="standalone btn btn-primary"
                    type="submit"
                    value="Import"
                    name="form.button.Import"
                    i18n:attributes="value"
                    />
-
           </div>
-
         </fieldset>
 
         <fieldset tal:condition="python:'users_results' in view.request">
           <legend i18n:translate="">
             Results
-          </legend>
-          
+          </legend>          
           <div class="field">  
               <div class="discreet">
                 <tal:number content="view/request/users_results"/> 
-                <tal:trans i18n:translate="">member(s) added.</tal:trans>
+                <tal:trans i18n:translate="">Organization(s) added.</tal:trans>
               </div>
               <div class="discreet">
                 <tal:number content="view/request/groups_results"/> 
                 <tal:trans i18n:translate="">group(s) added.</tal:trans>
               </div>
           </div>
-
-          <tal:errors tal:condition="view/request/csverrors|nothing">
-            
+          <tal:errors tal:condition="view/request/csverrors|nothing">            
             <div class="field">  
               <label i18n:translate="">Errors detail</label>
               <div class="formHelp" i18n:translate="">
@@ -107,54 +99,43 @@
             </div>
             
             <div class="formControls">
-              <input class="standalone"
+              <input class="standalone btn btn-primary"
                      type="submit"
                      value="Click here to get the errors as a CSV file"
                      name="form.button.CSVErrors"
                      i18n:attributes="value;"
                      />
-            </div>
-            
+            </div>            
           </tal:errors>
-
         </fieldset>
-
-
-
         <fieldset>
           <legend i18n:translate="">
             Export
-          </legend>
-            
+          </legend>            
           <div class="formHelp" i18n:translate="">
             Click on the Export button in order to download the full list of the
             social organizations as a CSV file. The CSV syntax is the same used in the
             template.
-          </div>
-          
+          </div>          
           <div class="formControls"
-               i18n:domain="plone">
-            
-            <input class="destructive"
+               i18n:domain="plone">            
+            <input class="destructive btn btn-primary"
                    type="submit"
                    value="Cancel"
                    name="form.button.Cancel"
                    i18n:attributes="value label_cancel;"
                    />
-            <input class="standalone"
+            <input class="standalone btn btn-primary"
                    type="submit"
                    value="Export"
                    name="form.button.Export"
                    i18n:attributes="value"
                    />
           </div>
-
-        </fieldset>     
-
+        </fieldset>
         <input tal:replace="structure context/@@authenticator/authenticator" />
       </form>
     </div>
 </body>
-
 </html>
 

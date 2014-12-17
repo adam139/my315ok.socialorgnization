@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: my315ok.products\n"
-"POT-Creation-Date: 2014-07-18 11:27+0000\n"
-"PO-Revision-Date: 2014-02-13 20:56+0800\n"
+"POT-Creation-Date: 2014-11-17 01:50+0000\n"
+"PO-Revision-Date: 2014-11-17 10:00+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,23 +39,23 @@ msgstr "行政许可报表"
 msgid "Annual survey Folder"
 msgstr "年检结果报表"
 
-#: ./browser/datainout.pt:110
+#: ./browser/datainout.pt:102
 msgid "Click here to get the errors as a CSV file"
-msgstr ""
+msgstr "点击将错误信息保存为CSV文件"
 
-#: ./browser/datainout.pt:129
+#: ./browser/datainout.pt:115
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
-msgstr ""
+msgstr "点击导出按钮，下载所有社会组织信息到一个CSV文件。该CSV文件格式和模板中的一致。"
 
-#: ./browser/datainout.pt:48
+#: ./browser/datainout.pt:45
 msgid "Csv file"
-msgstr ""
+msgstr "CSV文件"
 
 #: ./profiles/default/controlpanel.xml
 msgid "Data In/Out"
 msgstr "数据导入导出"
 
-#: ./browser/datainout.py:152
+#: ./browser/datainout.py:139
 msgid "Data successfully imported."
 msgstr "数据已成功导入"
 
@@ -65,27 +65,27 @@ msgstr "数据已成功导入"
 msgid "Edit"
 msgstr "编辑"
 
-#: ./browser/orgnization.py:54
+#: ./browser/orgnization.py:37
 msgid "Edit Organization"
 msgstr "编辑社会组织"
 
-#: ./browser/orgnization.py:43
+#: ./browser/orgnization.py:26
 msgid "Edit Organization Licence"
 msgstr "编辑行政许可信息"
 
-#: ./browser/orgnization.py:32
+#: ./browser/orgnization.py:15
 msgid "Edit Organization Survey"
 msgstr "编辑年检信息"
 
-#: ./browser/datainout.pt:100
+#: ./browser/datainout.pt:92
 msgid "Errors detail"
 msgstr "详细错误信息"
 
-#: ./browser/datainout.pt:125
+#: ./browser/datainout.pt:112
 msgid "Export"
 msgstr "导出"
 
-#: ./browser/datainout.pt:43
+#: ./browser/datainout.pt:40
 msgid "Import"
 msgstr "导入"
 
@@ -98,6 +98,18 @@ msgstr "序号"
 #: ./browser/templates/orgnization_listing_admin.pt:19
 msgid "Organization administration"
 msgstr "社会组织管理"
+
+#: ./browser/datainout.pt:83
+msgid "Organization(s) added."
+msgstr "组织已添加"
+
+#: ./browser/datainout.pt:14
+msgid "Organizations In/Out"
+msgstr "社会组织导入/导出"
+
+#: ./browser/datainout.pt:27
+msgid "Organizations import and export as CSV files."
+msgstr "以CSV文件格式，导入导出社会组织信息。"
 
 #: ./profiles/default/types/my315ok.socialorgnization.orgnization.xml
 msgid "Orgnization"
@@ -119,13 +131,13 @@ msgstr "社会组织年检"
 msgid "Pass Date"
 msgstr "批准时间"
 
-#: ./browser/datainout.pt:82
+#: ./browser/datainout.pt:77
 msgid "Results"
 msgstr "结果"
 
-#: ./browser/datainout.pt:51
+#: ./browser/datainout.pt:48
 msgid "Select your CSV file here. Please respect the syntax of the template available ${here}"
-msgstr ""
+msgstr "选择你的CSV文件。该CSV文件的有效模板在此${here}"
 
 #: ./profiles/default/types/my315ok.socialorgnization.shaoshanshifolder.xml
 msgid "Shaoshan Orgnization Folder"
@@ -133,27 +145,19 @@ msgstr "韶山市"
 
 #: ./profiles/default/types/my315ok.socialorgnization.shibenjifolder.xml
 msgid "Shi ben ji Orgnization Folder"
-msgstr "市本级" 
+msgstr "市本级"
 
-#: ./browser/datainout.py:149
+#: ./browser/datainout.py:136
 msgid "Some errors occured. Please check your CSV syntax and retry."
-msgstr ""
+msgstr "出错！请检查你的CSV文件格式。"
 
 #: ./browser/templates/orgnization_listing_admin.pt:47
 msgid "Title"
 msgstr "组织名称"
 
-#: ./browser/datainout.pt:16
-msgid "Users In/Out"
-msgstr "导入导出"
-
-#: ./browser/datainout.pt:30
-msgid "Users import and export as CSV files."
-msgstr ""
-
-#: ./browser/datainout.py:90
+#: ./browser/datainout.py:82
 msgid "Wrong specification of the CSV file. Please correct it and retry."
-msgstr ""
+msgstr "错误的CSV文件，请更正后重试。"
 
 #: ./profiles/default/types/my315ok.socialorgnization.xiangtanxianfolder.xml
 msgid "Xiangtanxian Orgnization Folder"
@@ -163,9 +167,9 @@ msgstr "湘潭县"
 msgid "Xiangxiangshi Orgnization Folder"
 msgstr "湘乡市"
 
-#: ./browser/datainout.pt:101
+#: ./browser/datainout.pt:93
 msgid "You will find below the CSV lines that failed."
-msgstr ""
+msgstr "下面的CSV行出错。"
 
 #: ./profiles/default/types/my315ok.socialorgnization.yuetangqufolder.xml
 msgid "Yuetangqu Orgnization Folder"
@@ -227,9 +231,9 @@ msgstr "成立"
 msgid "chenglidengji"
 msgstr "成立登记"
 
-#: ./browser/datainout.pt:93
+#: ./browser/datainout.pt:87
 msgid "group(s) added."
-msgstr ""
+msgstr "组已添加。"
 
 #: ./vocabulary.py:54
 msgid "hege"
@@ -240,7 +244,7 @@ msgstr "合格"
 msgid "help_register_code"
 msgstr "每个社会组织有唯一的登记证号"
 
-#: ./browser/datainout.pt:52
+#: ./browser/datainout.pt:49
 msgid "here"
 msgstr "这里"
 
@@ -262,10 +266,6 @@ msgstr "登记证号"
 #: ./browser/templates/shaoshanshi_allorgnization_listings.pt:130
 msgid "legal person"
 msgstr "法定代表人"
-
-#: ./browser/datainout.pt:89
-msgid "member(s) added."
-msgstr "成员已添加"
 
 #: ./vocabulary.py:41
 msgid "minfei"

@@ -19,8 +19,7 @@ from my315ok.socialorgnization.events import CreateOrgEvent
 
 from my315ok.socialorgnization import _
 
-
-CSV_HEADER = [
+data_PROPERTIES = [
     'title',
     'description',
     'address',
@@ -31,9 +30,20 @@ CSV_HEADER = [
     'organization_type',
     'announcement_type',
     'passDate'
-    ]              
+    ] 
+data_VALUES = [
+               u"社会组织名称".encode('utf-8'),
+               u"经营范围".encode('utf-8'),
+               u"注册地址".encode('utf-8'),
+               u"法定代表热".encode('utf-8'),
+               u"上级主管部门".encode('utf-8'),
+               u"登记证号".encode('utf-8'),
+               u"所属区县".encode('utf-8'),
+               u"社会组织类型".encode('utf-8'),
+               u"公告类别".encode('utf-8'),
+               u"批准日期".encode('utf-8')
+               ]
 
-data_PROPERTIES = CSV_HEADER
 
 class DataInOut (BrowserView):
     """Data import and export as CSV files.
@@ -60,15 +70,11 @@ class DataInOut (BrowserView):
     def getCSVTemplate(self):
         """Return a CSV template to use when importing members."""
         datafile = self._createCSV([])
-        return self._createRequest(datafile.getvalue(), "orgs_sheet_template.csv")
-
-     
+        return self._createRequest(datafile.getvalue(), "orgs_sheet_template.csv")     
 
     def IdIsExist(self,Id):
         catalog = getToolByName(self.context, "portal_catalog")
-
-        brains = catalog(object_provides=IOrgnization.__identifier__, 
-                                id=Id) 
+        brains = catalog(object_provides=IOrgnization.__identifier__,id=Id) 
         return bool(brains) 
             
     def importData(self):
@@ -80,13 +86,9 @@ class DataInOut (BrowserView):
         file_upload = self.request.form.get('csv_upload', None)
         if file_upload is None or not file_upload.filename:
             return
-
-
         reader = csv.reader(file_upload)
         header = reader.next()
-
-
-        if header != CSV_HEADER:
+        if header != data_VALUES:
             msg = _('Wrong specification of the CSV file. Please correct it and retry.')
             type = 'error'
             IStatusMessage(self.request).addStatusMessage(msg, type=type)
@@ -97,13 +99,12 @@ class DataInOut (BrowserView):
         for line in reader:
 #            datas = dict(zip(header, line))
             validLines.append(line)
-
         usersNumber = 0
         
         for line in validLines:
-
-            datas = dict(zip(header, line))
-
+#            datas = dict(zip(header, line))
+            datas = dict(zip(data_PROPERTIES, line))  
+            
             try:
 #                groups = [g.strip() for g in datas.pop('groups').split(',') if g]
                 name = datas['title']
@@ -112,7 +113,7 @@ class DataInOut (BrowserView):
                 id = IUserPreferredFileNameNormalizer(self.request).normalize(filename)
 #                id = datas['id']
                 if self.IdIsExist(id):continue
-                title = name                
+                title = filename                
                 description = datas.pop('description')
                 address = datas.pop('address')
                 legal_person = datas['legal_person']
@@ -122,10 +123,8 @@ class DataInOut (BrowserView):
                 organization_type = datas['organization_type']
                 announcement_type = datas.pop('announcement_type')
                 passDate = datas.pop('passDate')
-
                 
-# send a add memberuser event
-
+# send a add organization event
                 try:
                     event.notify(CreateOrgEvent(
                                                 id,title,description,
@@ -135,8 +134,7 @@ class DataInOut (BrowserView):
                 except (AttributeError, ValueError), err:
                     logging.exception(err)
                     IStatusMessage(self.request).addStatusMessage(err, type="error")
-                    return               
-
+                    return
                 usersNumber += 1
             except:
                 invalidLines.append(line)
@@ -179,7 +177,7 @@ class DataInOut (BrowserView):
                                                   mapping={},
                                                   target_language='zh_CN',
                                                   context=self.context,
-                                                  default=u"湘潭市")
+                                                  default=u"未填写")
         return title 
 
     def _getDataInfos(self):
@@ -192,23 +190,21 @@ class DataInOut (BrowserView):
             dataobj = i.getObject()                                
             props = []
             if dataobj is not None:
-
-                for p in data_PROPERTIES: # data properties
-                    
+                for p in data_PROPERTIES: # data properties 
+#                    import pdb
+#                    pdb.set_trace()                   
                     if p == "organization_type" or p == "announcement_type" or p == "belondto_area":
                         props.append(self.tranVoc(getattr(dataobj,p)))
                     else:
-                        props.append(getattr(dataobj,p))
-                    
+                        props.append(getattr(dataobj,p))                    
             yield props
-#
-#        return props
+
 
     def _createCSV(self, lines):
         """Write header and lines within the CSV file."""
         datafile = StringIO()
         writor = csv.writer(datafile)
-        writor.writerow(CSV_HEADER)
+        writor.writerow(data_VALUES)
         map(writor.writerow, lines)
         return datafile
 
@@ -218,7 +214,8 @@ class DataInOut (BrowserView):
         Add the right header and the CSV file.
         """
         self.request.response.addHeader('Content-Disposition', "attachment; filename=%s" % filename)
-        self.request.response.addHeader('Content-Type', "text/csv")
+        self.request.response.addHeader('Content-Type', "text/csv;charset=utf-8")
+        self.request.response.addHeader("Content-Transfer-Encoding", "8bit")        
         self.request.response.addHeader('Content-Length', "%d" % len(data))
         self.request.response.addHeader('Pragma', "no-cache")
         self.request.response.addHeader('Cache-Control', "must-revalidate, post-check=0, pre-check=0, public")

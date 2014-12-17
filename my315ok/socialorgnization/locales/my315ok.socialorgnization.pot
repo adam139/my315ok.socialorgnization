@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-07-18 11:27+0000\n"
+"POT-Creation-Date: 2014-11-17 01:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,15 +38,15 @@ msgstr ""
 msgid "Annual survey Folder"
 msgstr ""
 
-#: ./browser/datainout.pt:110
+#: ./browser/datainout.pt:102
 msgid "Click here to get the errors as a CSV file"
 msgstr ""
 
-#: ./browser/datainout.pt:129
+#: ./browser/datainout.pt:115
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
 msgstr ""
 
-#: ./browser/datainout.pt:48
+#: ./browser/datainout.pt:45
 msgid "Csv file"
 msgstr ""
 
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Data In/Out"
 msgstr ""
 
-#: ./browser/datainout.py:152
+#: ./browser/datainout.py:139
 msgid "Data successfully imported."
 msgstr ""
 
@@ -64,27 +64,27 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: ./browser/orgnization.py:54
+#: ./browser/orgnization.py:37
 msgid "Edit Organization"
 msgstr ""
 
-#: ./browser/orgnization.py:43
+#: ./browser/orgnization.py:26
 msgid "Edit Organization Licence"
 msgstr ""
 
-#: ./browser/orgnization.py:32
+#: ./browser/orgnization.py:15
 msgid "Edit Organization Survey"
 msgstr ""
 
-#: ./browser/datainout.pt:100
+#: ./browser/datainout.pt:92
 msgid "Errors detail"
 msgstr ""
 
-#: ./browser/datainout.pt:125
+#: ./browser/datainout.pt:112
 msgid "Export"
 msgstr ""
 
-#: ./browser/datainout.pt:43
+#: ./browser/datainout.pt:40
 msgid "Import"
 msgstr ""
 
@@ -96,6 +96,18 @@ msgstr ""
 
 #: ./browser/templates/orgnization_listing_admin.pt:19
 msgid "Organization administration"
+msgstr ""
+
+#: ./browser/datainout.pt:83
+msgid "Organization(s) added."
+msgstr ""
+
+#: ./browser/datainout.pt:14
+msgid "Organizations In/Out"
+msgstr ""
+
+#: ./browser/datainout.pt:27
+msgid "Organizations import and export as CSV files."
 msgstr ""
 
 #: ./profiles/default/types/my315ok.socialorgnization.orgnization.xml
@@ -118,11 +130,11 @@ msgstr ""
 msgid "Pass Date"
 msgstr ""
 
-#: ./browser/datainout.pt:82
+#: ./browser/datainout.pt:77
 msgid "Results"
 msgstr ""
 
-#: ./browser/datainout.pt:51
+#: ./browser/datainout.pt:48
 msgid "Select your CSV file here. Please respect the syntax of the template available ${here}"
 msgstr ""
 
@@ -134,7 +146,7 @@ msgstr ""
 msgid "Shi ben ji Orgnization Folder"
 msgstr ""
 
-#: ./browser/datainout.py:149
+#: ./browser/datainout.py:136
 msgid "Some errors occured. Please check your CSV syntax and retry."
 msgstr ""
 
@@ -142,15 +154,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: ./browser/datainout.pt:16
-msgid "Users In/Out"
-msgstr ""
-
-#: ./browser/datainout.pt:30
-msgid "Users import and export as CSV files."
-msgstr ""
-
-#: ./browser/datainout.py:90
+#: ./browser/datainout.py:82
 msgid "Wrong specification of the CSV file. Please correct it and retry."
 msgstr ""
 
@@ -162,7 +166,7 @@ msgstr ""
 msgid "Xiangxiangshi Orgnization Folder"
 msgstr ""
 
-#: ./browser/datainout.pt:101
+#: ./browser/datainout.pt:93
 msgid "You will find below the CSV lines that failed."
 msgstr ""
 
@@ -226,7 +230,7 @@ msgstr ""
 msgid "chenglidengji"
 msgstr ""
 
-#: ./browser/datainout.pt:93
+#: ./browser/datainout.pt:87
 msgid "group(s) added."
 msgstr ""
 
@@ -239,7 +243,7 @@ msgstr ""
 msgid "help_register_code"
 msgstr ""
 
-#: ./browser/datainout.pt:52
+#: ./browser/datainout.pt:49
 msgid "here"
 msgstr ""
 
@@ -260,10 +264,6 @@ msgstr ""
 #: ./browser/templates/orgnization_listing_admin.pt:51
 #: ./browser/templates/shaoshanshi_allorgnization_listings.pt:130
 msgid "legal person"
-msgstr ""
-
-#: ./browser/datainout.pt:89
-msgid "member(s) added."
 msgstr ""
 
 #: ./vocabulary.py:41
