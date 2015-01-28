@@ -94,7 +94,7 @@ class Orgnizations_adminView(grok.View):
         
     @memoize     
     def getMemberList(self):
-        """获取申请的会议列表"""
+        """获取社会组织列表"""
         mlist = []        
         
         memberbrains = self.catalog()({'object_provides':IOrgnization.__identifier__, 

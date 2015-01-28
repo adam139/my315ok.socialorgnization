@@ -21,7 +21,8 @@
 			  <td width="25%" valign="middle" bgcolor="#ededed" align="center">年度</td>
 			  <td width="20%" valign="middle" bgcolor="#ededed" align="center">年检结果</td>
 			</tr>
-		</tbody></table>
+			</tbody>
+		</table>
     <div style="margin: 0px; overflow: hidden;height: 180px" id="oRollV">
 	  <div id="oRollV1">
     <table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="#E6E7E8" class="text1">                  
