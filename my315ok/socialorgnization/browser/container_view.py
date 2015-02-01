@@ -335,7 +335,7 @@ class ContainerDownloadableListView(OrgnizationsView):
                                               )
             
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-        <tr><th class="span7">文件名称</th><th class="span3" >发布时间</th><th class="span2" >下载链接</th></tr>
+        <tr><th class="col-md-7">文件名称</th><th class="col-md-3" >发布时间</th><th class="col-md-2" >下载链接</th></tr>
         </thead><tbody>"""
         brainnum = len(braindata)
         
@@ -347,9 +347,9 @@ class ContainerDownloadableListView(OrgnizationsView):
 
             
             out = """<tr>
-            <td class="span7 title">%(title)s</td>
-            <td class="span3 item">%(pubtime)s</td>
-            <td class="span2 result"><a href="%(downloadlink)s">下载</a></td></tr>""" % dict(objurl=objurl,
+            <td class="col-md-7 title">%(title)s</td>
+            <td class="col-md-3 item">%(pubtime)s</td>
+            <td class="col-md-2 result"><a href="%(downloadlink)s">下载</a></td></tr>""" % dict(objurl=objurl,
                                             title = objtitle,
                                             pubtime = pubtime,
                                             downloadlink = downloadlink)           
@@ -392,8 +392,8 @@ class favoritemore(grok.View):
             pubtime = braindata[i].created.strftime('%Y-%m-%d')
           
             out = """<tr>
-            <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
-            <td class="span3 item">%(pubtime)s</td>
+            <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
+            <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
             outhtml = outhtml + out
             
@@ -473,7 +473,7 @@ class ContainerTableListView(OrgnizationsView):
 #                                              )
         braindata = self.getATDocuments(start,size)
 #        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-#        <tr><th class="span9">标题</th><th class="span3" >发布时间</th></tr>
+#        <tr><th class="col-md-9">标题</th><th class="col-md-3" >发布时间</th></tr>
 #        </thead><tbody>"""
         outhtml = ""
         
@@ -487,8 +487,8 @@ class ContainerTableListView(OrgnizationsView):
 
             
             out = """<tr>
-            <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
-            <td class="span3 item">%(pubtime)s</td>
+            <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
+            <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
             outhtml = outhtml + out
 #        outhtml = outhtml + "</tbody></table>"
@@ -512,7 +512,7 @@ class AdminstrativePunishTableListView(ContainerTableListView):
                              'sort_on': 'created'}                              
                                               )
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-        <tr><th class="span9">社会组织名称</th><th class="span3" >发布时间</th></tr>
+        <tr><th class="col-md-9">社会组织名称</th><th class="col-md-3" >发布时间</th></tr>
         </thead><tbody>"""
         brainnum = len(braindata)
         
@@ -522,8 +522,8 @@ class AdminstrativePunishTableListView(ContainerTableListView):
             pubtime = braindata[i].created.strftime('%Y-%m-%d')
             
             out = """<tr>
-            <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
-            <td class="span3 item">%(pubtime)s</td>
+            <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
+            <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
             outhtml = outhtml + out
         outhtml = outhtml + "</tbody></table>"

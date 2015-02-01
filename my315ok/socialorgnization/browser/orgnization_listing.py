@@ -557,13 +557,13 @@ class ajaxsearch(grok.View):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,
@@ -643,13 +643,13 @@ class yuhuqusearchlist(ajaxsearch):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,
@@ -730,13 +730,13 @@ class yuetangqusearchlist(ajaxsearch):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,
@@ -817,13 +817,13 @@ class xiangxiangshisearchlist(ajaxsearch):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,
@@ -904,13 +904,13 @@ class shaoshanshisearchlist(ajaxsearch):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,
@@ -991,13 +991,13 @@ class xiangtanxiansearchlist(ajaxsearch):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,
@@ -1078,13 +1078,13 @@ class xiangtanshisearchlist(ajaxsearch):
             numindex = str(i + 1)
             
             out = """<tr>
-                                <td class="span1">%(num)s</td>
-                                <td class="span2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="span1">%(code)s</td>
-                                <td class="span2">%(address)s</td>
-                                <td class="span2">%(sponsor)s</td>
-                                <td class="span2">%(legal_person)s</td>
-                                <td class="span2">%(pass_date)s</td>                                
+                                <td class="col-md-1">%(num)s</td>
+                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-1">%(code)s</td>
+                                <td class="col-md-2">%(address)s</td>
+                                <td class="col-md-2">%(sponsor)s</td>
+                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
                                             title=objtitle,

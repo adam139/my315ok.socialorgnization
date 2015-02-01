@@ -7,6 +7,7 @@ import datetime
 from plone.directives import form, dexterity
 from plone.app.dexterity.behaviors.metadata import IBasic
 from my315ok.socialorgnization.registrysource import RegistrySource, DynamicVocabulary
+from plone.namedfile.field import NamedBlobImage, NamedBlobFile
 
 from collective import dexteritytextindexer
 
@@ -102,17 +103,33 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
         source=possibleOrganization,     
         required=True
     )
+# 上级主管单位意见    
+    sponsor_comments = schema.Text(title=_(u"sponsor comments"))
+# 民政局意见      
+    agent_comments = schema.Text(title=_(u"sponsor comments"), required=False)    
    
-#年检结果            
-    annual_survey = schema.Choice(
-        title=_(u"the result of annual survey"),
-        vocabulary="my315ok.socialorgnization.vocabulary.annualsurvey"
-    )
+
     
 #年度           
     year = schema.TextLine(title=_(u"the year for survey"),
                              default=u"2012",
                              required=False,)
+
+#年检报告书    
+    attachment = NamedBlobFile(title=_(u"report"),
+        description=_(u"Attach your anual report (word, etc)."),
+        required=False
+    ) 
+    
+#年检结果            
+    annual_survey = schema.Choice(
+        title=_(u"the result of annual survey"),
+        vocabulary="my315ok.socialorgnization.vocabulary.annualsurvey"
+    )       
+# 审核历史
+
+    traced_history = schema.Text(title=_(u"traced history"), required=False)     
+    
     form.omitted('description')    
 
 class IOrgnization_administrative_licence(form.Schema,IBasic):
