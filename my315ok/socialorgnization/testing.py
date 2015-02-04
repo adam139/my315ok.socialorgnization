@@ -16,9 +16,11 @@ class My315okProducts(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         # Load ZCML
         import my315ok.socialorgnization
+        import xtshzz.policy
+        self.loadZCML(package=xtshzz.policy)
   
         xmlconfig.file('configure.zcml', my315ok.socialorgnization, context=configurationContext)        
-
+#        xmlconfig.file('configure.zcml', xtshzz.policy, context=configurationContext)
                       
     def tearDownZope(self, app):
         pass
@@ -26,6 +28,7 @@ class My315okProducts(PloneSandboxLayer):
     def setUpPloneSite(self, portal):
      
         applyProfile(portal, 'my315ok.socialorgnization:default')
+        applyProfile(portal, 'xtshzz.policy:default')
      
 
 MY315OK_PRODUCTS_FIXTURE = My315okProducts()

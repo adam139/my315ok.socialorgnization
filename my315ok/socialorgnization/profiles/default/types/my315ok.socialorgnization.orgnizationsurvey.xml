@@ -22,7 +22,7 @@
   <property name="product">my315ok.socialorgnization</property>
   <property name="factory">addOrgnization</property>
 -->
- <property name="add_permission">my315ok.socialorgnization.add.anualreporter</property>
+ <property name="add_permission">my315ok.socialorgnization.add.anualreport</property>
  <property name="behaviors">
     <element value="plone.app.content.interfaces.INameFromTitle" />
 <!--     <element value="my315ok.socialorgnization.behavior.customizetitle.INameFromParentId" />  

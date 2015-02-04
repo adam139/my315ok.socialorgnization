@@ -8,6 +8,7 @@ import unittest2 as unittest
 
 from plone.namedfile.file import NamedImage
 import os
+import datetime
 
 def getFile(filename):
     """ return contents of the file with the given name """
@@ -24,21 +25,45 @@ class TestProductsFolderView(unittest.TestCase):
         setRoles(portal, TEST_USER_ID, ('Manager',))
 
         portal.invokeFactory('my315ok.socialorgnization.orgnizationfolder', 'orgnizationfolder1',
-                             PerPagePrdtNum=5,PerRowPrdtNum=3,title="orgnizationfolder1",description="demo orgnizationfolder")     
+                             title="orgnizationfolder1",description="demo orgnizationfolder")     
      
+   
         portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization1',
                                                    title=u"宝庆商会",
                                                    description=u"运输业",
                                                    address=u"建设北路",
                                                    register_code="8341",
                                                    supervisor=u"交通局",
-                                                   organization_type=u"登记",
-                                                   law_person=u"张建明",
+                                                   organization_type="minfei",
+                                                   legal_person=u"张建明",
+                                                   passDate =datetime.datetime.today(),
+                                                   belondto_area='yuhuqu', 
                                                    )
-        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization2',title="Jpeg image",description="a jpeg image")
-        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization3',title="Png image",description="a png image")   
-        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization4',title="Jpeg image2",description="a jpeg image2")
-        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization5',title="Png image2",description="a png image2")               
+        
+        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization2',
+                                                   title=u"宝庆商会",
+                                                   description=u"运输业",
+                                                   address=u"建设北路",
+                                                   register_code="834100",
+                                                   supervisor=u"交通局",
+                                                   organization_type="minfei",
+                                                   legal_person=u"张建明",
+                                                   passDate =datetime.datetime.today(),
+                                                   belondto_area='xiangtanshi', 
+                                                   ) 
+               
+        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization3',
+                                                   title=u"宝庆商会",
+                                                   description=u"运输业",
+                                                   address=u"建设北路",
+                                                   register_code="834100",
+                                                   supervisor=u"交通局",
+                                                   organization_type="minfei",
+                                                   legal_person=u"张建明",
+                                                   passDate =datetime.datetime.today(),
+                                                   belondto_area='xiangtanshi', 
+                                                   ) 
+               
 
         data = getFile('image.gif').read()
         item = portal['orgnizationfolder1']['orgnization1']
@@ -49,10 +74,7 @@ class TestProductsFolderView(unittest.TestCase):
         data3 = getFile('image.png').read()        
         item3 = portal['orgnizationfolder1']['orgnization3']
         item3.image = NamedImage(data3, 'image/png', u'image.png') 
-        item4 = portal['orgnizationfolder1']['orgnization4']
-        item4.image = NamedImage(data3, 'image/png', u'image.png')  
-        item5 = portal['orgnizationfolder1']['orgnization5']
-        item5.image = NamedImage(data3, 'image/png', u'image.png')                                 
+                                
         self.portal = portal                
         
     def test_view(self):
