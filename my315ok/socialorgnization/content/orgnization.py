@@ -106,7 +106,7 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
 # 上级主管单位意见    
     sponsor_comments = schema.Text(title=_(u"sponsor comments"))
 # 民政局意见      
-    agent_comments = schema.Text(title=_(u"sponsor comments"), required=False)    
+    agent_comments = schema.Text(title=_(u"civil agent comments"), required=False)    
    
 
     
@@ -130,7 +130,7 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
 
     traced_history = schema.Text(title=_(u"traced history"), required=False)     
     
-    form.omitted('description')    
+    form.omitted('description','sponsor_comments','agent_comments','annual_survey','traced_history')    
 
 class IOrgnization_administrative_licence(form.Schema,IBasic):
 
@@ -168,6 +168,11 @@ class IOrgnization_administrative_licence(form.Schema,IBasic):
 def passDefaultValue(data):
     # To get hold of the folder, do: context = data.context
     return datetime.datetime.today() + datetime.timedelta(-1)  
+
+@form.default_value(field=IOrgnization_annual_survey['year'])
+def surveyYearDefaultValue(data):
+    # To get hold of the folder, do: context = data.context
+    return (datetime.datetime.today() + datetime.timedelta(-365)).strftime("%Y") 
 
 @form.default_value(field=IOrgnization_administrative_licence['audit_date'])
 def auditdateDefaultValue(data):
