@@ -27,7 +27,7 @@ from my315ok.socialorgnization.content.xiangtanxianfolder import IXiangtanxianOr
 from my315ok.socialorgnization.content.shaoshanshifolder import IShaoshanshiOrgnizationFolder
 from my315ok.socialorgnization.content.shibenjifolder import IShibenjiOrgnizationFolder
 
-from plone.memoize.instance import memoize
+
 
 from Products.CMFCore import permissions
 grok.templatedir('templates') 

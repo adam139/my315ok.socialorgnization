@@ -116,7 +116,7 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
                              required=False,)
 
 #年检报告书    
-    attachment = NamedBlobFile(title=_(u"report"),
+    report = NamedBlobFile(title=_(u"report"),
         description=_(u"Attach your anual report (word, etc)."),
         required=False
     ) 
