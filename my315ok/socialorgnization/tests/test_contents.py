@@ -22,6 +22,8 @@ class Allcontents(unittest.TestCase):
         
         portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization1',
                                                    title="organization1")
+        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.governmentorgnization','government1',
+                                                   title=u"organization1")        
         portal['orgnizationfolder1']['orgnization1'].invokeFactory('my315ok.socialorgnization.orgnizationadministrative','orgnizationadministrative1',
                                                    title="organization1")        
         portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization2')
@@ -31,7 +33,7 @@ class Allcontents(unittest.TestCase):
        
         self.portal = portal
                 
-    def test_marketfolder(self):
+    def test_folder_types(self):
         self.assertEqual(self.portal['orgnizationfolder1'].id,'orgnizationfolder1')
         self.assertEqual(self.portal['shaoshanshi'].id,'shaoshanshi')
         self.assertEqual(self.portal['xiangxiangshi'].id,'xiangxiangshi')
@@ -42,8 +44,9 @@ class Allcontents(unittest.TestCase):
     
 
     
-    def test_meetapply(self):
+    def test_item_types(self):
         self.assertEqual(self.portal['orgnizationfolder1']['orgnization1'].id,'orgnization1')
+        self.assertEqual(self.portal['orgnizationfolder1']['government1'].id,'government1')
         self.assertEqual(self.portal['orgnizationfolder1']['orgnization1']['orgnizationsurvey1'].id,'orgnizationsurvey1')        
         self.assertEqual(self.portal['orgnizationfolder1']['orgnization1']['orgnizationadministrative1'].id,'orgnizationadministrative1')     
     

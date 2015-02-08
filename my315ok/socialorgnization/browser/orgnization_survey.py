@@ -27,12 +27,12 @@ grok.templatedir('templates')
 
 class SurveyView(grok.View):
     grok.context(IOrgnization_annual_survey)
-    grok.template('survey_pending_view')
+    grok.template('survey_draft_view')
     grok.name('baseview')
     grok.require('zope2.View')
-    
-    def render(self):
-        "this is view base class,this function should be override by subclass using template or render."
+#    
+#    def render(self):
+#        "this is view base class,this function should be override by subclass using template or render."
       
     def update(self):
         # Hide the editable-object border
@@ -41,6 +41,8 @@ class SurveyView(grok.View):
     @memoize    
     def catalog(self):
         context = aq_inner(self.context)
+        import pdb
+        pdb.set_trace()
         pc = getToolByName(context, "portal_catalog")
         return pc
     
@@ -54,7 +56,44 @@ class SurveyView(grok.View):
     def isEditable(self):
         from Products.CMFCore.permissions import ModifyPortalContent
         return self.pm().checkPermission(ModifyPortalContent,self.context) 
+    
+    def formatDatetime(self,Datetimeobj):
+        "format Datetime obj to:2015年02月08日"
+        year = Datetimeobj.strftime('%Y')
+        month = Datetimeobj.strftime('%m')
+        day = Datetimeobj.strftime('%d')
+        return u"%s年%s月%s日" % (year,month,day)
+            
+    def created(self):
+        "get current context created time. format:2015年02月08日"
+        created = self.context.created()
+        return self.formatDatetime(created)
 
+
+    def getSponsorOrg(self):
+        "获取上级监管单位"
+        return u"市教育局"
+        
+    def getSponsorAuditDate(self):
+        "获取审核日期"
+        return self.created()       
+        
+    def getSponsorOperator(self):
+               "获取上级监管单位的经手人"
+               return "test_user_id"
+    
+    def getAgentOrg(self):
+        "获取民政局"
+        return self.getSponsorOrg()
+    
+    def getAgentAuditDate(self):
+        "获取民政局审核日期"
+        return self.getSponsorAuditDate()
+    
+    def getAgentOperator(self):
+        "获取民政局经手人"
+        return self.getSponsorOperator()
+    
     def tranVoc(self,value):
         """ translate vocabulary value to title"""
         translation_service = getToolByName(self.context,'translation_service')
@@ -100,25 +139,35 @@ class SurveyDraftView(SurveyView):
     grok.template('survey_draft_view')
     grok.name('draftview')
     grok.require('zope2.View')    
+
     
        
-class SurveyPendingSponsorView(SurveyView):
-    """survey report view based workflow status: 'pendsponsor'"""
-    grok.template('survey_pending_sponsor_view')
-    grok.name('sponsorview')
-    grok.require('zope2.View') 
-    
-class SurveyPendingAgentView(SurveyView):
-    """survey report view based workflow status: 'pendingagent'"""
-    grok.template('survey_pending_agent_view')
-    grok.name('agengtview')
-    grok.require('zope2.View')             
-
-class SurveyPublishedView(SurveyView):
-    """survey report view based workflow status: 'published'"""
-    grok.template('survey_published_view')
-    grok.name('publishedview')
-    grok.require('zope2.View') 
+#class SurveyPendingSponsorView(SurveyView):
+#    """survey report view based workflow status: 'pendsponsor'"""
+#    grok.template('survey_pending_sponsor_view')
+#    grok.name('sponsorview')
+#    grok.require('zope2.View')
+#    
+#    def render(self):
+#        pass     
+#    
+#class SurveyPendingAgentView(SurveyView):
+#    """survey report view based workflow status: 'pendingagent'"""
+#    grok.template('survey_pending_agent_view')
+#    grok.name('agengtview')
+#    grok.require('zope2.View')             
+#
+#    def render(self):
+#        pass
+#
+#class SurveyPublishedView(SurveyView):
+#    """survey report view based workflow status: 'published'"""
+#    grok.template('survey_published_view')
+#    grok.name('publishedview')
+#    grok.require('zope2.View')
+#    
+#    def render(self):
+#        pass 
 
 
 

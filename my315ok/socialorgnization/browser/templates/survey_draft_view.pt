@@ -27,7 +27,7 @@
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
 				<div class="col-md-3 col-md-offset-3">
 					<span tal:condition="iseditable">
-						<a tal:attributes="href python:context.absolute_url() +'/@@ajaxedit'" 
+						<a tal:attributes="href python:context.absolute_url() +'/edit'" 
 						title="Edit"  
 						i18n:attributes="title"
 						class="btn btn-primary"
@@ -68,26 +68,26 @@
        <div class="row">
        	<div class="col-sm-6 col-xs-12 col-sm-offset-6">
        		<strong class="">法定代表人签字：</strong>
-       		<strong tal:content="python:context.creator">张三</strong>
+       		<strong tal:content="python:context.creators[0]">张三</strong>
        	</div>      	
        </div>
        <div class="row">
        	<div class="col-sm-7 col-xs-12 col-sm-offset-5">
-       		<div tal:define="picture nocall:context/photo"
+   <!--    		<div tal:define="picture nocall:context/photo"
        			tal:condition="nocall:picture">
        			<img class="img-responsive img-circle" 
        				tal:attributes="src string:${context/absolute_url}/@@download/picture/${picture/filename};
                          height picture/_height | nothing;
                          width picture/_width | nothing;"/>
-           </div>
-       		<strong tal:content="python:context.created">2015年4月5日</strong>
+          </div> -->
+       		<strong tal:content="python:view.created()">2015年4月5日</strong>
        	</div>      	
        </div>
        <div class="row">
        	<div class="col-md-6 col-sd-12">
        		<span class="label">年检报告书：</span>
        		<span>
-       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}">
+       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}"/>
        		</span>
        	</div>
        	<div class="col-md-6 col-sd-12">
@@ -109,7 +109,7 @@
                 <td class="col-xs-12 col-sm-6" >
                 	<div class="row">
                 		<div class="col-xs-12">
-                			<div tal:content="python:structure context.sponsor_comments"></div>
+                			<div tal:content="python:context.sponsor_comments"></div>
                 		</div>
                 	</div>
                 	<div class="row">
@@ -124,14 +124,14 @@
                 	</div>
                 	<div class="row">
                 		<div class="col-xs-12">
-                			<div tal:content="python:structure view.getSponsorAuditDate()">2015年5月7日</div>
+                			<div tal:content="python:view.getSponsorAuditDate()">2015年5月7日</div>
                 		</div>                		
                 	</div>                	
                 </td>
                 <td class="col-xs-12 col-sm-6" >
                 	<div class="row">
                 		<div class="col-xs-12">
-                			<div tal:content="python:structure context.agent_comments"></div>
+                			<div tal:content="python: context.agent_comments"></div>
                 		</div>
                 	</div>
                 	<div class="row">
@@ -146,7 +146,7 @@
                 	</div>
                 	<div class="row">
                 		<div class="col-xs-12">
-                			<div tal:content="python:structure view.getAgent_audit_date()">2015年5月7日</div>
+                			<div tal:content="python: view.getAgentAuditDate()">2015年5月7日</div>
                 		</div>                		
                 	</div>                	
                 </td>
