@@ -19,8 +19,8 @@ from my315ok.socialorgnization import _
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
-
-
+from dexterity.membrane.content.member import IOrganizationMember
+from xtshzz.policy.behaviors.org import IOrg
 
 from Products.CMFCore import permissions
 grok.templatedir('templates') 
@@ -41,8 +41,7 @@ class SurveyView(grok.View):
     @memoize    
     def catalog(self):
         context = aq_inner(self.context)
-        import pdb
-        pdb.set_trace()
+
         pc = getToolByName(context, "portal_catalog")
         return pc
     
@@ -69,22 +68,53 @@ class SurveyView(grok.View):
         created = self.context.created()
         return self.formatDatetime(created)
 
+    def getCurrentMember(self):
+        member_data = self.pm().getAuthenticatedMember()
+        id = member_data.getUserName()
+        id = "12@qq.com"   # 测试时适应
+        query = {"object_provides":IOrganizationMember.__identifier__,'email':id}
+        bns = self.catalog()(query)
+        if bns:
+            member = bns[0]
+            return member
+        else:
+            return None
 
     def getSponsorOrg(self):
-        "获取上级监管单位"
-        return u"市教育局"
+        "获取上级监管单位名称"
+        
+        sponsor = IOrg(self.getCurrentMember().getObject()).getSponsor()
+
+        return sponsor
         
     def getSponsorAuditDate(self):
         "获取审核日期"
         return self.created()       
         
     def getSponsorOperator(self):
-               "获取上级监管单位的经手人"
-               return "test_user_id"
+        "获取上级监管单位的经手人，该经手人，在创建监管单位账号时，由事件更新"
+               
+        sponsor = self.getSponsorOrg()
+        if not sponsor:return None
+        from my315ok.socialorgnization.content.governmentdepartment import IOrgnization
+        # 获得该政府部门
+        query = {"object_provides":IOrgnization.__identifier__,'Title':sponsor}
+        bs = self.catalog()(query)
+
+        if bs: return bs[0].getObject().operator
+        return None
     
     def getAgentOrg(self):
-        "获取民政局"
-        return self.getSponsorOrg()
+        "获取民政局,为民政局 单位对象指定id:minzhengju,以此简便获取到民政局对象"
+        
+        from my315ok.socialorgnization.content.governmentdepartment import IOrgnization
+        # 获得该政府部门
+        query = {"object_provides":IOrgnization.__identifier__,'id':"minzhengju"}
+        bs = self.catalog()(query)
+#        import pdb
+#        pdb.set_trace()        
+        if bs: return bs[0].Title
+        return None
     
     def getAgentAuditDate(self):
         "获取民政局审核日期"
@@ -92,7 +122,12 @@ class SurveyView(grok.View):
     
     def getAgentOperator(self):
         "获取民政局经手人"
-        return self.getSponsorOperator()
+        from my315ok.socialorgnization.content.governmentdepartment import IOrgnization
+        # 获得该政府部门
+        query = {"object_provides":IOrgnization.__identifier__,'id':"minzhengju"}
+        bs = self.catalog()(query)
+        if bs: return bs[0].getObject().operator
+        return None
     
     def tranVoc(self,value):
         """ translate vocabulary value to title"""

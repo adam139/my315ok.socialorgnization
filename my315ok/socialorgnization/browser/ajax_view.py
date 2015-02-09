@@ -26,6 +26,19 @@ class SurveyWorkflow(grok.View):
     grok.require('zope2.View')
     grok.context(IOrgnization_annual_survey)
     
+    @memoize    
+    def catalog(self):
+        context = aq_inner(self.context)
+
+        pc = getToolByName(context, "portal_catalog")
+        return pc
+    
+    @memoize    
+    def pm(self):
+        context = aq_inner(self.context)
+        pm = getToolByName(context, "portal_membership")
+        return pm    
+    
     def render(self):
         """
         workflow process ,this function should be subclass override.
@@ -47,12 +60,13 @@ class SurveySubmit(SurveyWorkflow):
         input:{status:'pengding';comment:'please approve'}
         output:{}
         """
-        pm =getToolByName(self.context,'portal_membership')
-        userobj = pm.getAuthenticatedMember()
-        catalog = getToolByName(self.context,'portal_catalog')
+
+        userobj = self.pm().getAuthenticatedMember()
+
         email = userobj.getUserName()
         try:
-            member = catalog({'object_provides': IOrganizationMember.__identifier__, "email":email})[0].getObject()
+            member = self.catalog()({'object_provides': IOrganizationMember.__identifier__, 
+                              "email":email})[0].getObject()
             return member.absolute_url()
         except:
             return ""      
