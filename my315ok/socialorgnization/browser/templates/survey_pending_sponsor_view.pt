@@ -41,27 +41,17 @@
 			 </form>
 		  </div> -->
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
-				<div class="col-md-3 col-md-offset-3">
-					<span tal:condition="iseditable">
-						<a tal:attributes="href python:context.absolute_url() +'/edit'" 
-						title="Edit"  
-						i18n:attributes="title"
-						class="btn btn-primary"
-						i18n:translate="">Edit</a>
-					</span>
-				</div>	
-				<div class="col-md-3">
-					<div id="submit2sponsor">
+
+				<div class="col-md-3 col-md-offset-6">
+					<div id="sponsor-agree">
 					<span tal:condition="python:view.canbeAuditBySponsor()">
-						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_sponsor'" 
-						title="Submit"  
-						i18n:attributes="title"
-						class="btn btn-primary"
-						i18n:translate="">提交主管单位审核</a>
+						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_sponsor_agree'" 
+						title="同意" 
+						class="btn btn-primary">同意</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
 			 			<div class="form-group">
-			 				<label for="InputComment">邮件标题</label>
+			 				<label for="InputComment">审核意见</label>
 							<textarea class="form-control" rows="3" tal:attributes="placeholder python:context.sponsor_comments"/>
 						</div>
 						<button class="btn btn-default" name="ok">确定</button>
@@ -70,17 +60,15 @@
 		  		</div>					
 				</div>	
 				<div class="col-md-3">
-					<div id="submit2agent">
+					<div id="sponsor-reject">
 					<span tal:condition="python:view.canbeAuditBySponsor()">
-						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_agent'" 
-						title="Submit"  
-						i18n:attributes="title"
-						class="btn btn-primary"
-						i18n:translate="">提交民政局审核</a>
+						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_sponsor_reject'" 
+						title="打回" 
+						class="btn btn-primary">打回</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
 			 			<div class="form-group">
-			 				<label for="InputComment">邮件标题</label>
+			 				<label for="InputComment">审核意见</label>
 							<textarea class="form-control" rows="3" tal:attributes="placeholder python:context.sponsor_comments"/>
 						</div>
 						<button class="btn btn-default" name="ok">确定</button>
@@ -197,25 +185,25 @@
 <script>
 	$(document).ready(function(){
 	//click a triger
-	$("#submit2sponsor").on("click","span",function() {
+	$("#sponsor-reject").on("click","span",function() {
 	//display ajax input form
-	$("#submit2sponsor form").show();
+	$("#sponsor-reject form").show();
 	//hide submit buttom
-	$("#submit2sponsor span").hide();
+	$("#sponsor-reject span").hide();
 	return false;	
 	}
 	
-$("#submit2sponsor button[name='ok']").on("click",function() {
-	var action = $("#submit2sponsor span a").attr('href');
-	var formval = $("#submit2sponsor textarea").val();
+$("#sponsor-reject button[name='ok']").on("click",function() {
+	var action = $("#sponsor-reject span a").attr('href');
+	var formval = $("#sponsor-reject textarea").val();
 	if formval ==="" {
 	alert( "must input subject" );
 	return false;
 	}
 	var data = {'subject':formval};
 	$.post(action,data,function(callback) {
-		$("#submit2sponsor form").hide();
-		$("#submit2sponsor span").show();
+		$("#sponsor-reject form").hide();
+		$("#sponsor-reject span").show();
 		if callback['result'] {
 			$("#ajax-status-notify div").html(callback['message']);
 			$("#ajax-status-notify").show();
@@ -224,31 +212,31 @@ $("#submit2sponsor button[name='ok']").on("click",function() {
 	return false;
 });
 
-$("#submit2sponsor button[name='cancel']").on("click",function() {
-		$("#submit2sponsor form").hide();
-		$("#submit2sponsor span").show();
+$("#sponsor-reject button[name='cancel']").on("click",function() {
+		$("#sponsor-reject form").hide();
+		$("#sponsor-reject span").show();
 		return false;
 });
 	//click a triger
-	$("#submit2agent").on("click","span",function() {
+	$("#sponsor-agree").on("click","span",function() {
 	//display ajax input form
-	$("#submit2agent form").show();
+	$("#sponsor-agree form").show();
 	//hide submit buttom
-	$("#submit2agent span").hide();
+	$("#sponsor-agree span").hide();
 	return false;	
 	}
 	
-$("#submit2agent button[name='ok']").on("click",function() {
-	var action = $("#submit2agent span a").attr('href');
-	var formval = $("#submit2agent textarea").val();
+$("#sponsor-agree button[name='ok']").on("click",function() {
+	var action = $("#sponsor-agree span a").attr('href');
+	var formval = $("#sponsor-agree textarea").val();
 	if formval ==="" {
 	alert( "must input subject" );
 	return false;
 	}
 	var data = {'subject':formval};
 	$.post(action,data,function(callback) {
-		$("#submit2agent form").hide();
-		$("#submit2agent span").show();
+		$("#sponsor-agree form").hide();
+		$("#sponsor-agree span").show();
 		if callback['result'] {
 			$("#ajax-status-notify div").html(callback['message']);
 			$("#ajax-status-notify").show();
@@ -257,9 +245,9 @@ $("#submit2agent button[name='ok']").on("click",function() {
 	return false;
 });
 
-$("#submit2agent button[name='cancel']").on("click",function() {
-		$("#submit2agent form").hide();
-		$("#submit2agent span").show();
+$("#sponsor-agree button[name='cancel']").on("click",function() {
+		$("#sponsor-agree form").hide();
+		$("#sponsor-agree span").show();
 		return false;
 });
 }

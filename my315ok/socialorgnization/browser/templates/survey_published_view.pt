@@ -41,53 +41,24 @@
 			 </form>
 		  </div> -->
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
-				<div class="col-md-3 col-md-offset-3">
-					<span tal:condition="iseditable">
-						<a tal:attributes="href python:context.absolute_url() +'/edit'" 
-						title="Edit"  
-						i18n:attributes="title"
-						class="btn btn-primary"
-						i18n:translate="">Edit</a>
-					</span>
-				</div>	
-				<div class="col-md-3">
-					<div id="submit2sponsor">
+
+				<div class="col-md-3 col-md-offset-9">
+					<div id="agent-retract">
 					<span tal:condition="python:view.canbeAuditBySponsor()">
-						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_sponsor'" 
-						title="Submit"  
-						i18n:attributes="title"
-						class="btn btn-primary"
-						i18n:translate="">提交主管单位审核</a>
+						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_agent_retract'" 
+						title="收回" 
+						class="btn btn-primary">收回</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
 			 			<div class="form-group">
-			 				<label for="InputComment">邮件标题</label>
+			 				<label for="InputComment">审核意见</label>
 							<textarea class="form-control" rows="3" tal:attributes="placeholder python:context.sponsor_comments"/>
 						</div>
 						<button class="btn btn-default" name="ok">确定</button>
 						<button class="btn btn-default" name="cancel">取消</button>
 			 		</form>
 		  		</div>					
-				</div>	
-				<div class="col-md-3">
-					<div id="submit2agent">
-					<span tal:condition="python:view.canbeAuditBySponsor()">
-						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_agent'" 
-						title="Submit"  
-						i18n:attributes="title"
-						class="btn btn-primary"
-						i18n:translate="">提交民政局审核</a>
-					</span>
-					<form class="ajaxform" style=" display:none;">
-			 			<div class="form-group">
-			 				<label for="InputComment">邮件标题</label>
-							<textarea class="form-control" rows="3" tal:attributes="placeholder python:context.sponsor_comments"/>
-						</div>
-						<button class="btn btn-default" name="ok">确定</button>
-						<button class="btn btn-default" name="cancel">取消</button>
-			 		</form>
-		  		</div>					
-				</div>									 
+				</div>												 
        </div>
        <div class="row">
        	<div class="col-xs-12">
@@ -197,25 +168,25 @@
 <script>
 	$(document).ready(function(){
 	//click a triger
-	$("#submit2sponsor").on("click","span",function() {
+	$("#agent-retract").on("click","span",function() {
 	//display ajax input form
-	$("#submit2sponsor form").show();
+	$("#agent-retract form").show();
 	//hide submit buttom
-	$("#submit2sponsor span").hide();
+	$("#agent-retract span").hide();
 	return false;	
 	}
 	
-$("#submit2sponsor button[name='ok']").on("click",function() {
-	var action = $("#submit2sponsor span a").attr('href');
-	var formval = $("#submit2sponsor textarea").val();
+$("#agent-retract button[name='ok']").on("click",function() {
+	var action = $("#agent-retract span a").attr('href');
+	var formval = $("#agent-retract textarea").val();
 	if formval ==="" {
 	alert( "must input subject" );
 	return false;
 	}
 	var data = {'subject':formval};
 	$.post(action,data,function(callback) {
-		$("#submit2sponsor form").hide();
-		$("#submit2sponsor span").show();
+		$("#agent-retract form").hide();
+		$("#agent-retract span").show();
 		if callback['result'] {
 			$("#ajax-status-notify div").html(callback['message']);
 			$("#ajax-status-notify").show();
@@ -224,42 +195,9 @@ $("#submit2sponsor button[name='ok']").on("click",function() {
 	return false;
 });
 
-$("#submit2sponsor button[name='cancel']").on("click",function() {
-		$("#submit2sponsor form").hide();
-		$("#submit2sponsor span").show();
-		return false;
-});
-	//click a triger
-	$("#submit2agent").on("click","span",function() {
-	//display ajax input form
-	$("#submit2agent form").show();
-	//hide submit buttom
-	$("#submit2agent span").hide();
-	return false;	
-	}
-	
-$("#submit2agent button[name='ok']").on("click",function() {
-	var action = $("#submit2agent span a").attr('href');
-	var formval = $("#submit2agent textarea").val();
-	if formval ==="" {
-	alert( "must input subject" );
-	return false;
-	}
-	var data = {'subject':formval};
-	$.post(action,data,function(callback) {
-		$("#submit2agent form").hide();
-		$("#submit2agent span").show();
-		if callback['result'] {
-			$("#ajax-status-notify div").html(callback['message']);
-			$("#ajax-status-notify").show();
-			}
-	},'json');
-	return false;
-});
-
-$("#submit2agent button[name='cancel']").on("click",function() {
-		$("#submit2agent form").hide();
-		$("#submit2agent span").show();
+$("#agent-retract button[name='cancel']").on("click",function() {
+		$("#agent-retract form").hide();
+		$("#agent-retract span").show();
 		return false;
 });
 }

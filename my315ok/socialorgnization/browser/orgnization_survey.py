@@ -49,7 +49,13 @@ class SurveyView(grok.View):
     def pm(self):
         context = aq_inner(self.context)
         pm = getToolByName(context, "portal_membership")
-        return pm    
+        return pm
+    
+    @memoize    
+    def wf(self):
+        context = aq_inner(self.context)
+        wf = getToolByName(context, "portal_workflow")
+        return wf        
             
     @property
     def isEditable(self):
@@ -68,6 +74,14 @@ class SurveyView(grok.View):
         created = self.context.created()
         return self.formatDatetime(created)
 
+    def canbeAuditBySponsor(self):
+        status = self.workflow_state()
+        sponsor = self.getSponsorOrg()
+        return (status == 'draft') and sponsor
+    
+    def canbeAuditByAgent(self):
+        return not self.canbeAuditBySponsor()
+        
     def getCurrentMember(self):
         member_data = self.pm().getAuthenticatedMember()
         id = member_data.getUserName()
@@ -150,12 +164,16 @@ class SurveyView(grok.View):
         else:
             return id
         
+    def creator(self):
+        "get survey report's creator"
+        creator = self.context.creators[0]
+        return creator
+    
     def workflow_state(self):
         "context workflow status"
         context = self.context
-        wf = getToolByName(context, 'portal_workflow')
-        review_state = wf.getInfoFor(context, 'review_state')
-        return _(review_state)
+        review_state = self.wf().getInfoFor(context, 'review_state')
+        return review_state
     
     @memoize         
     def getOrgnizationFolder(self):
@@ -177,29 +195,29 @@ class SurveyDraftView(SurveyView):
 
     
        
-#class SurveyPendingSponsorView(SurveyView):
-#    """survey report view based workflow status: 'pendsponsor'"""
-#    grok.template('survey_pending_sponsor_view')
-#    grok.name('sponsorview')
-#    grok.require('zope2.View')
+class SurveyPendingSponsorView(SurveyView):
+    """survey report view based workflow status: 'pendsponsor'"""
+    grok.template('survey_pending_sponsor_view')
+    grok.name('sponsorview')
+    grok.require('zope2.View')
 #    
 #    def render(self):
 #        pass     
 #    
-#class SurveyPendingAgentView(SurveyView):
-#    """survey report view based workflow status: 'pendingagent'"""
-#    grok.template('survey_pending_agent_view')
-#    grok.name('agengtview')
-#    grok.require('zope2.View')             
+class SurveyPendingAgentView(SurveyView):
+    """survey report view based workflow status: 'pendingagent'"""
+    grok.template('survey_pending_agent_view')
+    grok.name('agentview')
+    grok.require('zope2.View')             
 #
 #    def render(self):
 #        pass
 #
-#class SurveyPublishedView(SurveyView):
-#    """survey report view based workflow status: 'published'"""
-#    grok.template('survey_published_view')
-#    grok.name('publishedview')
-#    grok.require('zope2.View')
+class SurveyPublishedView(SurveyView):
+    """survey report view based workflow status: 'published'"""
+    grok.template('survey_published_view')
+    grok.name('publishedview')
+    grok.require('zope2.View')
 #    
 #    def render(self):
 #        pass 
