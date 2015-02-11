@@ -161,6 +161,9 @@
         		</tbody>
       </table>      
       </div>
+      </section>
+      <section>
+      				 <div tal:content="structure context/@@publishedview/xtshzz.policy.reviewhistory" />
       </section>          
     </tal:main-macro>
 </metal:main>

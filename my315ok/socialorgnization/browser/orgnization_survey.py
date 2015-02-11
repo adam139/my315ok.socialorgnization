@@ -14,6 +14,13 @@ from zope.component import getMultiAdapter
 from Products.CMFCore.interfaces import ISiteRoot
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
+from plone.app.customerize import registration
+from zope.traversing.interfaces import ITraverser,ITraversable
+from zope.publisher.interfaces import IPublishTraverse
+from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.viewlet.interfaces import IViewlet
+from zExceptions import NotFound
+
 from my315ok.socialorgnization import _
 
 from my315ok.socialorgnization.content.orgnization import IOrgnization
@@ -175,6 +182,65 @@ class SurveyView(grok.View):
         review_state = self.wf().getInfoFor(context, 'review_state')
         return review_state
     
+    def workflowHistory(self, complete=True):
+        """Return workflow history of this context.
+
+        Taken from plone_scripts/getWorkflowHistory.py
+        """
+        context = aq_inner(self.context)
+        # check if the current user has the proper permissions
+#        if not (_checkPermission('Request review', context) or
+#            _checkPermission('Review portal content', context)):
+#            return []
+
+        workflow = self.wf()
+        membership = self.pm()
+
+        review_history = []
+
+        try:
+            # get total history
+            review_history = workflow.getInfoFor(context, 'review_history')
+
+            if not complete:
+                # filter out automatic transitions.
+                review_history = [r for r in review_history if r['action']]
+            else:
+                review_history = list(review_history)
+
+            portal_type = context.portal_type
+            anon = _(u'label_anonymous_user', default=u'Anonymous User')
+
+            for r in review_history:
+                r['type'] = 'workflow'
+                r['transition_title'] = workflow.getTitleForTransitionOnType(
+                    r['action'], portal_type) or _("Create")
+                r['state_title'] = workflow.getTitleForStateOnType(
+                    r['review_state'], portal_type)
+                actorid = r['actor']
+                r['actorid'] = actorid
+                if actorid is None:
+                    # action performed by an anonymous user
+                    r['actor'] = {'username': anon, 'fullname': anon}
+                    r['actor_home'] = ''
+                else:
+                    r['actor'] = membership.getMemberInfo(actorid)
+                    if r['actor'] is not None:
+                        r['actor_home'] = self.navigation_root_url + '/author/' + actorid
+                    else:
+                        # member info is not available
+                        # the user was probably deleted
+                        r['actor_home'] = ''
+            review_history.reverse()
+
+        except WorkflowException:
+            log('plone.app.layout.viewlets.content: '
+                '%s has no associated workflow' % context.absolute_url(),
+                severity=logging.DEBUG)
+
+        return review_history
+    
+    
     @memoize         
     def getOrgnizationFolder(self):
 
@@ -186,6 +252,38 @@ class SurveyView(grok.View):
         else:
             tfpath = None            
         return tfpath
+    
+### load viewlet
+    def __getitem__(self,name):
+        viewlet = self.setUpViewletByName(name)
+        if viewlet is None:
+            active_layers = [ str(x) for x in self.request.__provides__.__iro__]
+            active_layers = tuple(active_layers)
+            raise RuntimeError("Viewlet does not exist by name %s for the active theme "% name)
+        viewlet.update()
+        return viewlet.render()
+    
+    def getViewletByName(self,name):
+        views = registration.getViews(IBrowserRequest)
+        for v in views:
+            if v.provided == IViewlet:
+                if v.name == name:
+#                    if str(v.required[1]) == '<InterfaceClass plone.app.discussion.interfaces.IDiscussionLayer>':
+                        return v
+        return None
+    
+    def setUpViewletByName(self,name):
+        context = aq_inner(self.context)
+        request = self.request
+        reg = self.getViewletByName(name)
+        if reg == None:
+            return None
+        factory = reg.factory
+        try:
+            viewlet = factory(context,request,self,None).__of__(context)
+        except TypeError:
+            raise RuntimeError("Unable to initialize viewlet %s. Factory method %s call failed."% name)
+        return viewlet    
          
 class SurveyDraftView(SurveyView):
     """survey report view based workflow status: 'draft'"""

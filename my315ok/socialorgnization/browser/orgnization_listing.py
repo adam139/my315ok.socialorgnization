@@ -117,13 +117,46 @@ class Orgnizations_adminView(grok.View):
             row['legal_person'] = brain.orgnization_legalPerson            
             row['address'] = brain.orgnization_address
             row['register_code'] = brain.orgnization_registerCode
-
-
             row['editurl'] = row['url'] + '/confajaxedit'
             row['delurl'] = row['url'] + '/delete_confirmation'            
             mlist.append(row)
         return mlist
 
+class GovernmentDepartmentListing(Orgnizations_adminView):
+    "government department admin view"
+    grok.template('department_listing')
+    grok.name('deparment_listing')    
+    
+    
+    @memoize     
+    def getMemberList(self):
+        """获取政府部门列表"""
+        mlist = []
+        import pdb
+        pdb.set_trace()
+        from my315ok.socialorgnization.content.governmentdepartment import IOrgnization as IDepartment        
+        memberbrains = self.catalog()({'object_provides':IDepartment.__identifier__, 
+                                'path':"/".join(self.context.getPhysicalPath()),
+                             'sort_order': 'reverse',
+                             'sort_on': 'created'}                              
+                                              )
+        i = 0
+        for brain in memberbrains:
+            i = i+1           
+            row = {'number':'','id':'', 'name':'', 'url':'',
+                    'operator':'', 'address':'','editurl':'',
+                    'delurl':''}
+            row['number'] = i
+            row['id'] = brain.id
+            row['name'] = brain.Title
+            row['url'] = brain.getURL()
+            row['operator'] = brain.orgnization_supervisor           
+            row['address'] = brain.orgnization_address
+            row['editurl'] = row['url'] + '/confajaxedit'
+            row['delurl'] = row['url'] + '/delete_confirmation'            
+            mlist.append(row)
+        return mlist            
+    
 class OrgnizationsView(Orgnizations_adminView):
     grok.context(IOrgnization)
     grok.template('orgnization_view')

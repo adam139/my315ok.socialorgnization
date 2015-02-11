@@ -16,13 +16,13 @@
 
        <section id="profile">
 			<div class="page-header">
-           <h3 i18n:translate="">Organization administration</h3>           
+           <h3>政府部门管理</h3>           
        </div>
        <div class="row action-bar">
 	<div class="col-md-6"></div>
 	<div class="col-md-3" tal:define="confolder python:view.getOrgnizationFolder()">
 		<span class="overlay" tal:condition="confolder">
-			<a tal:attributes="href  python:confolder + '/++add++my315ok.socialorgnization.orgnization'" 
+			<a tal:attributes="href  python:confolder + '/++add++my315ok.socialorgnization.governmentorgnization'" 
 				title="Add organization"
 				i18n:attributes="title"
 				class="btn btn-primary" 
@@ -44,12 +44,9 @@
 	        <thead>
           	<tr>
             <th class="col-md-1" i18n:translate="">Number</th>
-            <th class="col-md-3" i18n:translate="">Title</th>
-            <th class="col-md-1" i18n:translate="">register code</th>
-            <th class="col-md-3" i18n:translate="">address</th>
-            <th class="col-md-2" i18n:translate="">sponsor</th>            
-            <th class="col-md-1" i18n:translate="">legal person</th>
-            <th class="col-md-1" i18n:translate="">pass date</th>                                      
+            <th class="col-md-4" i18n:translate="">Title</th>
+            <th class="col-md-5" i18n:translate="">address</th>
+            <th class="col-md-2" i18n:translate="">operator</th>                                     
           	</tr>
         		</thead>
         <tbody>
@@ -57,21 +54,16 @@
              <tr>
                 <td class="col-md-1" tal:content="python:lists['number']">
                                     </td>
-                <td class="col-md-3 title" >
+                <td class="col-md-4 title" >
                                         <a tal:attributes="href python:lists['url']">
                                         	<span tal:content="python:lists['name']"></span>
                                         </a>
                  </td>
-                                    <td class="col-md-1"  tal:content="python:lists['register_code']">
+
+                                    <td class="col-md-5 title"  tal:content="python:lists['address']">
                                     </td>
-                                    <td class="col-md-3 title"  tal:content="python:lists['address']">
-                                    </td>
-                                    <td class="col-md-2 title"  tal:content="python:lists['sponsor']">
-                                    </td>
-                                    <td class="col-md-1" tal:content="python:lists['legal_person']">
- 																</td>
-                                    <td class="col-md-1" tal:content="python:lists['orgnization_passDate']">
- 																</td>                                                          
+                                    <td class="col-md-2 title"  tal:content="python:lists['operator']">
+                                    </td>                                                          
                                 </tr>
                             </tal:block>
         </tbody>

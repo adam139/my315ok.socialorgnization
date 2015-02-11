@@ -9,6 +9,7 @@ class Allcontents(unittest.TestCase):
     
     def setUp(self):
         portal = self.layer['portal']
+
         setRoles(portal, TEST_USER_ID, ('Manager',))
 
         portal.invokeFactory('my315ok.socialorgnization.orgnizationfolder', 'orgnizationfolder1')
@@ -27,7 +28,8 @@ class Allcontents(unittest.TestCase):
         portal['orgnizationfolder1']['orgnization1'].invokeFactory('my315ok.socialorgnization.orgnizationadministrative','orgnizationadministrative1',
                                                    title="organization1")        
         portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization2')
-        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization3')        
+        portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization3')
+      
         portal['orgnizationfolder1']['orgnization1'].invokeFactory('my315ok.socialorgnization.orgnizationsurvey','orgnizationsurvey1',
                                                    title="orgnizationfolder1")
        

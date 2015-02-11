@@ -108,7 +108,10 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
 # 民政局意见      
     agent_comments = schema.Text(title=_(u"civil agent comments"), required=False)    
    
-
+# 上级主管单位审核日期 
+    sponsor_audit_date = schema.Text(title=_(u"sponsor audit date"))
+# 民政局审核日期      
+    agent__audit_date = schema.Text(title=_(u"civil agent audit date"), required=False) 
     
 #年度           
     year = schema.TextLine(title=_(u"the year for survey"),

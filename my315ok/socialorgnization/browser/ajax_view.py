@@ -116,7 +116,7 @@ class SurveyWorkflow(grok.View):
         every subclass link to workflow transition.
         """
 class SurveySubmitSponsor(SurveyWorkflow):
-    "接受前台ajax 事件，处理工作流"
+    "接受前台ajax 事件，处理工作流，提交上级主管审核"
     grok.name('ajax_submit_sponsor')
           
 
@@ -147,6 +147,7 @@ class SurveySubmitSponsor(SurveyWorkflow):
             wf.doActionFor(context, 'submit2sponsor', comment=subject )
             # set default view as sponsor pending audit
             context.setLayout("sponsorview")
+            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -163,7 +164,7 @@ class SurveySubmitSponsor(SurveyWorkflow):
                   
 
 class SurveySubmitAgent(SurveyWorkflow):
-    "接受前台ajax 事件，处理工作流"
+    "接受前台ajax 事件，处理工作流，直接提交民政局审核。"
     grok.name('ajax_submit_agent')
           
     def render(self):
@@ -208,7 +209,7 @@ class SurveySubmitAgent(SurveyWorkflow):
                      
 ##pending sponsor status,sponsor reject to owner            
 class SurveySponsorReject(SurveyWorkflow):
-    "接受前台ajax 事件，处理工作流"
+    "接受前台ajax 事件，处理工作流，上级主管单位驳回."
     grok.name('ajax_sponsor_reject')
           
     def render(self):
@@ -237,10 +238,14 @@ class SurveySponsorReject(SurveyWorkflow):
             # 提交民政局审核
             send_to = dview.getAgentOperator()
             wf = dview.wf()
-            wf.doActionFor(context, 'submit2sponsor', comment=subject )
+
             wf.doActionFor(context, 'sponsorreject', comment=subject )
             # set default view as agent pending audit
             context.setLayout("draftview")
+            # set sponsor_audit_date
+            
+            context.sponsor_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            context.sponsor_comments = subject
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告被打回，请根据审核意见，仔细核对。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -283,10 +288,12 @@ class SurveySponsorAgree(SurveyWorkflow):
             # 提交民政局审核
             send_to = dview.getAgentOperator()
             wf = dview.wf()
-            wf.doActionFor(context, 'submit2sponsor', comment=subject )
+#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
             wf.doActionFor(context, 'sponsoragree', comment=subject )
             # set default view as agent pending audit
             context.setLayout("agentview")
+            context.sponsor_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            context.sponsor_comments = subject            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -327,13 +334,15 @@ class SurveyAgentReject(SurveyWorkflow):
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
-            send_to = dview.getAgentOperator()
+            send_to = dview.creator()
             wf = dview.wf()
-            wf.doActionFor(context, 'submit2sponsor', comment=subject )
-            wf.doActionFor(context, 'sponsoragree', comment=subject )
+#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
+#            wf.doActionFor(context, 'sponsoragree', comment=subject )
             wf.doActionFor(context, 'agentreject', comment=subject )
             # set default view as agent pending audit
             context.setLayout("draftview")
+            context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            context.agent_comments = subject            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告被民政局打回，请根据审核意见仔细核对。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -377,11 +386,13 @@ class SurveyAgentAgree(SurveyWorkflow):
             # 提交民政局审核
             send_to = dview.creator()
             wf = dview.wf()
-            wf.doActionFor(context, 'submit2sponsor', comment=subject )
-            wf.doActionFor(context, 'sponsoragree', comment=subject )
+#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
+#            wf.doActionFor(context, 'sponsoragree', comment=subject )
             wf.doActionFor(context, 'agentagree', comment=subject )            
             # set default view as agent pending audit
             context.setLayout("publishedview")
+            context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            context.agent_comments = subject            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -422,13 +433,15 @@ class SurveyAgentVeto(SurveyWorkflow):
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
-            send_to = dview.getAgentOperator()
+            send_to = dview.creator()
             wf = dview.wf()
-            wf.doActionFor(context, 'submit2sponsor', comment=subject )
-            wf.doActionFor(context, 'sponsoragree', comment=subject )
+#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
+#            wf.doActionFor(context, 'sponsoragree', comment=subject )
             wf.doActionFor(context, 'agentveto', comment=subject )            
             # set default view as agent pending audit
             context.setLayout("publishedview")
+            context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            context.agent_comments = subject            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局否决，年检不合格。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -466,17 +479,22 @@ class SurveyAgentRetract(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"agentview")
-        sponsor = dview.getAgentOrg()
+        sponsor = dview.creator()
         if sponsor:
             # 提交民政局审核
             send_to = dview.getAgentOperator()
+            state = dview.workflow_state()
+#            import pdb
+#            pdb.set_trace()
             wf = dview.wf()
-            wf.doActionFor(context, 'submit2sponsor', comment=subject )
-            wf.doActionFor(context, 'sponsoragree', comment=subject )
-            wf.doActionFor(context, 'agentagree', comment=subject ) 
+#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
+#            wf.doActionFor(context, 'sponsoragree', comment=subject )
+#            wf.doActionFor(context, 'agentagree', comment=subject ) 
             wf.doActionFor(context, 'retract', comment=subject )  
             # set default view as agent pending audit
             context.setLayout("draftview")
+            context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            context.agent_comments = subject            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局收回，可以开启新一轮审批流程。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
