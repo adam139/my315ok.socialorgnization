@@ -26,20 +26,9 @@
            	<span class="focuse" tal:content="python:context.year">2011</span>
            	<span>年度年检报告</span>
            </h3>
-           <h4><span class="text-right" tal:content="python:view.workflow_state()">草稿</span></h4>           
+           <h4 class="text-right"><span  i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h4>           
        </div>
-       <!--
-		<span id="showtitle" tal:content="context/title"/>
-		<a href="javascript:void(0)" onclick="outdisplaytitle()">
-			<span id="edittitle" class="edit" i18n:translate="edit">edit</span>
-		</a>       	
-       <div id="modifytitle" tal:attributes="modifytitle string:${context/absolute_url}/@@modify-title">
-			 <form id="modifytitleform" style=" display:none;">
-				<textarea tal:content="context/title"/>
-				<button name="ok" i18n:translate="ok">确定</button>
-				<button name="cancel" i18n:translate="cancel">取消</button>
-			 </form>
-		  </div> -->
+      
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
 				<div class="col-md-3 col-md-offset-3">
 					<span tal:condition="iseditable">
@@ -96,19 +85,14 @@
        			<span class="focuse" tal:content="python:context.year">2011</span>
        		年度工作报告书，并保证本报告书内容真实、准确、完整。</p>
        		<p>请予审查。</p>
-       		<p class="text-right">法定代表人签字：</p>
+       		<p class="text-right">法定代表人签字：<strong tal:content="python:context.creators[0]">张三</strong></p>
        		<p class="text-right">（社团印章）</p>
        		
        	</div>
        </div>
+
        <div class="row">
-       	<div class="col-sm-6 col-xs-12 col-sm-offset-6">
-       		<strong class="">法定代表人签字：</strong>
-       		<strong tal:content="python:context.creators[0]">张三</strong>
-       	</div>      	
-       </div>
-       <div class="row">
-       	<div class="col-sm-7 col-xs-12 col-sm-offset-5">
+       	<div class="col-sm-2 col-xs-12 col-sm-offset-10">
    <!--    		<div tal:define="picture nocall:context/photo"
        			tal:condition="nocall:picture">
        			<img class="img-responsive img-circle" 
@@ -116,18 +100,23 @@
                          height picture/_height | nothing;
                          width picture/_width | nothing;"/>
           </div> -->
-       		<strong tal:content="python:view.created()">2015年4月5日</strong>
+       		<strong class="text-right" tal:content="python:view.created()">2015年4月5日</strong>
        	</div>      	
        </div>
        <div class="row">
        	<div class="col-md-6 col-sd-12">
        		<span class="label">年检报告书：</span>
        		<span>
-       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}"/>
+       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}">
+       				点击查看</a>
        		</span>
        	</div>
        	<div class="col-md-6 col-sd-12">
-       		
+       		<span class="label">财务报告书：</span>
+       		<span>
+       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}">
+       				点击查看</a>
+       		</span>       		
        	</div>
        </div>     
        <div class="row">
@@ -160,7 +149,7 @@
                 	</div>
                 	<div class="row">
                 		<div class="col-xs-12">
-                			<div tal:content="python:view.getSponsorAuditDate()">2015年5月7日</div>
+                			<div class="text-right" tal:content="python:view.getSponsorAuditDate()">2015年5月7日</div>
                 		</div>                		
                 	</div>                	
                 </td>
@@ -182,7 +171,7 @@
                 	</div>
                 	<div class="row">
                 		<div class="col-xs-12">
-                			<div tal:content="python: view.getAgentAuditDate()">2015年5月7日</div>
+                			<div class="text-right" tal:content="python: view.getAgentAuditDate()">2015年5月7日</div>
                 		</div>                		
                 	</div>                	
                 </td>
@@ -196,73 +185,41 @@
 <metal:js fill-slot="javascript_bottom_slot">
 <script>
 	$(document).ready(function(){
-	//click a triger
-	$("#submit2sponsor").on("click","span",function() {
-	//display ajax input form
-	$("#submit2sponsor form").show();
-	//hide submit buttom
-	$("#submit2sponsor span").hide();
-	return false;	
-	}
-	
-$("#submit2sponsor button[name='ok']").on("click",function() {
-	var action = $("#submit2sponsor span a").attr('href');
-	var formval = $("#submit2sponsor textarea").val();
-	if formval ==="" {
-	alert( "must input subject" );
-	return false;
-	}
-	var data = {'subject':formval};
-	$.post(action,data,function(callback) {
-		$("#submit2sponsor form").hide();
-		$("#submit2sponsor span").show();
-		if callback['result'] {
-			$("#ajax-status-notify div").html(callback['message']);
-			$("#ajax-status-notify").show();
-			}
-	},'json');
-	return false;
-});
 
-$("#submit2sponsor button[name='cancel']").on("click",function() {
-		$("#submit2sponsor form").hide();
-		$("#submit2sponsor span").show();
+		//click a triger
+		$("#submit2sponsor").on("click","a",function() {
+		//display ajax input form
+		$("#submit2sponsor form").show();
+		//hide submit buttom
+		$("#submit2sponsor span").hide();
+		return false;	
+		});
+	$("#submit2sponsor button[name='ok']").on("click",function() {
+		var action = $("#submit2sponsor span a").attr('href');
+		var formval = $("#submit2sponsor textarea").val();
+		if (formval ==="") {
+		alert( "must input subject" );
 		return false;
-});
-	//click a triger
-	$("#submit2agent").on("click","span",function() {
-	//display ajax input form
-	$("#submit2agent form").show();
-	//hide submit buttom
-	$("#submit2agent span").hide();
-	return false;	
-	}
-	
-$("#submit2agent button[name='ok']").on("click",function() {
-	var action = $("#submit2agent span a").attr('href');
-	var formval = $("#submit2agent textarea").val();
-	if formval ==="" {
-	alert( "must input subject" );
-	return false;
-	}
-	var data = {'subject':formval};
-	$.post(action,data,function(callback) {
-		$("#submit2agent form").hide();
-		$("#submit2agent span").show();
-		if callback['result'] {
-			$("#ajax-status-notify div").html(callback['message']);
-			$("#ajax-status-notify").show();
-			}
-	},'json');
-	return false;
-});
+		}
+		var data = {'subject':formval};
+		$.post(action,data,function(callback) {
+			$("#submit2sponsor form").hide();
+			$("#submit2sponsor span").show();
+			if (callback['result']) {
+				$("#ajax-status-notify div").html(callback['message']);
+				$("#ajax-status-notify").show();
+			}				
+		},'json');
+		return false;
+	});
 
-$("#submit2agent button[name='cancel']").on("click",function() {
-		$("#submit2agent form").hide();
-		$("#submit2agent span").show();
-		return false;
-});
+	$("#submit2sponsor button[name='cancel']").on("click",function() {
+			$("#submit2sponsor form").hide();
+			$("#submit2sponsor span").show();
+			return false;
+	});		
 }
+)
 </script>
 </metal:js>
 </body>

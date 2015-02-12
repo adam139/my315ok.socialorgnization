@@ -143,6 +143,8 @@ class SurveySubmitSponsor(SurveyWorkflow):
         if sponsor:
             # 提交主管单位审核
             send_to = dview.getSponsorOperator()
+            import pdb
+            pdb.set_trace()
             wf = dview.wf()
             wf.doActionFor(context, 'submit2sponsor', comment=subject )
             # set default view as sponsor pending audit

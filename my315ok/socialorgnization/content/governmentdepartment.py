@@ -32,7 +32,7 @@ class IOrgnization(form.Schema,IImageScaleTraversable):
                              default=u"",
                             required=True,) 
 #描述       
-    description = schema.TextLine(title=_(u"sector"),
+    description = schema.TextLine(title=_(u"organization summary"),
                              default=u"",
                              required=False,)
 #   住所 

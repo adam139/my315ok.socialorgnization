@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: my315ok.products\n"
-"POT-Creation-Date: 2014-11-17 01:50+0000\n"
-"PO-Revision-Date: 2014-11-17 10:00+0800\n"
+"POT-Creation-Date: 2015-02-12 05:02+0000\n"
+"PO-Revision-Date: 2015-02-12 11:07+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,11 +23,13 @@ msgstr "添加行政许可"
 msgid "Add annual survey"
 msgstr "添加年检记录"
 
+#: ./browser/templates/department_listing.pt:25
 #: ./browser/templates/orgnization_listing_admin.pt:25
 msgid "Add organization"
 msgstr "添加社会组织"
 
-#: ./content/orgnization.py:33
+#: ./content/governmentdepartment.py:39
+#: ./content/orgnization.py:34
 msgid "Address"
 msgstr "住所"
 
@@ -39,6 +41,10 @@ msgstr "行政许可报表"
 msgid "Annual survey Folder"
 msgstr "年检结果报表"
 
+#: ./content/orgnization.py:123
+msgid "Attach your anual report (word, etc)."
+msgstr "上载你的年检报表（推荐word格式）"
+
 #: ./browser/datainout.pt:102
 msgid "Click here to get the errors as a CSV file"
 msgstr "点击将错误信息保存为CSV文件"
@@ -46,6 +52,10 @@ msgstr "点击将错误信息保存为CSV文件"
 #: ./browser/datainout.pt:115
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
 msgstr "点击导出按钮，下载所有社会组织信息到一个CSV文件。该CSV文件格式和模板中的一致。"
+
+#: ./browser/orgnization_survey.py:217
+msgid "Create"
+msgstr "创建"
 
 #: ./browser/datainout.pt:45
 msgid "Csv file"
@@ -55,7 +65,7 @@ msgstr "CSV文件"
 msgid "Data In/Out"
 msgstr "数据导入导出"
 
-#: ./browser/datainout.py:139
+#: ./browser/datainout.py:150
 msgid "Data successfully imported."
 msgstr "数据已成功导入"
 
@@ -85,13 +95,21 @@ msgstr "详细错误信息"
 msgid "Export"
 msgstr "导出"
 
+#: ./profiles/default/types/my315ok.socialorgnization.governmentorgnization.xml
+msgid "Government Orgnization"
+msgstr "政府部门"
+
 #: ./browser/datainout.pt:40
 msgid "Import"
 msgstr "导入"
 
+#: ./browser/ajax_view.py:110
+msgid "Not able to send notifications"
+msgstr "不能发送通知"
+
 #: ./browser/templates/allorgnization_listings.pt:123
+#: ./browser/templates/department_listing.pt:46
 #: ./browser/templates/orgnization_listing_admin.pt:46
-#: ./browser/templates/shaoshanshi_allorgnization_listings.pt:125
 msgid "Number"
 msgstr "序号"
 
@@ -127,7 +145,7 @@ msgstr "社会组织行政许可"
 msgid "Orgnization annual survey"
 msgstr "社会组织年检"
 
-#: ./content/orgnization.py:74
+#: ./content/orgnization.py:75
 msgid "Pass Date"
 msgstr "批准时间"
 
@@ -147,15 +165,20 @@ msgstr "韶山市"
 msgid "Shi ben ji Orgnization Folder"
 msgstr "市本级"
 
-#: ./browser/datainout.py:136
+#: ./browser/datainout.py:147
 msgid "Some errors occured. Please check your CSV syntax and retry."
 msgstr "出错！请检查你的CSV文件格式。"
 
+#: ./browser/templates/survey_draft_view.pt:56
+msgid "Submit"
+msgstr "提交"
+
+#: ./browser/templates/department_listing.pt:47
 #: ./browser/templates/orgnization_listing_admin.pt:47
 msgid "Title"
 msgstr "组织名称"
 
-#: ./browser/datainout.py:82
+#: ./browser/datainout.py:92
 msgid "Wrong specification of the CSV file. Please correct it and retry."
 msgstr "错误的CSV文件，请更正后重试。"
 
@@ -193,17 +216,21 @@ msgstr "包含年检结果信息的页面"
 msgid "a folder contain some orgnizations"
 msgstr "一个包含社会组织信息的文件夹"
 
+#: ./content/governmentdepartment.py:49
+msgid "a image of the public sign"
+msgstr "公章扫描图片"
+
 #: ./browser/templates/allorgnization_listings.pt:126
+#: ./browser/templates/department_listing.pt:48
 #: ./browser/templates/orgnization_listing_admin.pt:49
-#: ./browser/templates/shaoshanshi_allorgnization_listings.pt:128
 msgid "address"
 msgstr "住所"
 
-#: ./content/orgnization.py:68
+#: ./content/orgnization.py:69
 msgid "announcement Type"
 msgstr "公告类型"
 
-#: ./content/orgnization.py:61
+#: ./content/orgnization.py:62
 msgid "belondto area"
 msgstr "所属区县"
 
@@ -231,6 +258,18 @@ msgstr "成立"
 msgid "chenglidengji"
 msgstr "成立登记"
 
+#: ./content/orgnization.py:114
+msgid "civil agent audit date"
+msgstr "民政局审核日期"
+
+#: ./content/orgnization.py:109
+msgid "civil agent comments"
+msgstr "民政局审核意见"
+
+#: ./profiles/default/types/my315ok.socialorgnization.governmentorgnization.xml
+msgid "government orgnization content type"
+msgstr "政府部门类型"
+
 #: ./browser/datainout.pt:87
 msgid "group(s) added."
 msgstr "组已添加。"
@@ -240,7 +279,7 @@ msgid "hege"
 msgstr "合格"
 
 #. Default: "A code identifying this sector. register codes are defined by national standards bodies and based on revision 2 of the NACE standard."
-#: ./content/orgnization.py:48
+#: ./content/orgnization.py:49
 msgid "help_register_code"
 msgstr "每个社会组织有唯一的登记证号"
 
@@ -256,8 +295,13 @@ msgstr "基本合格"
 msgid "jijinhui"
 msgstr "基金会"
 
+#. Default: "Anonymous User"
+#: ./browser/orgnization_survey.py:212
+msgid "label_anonymous_user"
+msgstr "匿名用户"
+
 #. Default: "register code"
-#: ./content/orgnization.py:46
+#: ./content/orgnization.py:47
 msgid "label_register_code"
 msgstr "登记证号"
 
@@ -271,7 +315,12 @@ msgstr "法定代表人"
 msgid "minfei"
 msgstr "民非"
 
-#: ./content/orgnization.py:55
+#: ./browser/templates/department_listing.pt:49
+#: ./content/governmentdepartment.py:43
+msgid "operator"
+msgstr "经手人"
+
+#: ./content/orgnization.py:56
 msgid "organization Type"
 msgstr "社会组织类型"
 
@@ -281,11 +330,16 @@ msgstr "社会组织类型"
 msgid "organization name"
 msgstr "社会组织名称"
 
+#: ./content/governmentdepartment.py:35
+msgid "organization summary"
+msgstr ""
+
 #: ./profiles/default/types/my315ok.socialorgnization.orgnization.xml
 msgid "orgnization content type"
 msgstr "社会组织内容类型"
 
-#: ./content/orgnization.py:25
+#: ./content/governmentdepartment.py:31
+#: ./content/orgnization.py:26
 msgid "orgnization name"
 msgstr "社会组织名称"
 
@@ -295,6 +349,11 @@ msgstr "社会组织名称"
 msgid "pass date"
 msgstr "批准时间"
 
+#: ./content/governmentdepartment.py:48
+msgid "public sign"
+msgstr "公章"
+
+#: ./browser/templates/department_listing.pt:34
 #: ./browser/templates/orgnization_listing_admin.pt:34
 msgid "quick search"
 msgstr "快速查询"
@@ -305,7 +364,11 @@ msgstr "快速查询"
 msgid "register code"
 msgstr "登记证号"
 
-#: ./content/orgnization.py:29
+#: ./content/orgnization.py:122
+msgid "report"
+msgstr "年报"
+
+#: ./content/orgnization.py:30
 msgid "sector"
 msgstr "行业"
 
@@ -323,25 +386,37 @@ msgstr "社会团体"
 msgid "sponsor"
 msgstr "业务主管单位"
 
-#: ./content/orgnization.py:41
+#: ./content/orgnization.py:112
+msgid "sponsor audit date"
+msgstr "主管单位审核日期"
+
+#: ./content/orgnization.py:107
+msgid "sponsor comments"
+msgstr "主管单位审核意见"
+
+#: ./content/orgnization.py:42
 msgid "supervisor organization"
 msgstr "业务主管单位"
 
-#: ./content/orgnization.py:132
+#: ./content/orgnization.py:152
 msgid "the item had been audited"
 msgstr "审批事项"
 
-#: ./content/orgnization.py:108
+#: ./content/orgnization.py:129
 msgid "the result of annual survey"
 msgstr "年检结果"
 
-#: ./content/orgnization.py:138
+#: ./content/orgnization.py:158
 msgid "the result of item that had been audited"
 msgstr "审核结果"
 
-#: ./content/orgnization.py:113
+#: ./content/orgnization.py:117
 msgid "the year for survey"
 msgstr "年度"
+
+#: ./content/orgnization.py:134
+msgid "traced history"
+msgstr ""
 
 #: ./vocabulary.py:27
 msgid "xiangtanshi"
@@ -370,4 +445,12 @@ msgstr "准予"
 #: ./vocabulary.py:11
 msgid "zhuxiao"
 msgstr "注销"
+
+#: ./browser/templates/survey_draft_view.pt:56
+msgid "提交主管单位审核"
+msgstr ""
+
+#: ./browser/templates/survey_draft_view.pt:75
+msgid "提交民政局审核"
+msgstr ""
 

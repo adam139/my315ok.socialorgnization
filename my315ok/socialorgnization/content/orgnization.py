@@ -104,14 +104,14 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
         required=True
     )
 # 上级主管单位意见    
-    sponsor_comments = schema.Text(title=_(u"sponsor comments"))
+    sponsor_comments = schema.Text(title=_(u"sponsor comments"), required=False)
 # 民政局意见      
     agent_comments = schema.Text(title=_(u"civil agent comments"), required=False)    
    
 # 上级主管单位审核日期 
-    sponsor_audit_date = schema.Text(title=_(u"sponsor audit date"))
+    sponsor_audit_date = schema.Text(title=_(u"sponsor audit date"), required=False)
 # 民政局审核日期      
-    agent__audit_date = schema.Text(title=_(u"civil agent audit date"), required=False) 
+    agent_audit_date = schema.Text(title=_(u"civil agent audit date"), required=False) 
     
 #年度           
     year = schema.TextLine(title=_(u"the year for survey"),
@@ -131,9 +131,9 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
     )       
 # 审核历史
 
-    traced_history = schema.Text(title=_(u"traced history"), required=False)     
+#    traced_history = schema.Text(title=_(u"traced history"), required=False)     
     
-    form.omitted('description','sponsor_comments','agent_comments','annual_survey','traced_history')    
+    form.omitted('description','sponsor_comments','sponsor_audit_date','agent_audit_date','agent_comments','annual_survey')    
 
 class IOrgnization_administrative_licence(form.Schema,IBasic):
 

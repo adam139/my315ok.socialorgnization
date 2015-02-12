@@ -1,3 +1,77 @@
+	$(document).ready(function(){
+
+		//click a triger
+		$("#submit2sponsor").on("click","a",function() {
+		//display ajax input form
+		$("#submit2sponsor form").show();
+		//hide submit buttom
+		$("#submit2sponsor span").hide();
+		return false;	
+		});
+		
+	$("#submit2sponsor button[name='ok']").on("click",function() {
+		var action = $("#submit2sponsor span a").attr('href');
+		var formval = $("#submit2sponsor textarea").val();
+		if (formval ==="") {
+		alert( "must input subject" );
+		return false;
+		}
+		var data = {'subject':formval};
+		$.post(action,data,function(callback) {
+			$("#submit2sponsor form").hide();
+			$("#submit2sponsor span").show();
+			if (callback['result']) {
+				$("#ajax-status-notify div").html(callback['message']);
+				$("#ajax-status-notify").show();
+			}				
+		},'json');
+		return false;
+	});
+
+	$("#submit2sponsor button[name='cancel']").on("click",function() {
+			$("#submit2sponsor form").hide();
+			$("#submit2sponsor span").show();
+			return false;
+	});
+		//click a triger
+		$("#submit2agent").on("click","a",function() {
+		//display ajax input form
+		$("#submit2agent form").show();
+		//hide submit buttom
+		$("#submit2agent span").hide();
+		return false;	
+		});
+		
+	$("#submit2agent button[name='ok']").on("click",function() {
+		var action = $("#submit2agent span a").attr('href');
+		var formval = $("#submit2agent textarea").val();
+		if (formval ==="") {
+		alert( "must input subject" );
+		return false;
+		}
+		var data = {'subject':formval};
+		$.post(action,data,function(callback) {
+			$("#submit2agent form").hide();
+			$("#submit2agent span").show();
+			if (callback['result']) {
+				$("#ajax-status-notify div").html(callback['message']);
+				$("#ajax-status-notify").show();
+				
+		},'json');
+		return false;
+	});
+
+	$("#submit2agent button[name='cancel']").on("click",function() {
+			$("#submit2agent form").hide();
+			$("#submit2agent span").show();
+			return false;
+	});		
+}
+)
+
+
+
+
 var jq=jQuery.noConflict();
 jq(document).ready(function(){
 

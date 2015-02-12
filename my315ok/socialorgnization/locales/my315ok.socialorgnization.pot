@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-11-17 01:50+0000\n"
+"POT-Creation-Date: 2015-02-12 05:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,13 @@ msgstr ""
 msgid "Add annual survey"
 msgstr ""
 
+#: ./browser/templates/department_listing.pt:25
 #: ./browser/templates/orgnization_listing_admin.pt:25
 msgid "Add organization"
 msgstr ""
 
-#: ./content/orgnization.py:33
+#: ./content/governmentdepartment.py:39
+#: ./content/orgnization.py:34
 msgid "Address"
 msgstr ""
 
@@ -38,12 +40,20 @@ msgstr ""
 msgid "Annual survey Folder"
 msgstr ""
 
+#: ./content/orgnization.py:123
+msgid "Attach your anual report (word, etc)."
+msgstr ""
+
 #: ./browser/datainout.pt:102
 msgid "Click here to get the errors as a CSV file"
 msgstr ""
 
 #: ./browser/datainout.pt:115
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
+msgstr ""
+
+#: ./browser/orgnization_survey.py:217
+msgid "Create"
 msgstr ""
 
 #: ./browser/datainout.pt:45
@@ -54,7 +64,7 @@ msgstr ""
 msgid "Data In/Out"
 msgstr ""
 
-#: ./browser/datainout.py:139
+#: ./browser/datainout.py:150
 msgid "Data successfully imported."
 msgstr ""
 
@@ -84,13 +94,21 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
+#: ./profiles/default/types/my315ok.socialorgnization.governmentorgnization.xml
+msgid "Government Orgnization"
+msgstr ""
+
 #: ./browser/datainout.pt:40
 msgid "Import"
 msgstr ""
 
+#: ./browser/ajax_view.py:110
+msgid "Not able to send notifications"
+msgstr ""
+
 #: ./browser/templates/allorgnization_listings.pt:123
+#: ./browser/templates/department_listing.pt:46
 #: ./browser/templates/orgnization_listing_admin.pt:46
-#: ./browser/templates/shaoshanshi_allorgnization_listings.pt:125
 msgid "Number"
 msgstr ""
 
@@ -126,7 +144,7 @@ msgstr ""
 msgid "Orgnization annual survey"
 msgstr ""
 
-#: ./content/orgnization.py:74
+#: ./content/orgnization.py:75
 msgid "Pass Date"
 msgstr ""
 
@@ -146,15 +164,20 @@ msgstr ""
 msgid "Shi ben ji Orgnization Folder"
 msgstr ""
 
-#: ./browser/datainout.py:136
+#: ./browser/datainout.py:147
 msgid "Some errors occured. Please check your CSV syntax and retry."
 msgstr ""
 
+#: ./browser/templates/survey_draft_view.pt:56
+msgid "Submit"
+msgstr ""
+
+#: ./browser/templates/department_listing.pt:47
 #: ./browser/templates/orgnization_listing_admin.pt:47
 msgid "Title"
 msgstr ""
 
-#: ./browser/datainout.py:82
+#: ./browser/datainout.py:92
 msgid "Wrong specification of the CSV file. Please correct it and retry."
 msgstr ""
 
@@ -192,17 +215,21 @@ msgstr ""
 msgid "a folder contain some orgnizations"
 msgstr ""
 
+#: ./content/governmentdepartment.py:49
+msgid "a image of the public sign"
+msgstr ""
+
 #: ./browser/templates/allorgnization_listings.pt:126
+#: ./browser/templates/department_listing.pt:48
 #: ./browser/templates/orgnization_listing_admin.pt:49
-#: ./browser/templates/shaoshanshi_allorgnization_listings.pt:128
 msgid "address"
 msgstr ""
 
-#: ./content/orgnization.py:68
+#: ./content/orgnization.py:69
 msgid "announcement Type"
 msgstr ""
 
-#: ./content/orgnization.py:61
+#: ./content/orgnization.py:62
 msgid "belondto area"
 msgstr ""
 
@@ -230,6 +257,18 @@ msgstr ""
 msgid "chenglidengji"
 msgstr ""
 
+#: ./content/orgnization.py:114
+msgid "civil agent audit date"
+msgstr ""
+
+#: ./content/orgnization.py:109
+msgid "civil agent comments"
+msgstr ""
+
+#: ./profiles/default/types/my315ok.socialorgnization.governmentorgnization.xml
+msgid "government orgnization content type"
+msgstr ""
+
 #: ./browser/datainout.pt:87
 msgid "group(s) added."
 msgstr ""
@@ -239,7 +278,7 @@ msgid "hege"
 msgstr ""
 
 #. Default: "A code identifying this sector. register codes are defined by national standards bodies and based on revision 2 of the NACE standard."
-#: ./content/orgnization.py:48
+#: ./content/orgnization.py:49
 msgid "help_register_code"
 msgstr ""
 
@@ -255,8 +294,13 @@ msgstr ""
 msgid "jijinhui"
 msgstr ""
 
+#. Default: "Anonymous User"
+#: ./browser/orgnization_survey.py:212
+msgid "label_anonymous_user"
+msgstr ""
+
 #. Default: "register code"
-#: ./content/orgnization.py:46
+#: ./content/orgnization.py:47
 msgid "label_register_code"
 msgstr ""
 
@@ -270,7 +314,12 @@ msgstr ""
 msgid "minfei"
 msgstr ""
 
-#: ./content/orgnization.py:55
+#: ./browser/templates/department_listing.pt:49
+#: ./content/governmentdepartment.py:43
+msgid "operator"
+msgstr ""
+
+#: ./content/orgnization.py:56
 msgid "organization Type"
 msgstr ""
 
@@ -280,11 +329,16 @@ msgstr ""
 msgid "organization name"
 msgstr ""
 
+#: ./content/governmentdepartment.py:35
+msgid "organization summary"
+msgstr ""
+
 #: ./profiles/default/types/my315ok.socialorgnization.orgnization.xml
 msgid "orgnization content type"
 msgstr ""
 
-#: ./content/orgnization.py:25
+#: ./content/governmentdepartment.py:31
+#: ./content/orgnization.py:26
 msgid "orgnization name"
 msgstr ""
 
@@ -294,6 +348,11 @@ msgstr ""
 msgid "pass date"
 msgstr ""
 
+#: ./content/governmentdepartment.py:48
+msgid "public sign"
+msgstr ""
+
+#: ./browser/templates/department_listing.pt:34
 #: ./browser/templates/orgnization_listing_admin.pt:34
 msgid "quick search"
 msgstr ""
@@ -304,7 +363,11 @@ msgstr ""
 msgid "register code"
 msgstr ""
 
-#: ./content/orgnization.py:29
+#: ./content/orgnization.py:122
+msgid "report"
+msgstr ""
+
+#: ./content/orgnization.py:30
 msgid "sector"
 msgstr ""
 
@@ -322,24 +385,36 @@ msgstr ""
 msgid "sponsor"
 msgstr ""
 
-#: ./content/orgnization.py:41
+#: ./content/orgnization.py:112
+msgid "sponsor audit date"
+msgstr ""
+
+#: ./content/orgnization.py:107
+msgid "sponsor comments"
+msgstr ""
+
+#: ./content/orgnization.py:42
 msgid "supervisor organization"
 msgstr ""
 
-#: ./content/orgnization.py:132
+#: ./content/orgnization.py:152
 msgid "the item had been audited"
 msgstr ""
 
-#: ./content/orgnization.py:108
+#: ./content/orgnization.py:129
 msgid "the result of annual survey"
 msgstr ""
 
-#: ./content/orgnization.py:138
+#: ./content/orgnization.py:158
 msgid "the result of item that had been audited"
 msgstr ""
 
-#: ./content/orgnization.py:113
+#: ./content/orgnization.py:117
 msgid "the year for survey"
+msgstr ""
+
+#: ./content/orgnization.py:134
+msgid "traced history"
 msgstr ""
 
 #: ./vocabulary.py:27
@@ -368,5 +443,13 @@ msgstr ""
 
 #: ./vocabulary.py:11
 msgid "zhuxiao"
+msgstr ""
+
+#: ./browser/templates/survey_draft_view.pt:56
+msgid "提交主管单位审核"
+msgstr ""
+
+#: ./browser/templates/survey_draft_view.pt:75
+msgid "提交民政局审核"
 msgstr ""
 

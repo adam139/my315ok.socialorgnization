@@ -132,8 +132,7 @@ class GovernmentDepartmentListing(Orgnizations_adminView):
     def getMemberList(self):
         """获取政府部门列表"""
         mlist = []
-        import pdb
-        pdb.set_trace()
+
         from my315ok.socialorgnization.content.governmentdepartment import IOrgnization as IDepartment        
         memberbrains = self.catalog()({'object_provides':IDepartment.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
@@ -142,7 +141,8 @@ class GovernmentDepartmentListing(Orgnizations_adminView):
                                               )
         i = 0
         for brain in memberbrains:
-            i = i+1           
+            i = i+1
+            obj = brain.getObject()           
             row = {'number':'','id':'', 'name':'', 'url':'',
                     'operator':'', 'address':'','editurl':'',
                     'delurl':''}
@@ -150,8 +150,8 @@ class GovernmentDepartmentListing(Orgnizations_adminView):
             row['id'] = brain.id
             row['name'] = brain.Title
             row['url'] = brain.getURL()
-            row['operator'] = brain.orgnization_supervisor           
-            row['address'] = brain.orgnization_address
+            row['operator'] = obj.operator           
+            row['address'] = obj.address
             row['editurl'] = row['url'] + '/confajaxedit'
             row['delurl'] = row['url'] + '/delete_confirmation'            
             mlist.append(row)
