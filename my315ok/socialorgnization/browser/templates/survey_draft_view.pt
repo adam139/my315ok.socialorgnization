@@ -41,7 +41,7 @@
 				</div>	
 				<div class="col-md-3">
 					<div id="submit2sponsor">
-					<span tal:condition="python:view.canbeAuditBySponsor()">
+					<span tal:condition="python:view.canbeSubmit()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_sponsor'" 
 						title="Submit"  
 						i18n:attributes="title"
@@ -60,7 +60,7 @@
 				</div>	
 				<div class="col-md-3">
 					<div id="submit2agent">
-					<span tal:condition="python:view.canbeAuditBySponsor()">
+					<span tal:condition="python:view.canbeSubmit()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_agent'" 
 						title="Submit"  
 						i18n:attributes="title"

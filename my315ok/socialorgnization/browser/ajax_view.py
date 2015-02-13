@@ -47,7 +47,7 @@ class SurveyWorkflow(grok.View):
         pm = getToolByName(context, "portal_membership")
         return pm    
     
-    def sendMail(self,subject,mailbody,send_to,send_to_bcc=[],sender=None):
+    def sendMail(self,subject,mailbody,send_to,send_to_bcc=[],sender=None,debug_mode=True):
         notify_encode = 'utf-8'
         object = aq_inner(self.context)
         portal = getToolByName(object,"portal_url").getPortalObject()

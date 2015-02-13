@@ -83,16 +83,20 @@ class SurveyView(grok.View):
 
     def canbeAuditBySponsor(self):
         status = self.workflow_state()
-        sponsor = self.getSponsorOrg()
-        return (status == 'draft') and sponsor
+        return (status == 'pendingsponsor') 
     
     def canbeAuditByAgent(self):
-        return not self.canbeAuditBySponsor()
+        status = self.workflow_state()
+        return (status == 'pendingagent') 
+    
+    def canbeSubmit(self):
+        status = self.workflow_state()
+        return (status == 'draft')   
         
     def getCurrentMember(self):
         member_data = self.pm().getAuthenticatedMember()
         id = member_data.getUserName()
-        id = "12@qq.com"   # 测试时适应
+#        id = "12@qq.com"   # 测试时适应
         query = {"object_provides":IOrganizationMember.__identifier__,'email':id}
         bns = self.catalog()(query)
         if bns:
