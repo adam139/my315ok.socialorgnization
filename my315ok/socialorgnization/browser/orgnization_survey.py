@@ -67,7 +67,9 @@ class SurveyView(grok.View):
     @property
     def isEditable(self):
         from Products.CMFCore.permissions import ModifyPortalContent
-        return self.pm().checkPermission(ModifyPortalContent,self.context) 
+        return self.pm().checkPermission(ModifyPortalContent,self.context)
+    
+
     
     def formatDatetime(self,Datetimeobj):
         "format Datetime obj to:2015年02月08日"
@@ -83,15 +85,31 @@ class SurveyView(grok.View):
 
     def canbeAuditBySponsor(self):
         status = self.workflow_state()
-        return (status == 'pendingsponsor') 
+# checkPermission function must be use Title style permission
+        canbe = self.pm().checkPermission("my315ok.socialorgnization:Review anual report",self.context)
+        return (status == 'pendingsponsor') and canbe
+
     
     def canbeAuditByAgent(self):
         status = self.workflow_state()
-        return (status == 'pendingagent') 
+# checkPermission function must be use Title style permission
+        canbe = self.pm().checkPermission("my315ok.socialorgnization:Review lastly anual report",self.context)
+        return (status == 'pendingagent') and canbe
+
     
     def canbeSubmit(self):
         status = self.workflow_state()
-        return (status == 'draft')   
+# checkPermission function must be use Title style permission
+        canbe = self.pm().checkPermission("my315ok.socialorgnization:Add anual report",self.context)
+        return (status == 'draft') and canbe
+
+    
+    def canbeRetract(self):
+        status = self.workflow_state()
+# checkPermission function must be use Title style permission
+        canbe = self.pm().checkPermission("my315ok.socialorgnization:Review lastly anual report",self.context)
+        return (status == 'published') and canbe
+              
         
     def getCurrentMember(self):
         member_data = self.pm().getAuthenticatedMember()
@@ -320,9 +338,10 @@ class SurveyPublishedView(SurveyView):
     grok.template('survey_published_view')
     grok.name('publishedview')
     grok.require('zope2.View')
-#    
-#    def render(self):
-#        pass 
+    
+
+        
+
 
 
 

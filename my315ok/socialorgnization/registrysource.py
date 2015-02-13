@@ -46,21 +46,22 @@ class RegistrySource(object):
 class DynamicVocabulary(object):
     grok.implements(IContextSourceBinder)
     
-    def __init__(self,key,mo):
-        "key:package name;mo:content object interface"
+    def __init__(self,key,mo,**kw):
+        """key:package name;mo:content object interface;
+        kw as catalog search condition"""
         self.key = key
         self.mo = mo
-
-        self.query = {}
-
+        self.query = kw
         
     def __call__(self,context):
         terms = []
+#        import pdb
+#        pdb.set_trace()
         exec("from %s import %s as mo"%(self.key,self.mo))
         catalog = getToolByName(context,"portal_catalog")
         if mo:
-            self.query.update({"object_provides":mo.__identifier__})
-            all = catalog(self.query)
+            self.query.update({"object_provides":mo.__identifier__})                
+            all = catalog.unrestrictedSearchResults(self.query)
             for bs in all:
                 title = bs.Title
                 id = bs.id

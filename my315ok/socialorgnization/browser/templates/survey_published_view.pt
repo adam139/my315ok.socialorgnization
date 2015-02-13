@@ -26,7 +26,7 @@
            	<span class="focuse" tal:content="python:context.year">2011</span>
            	<span>年度年检报告</span>
            </h3>
-           <h4><span class="text-right" tal:content="python:view.workflow_state()">草稿</span></h4>           
+           <h4 class="text-right"><span  i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h4>           
        </div>
        <!--
 		<span id="showtitle" tal:content="context/title"/>
@@ -44,7 +44,7 @@
 
 				<div class="col-md-3 col-md-offset-9">
 					<div id="agent-retract">
-					<span tal:condition="python:view.canbeAuditBySponsor()">
+					<span tal:condition="python:view.canbeRetract()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_agent_retract'" 
 						title="收回" 
 						class="btn btn-primary">收回</a>
@@ -67,15 +67,21 @@
        			<span class="focuse" tal:content="python:context.year">2011</span>
        		年度工作报告书，并保证本报告书内容真实、准确、完整。</p>
        		<p>请予审查。</p>
-       		<p class="text-right">法定代表人签字：</p>
+       		<p class="text-right">法定代表人签字：<strong tal:content="python:context.creators[0]">张三</strong></p>
        		<p class="text-right">（社团印章）</p>
        		
        	</div>
        </div>
        <div class="row">
-       	<div class="col-sm-6 col-xs-12 col-sm-offset-6">
-       		<strong class="">法定代表人签字：</strong>
-       		<strong tal:content="python:context.creators[0]">张三</strong>
+       	<div class="col-sm-2 col-xs-12 col-sm-offset-10">
+   <!--    		<div tal:define="picture nocall:context/photo"
+       			tal:condition="nocall:picture">
+       			<img class="img-responsive img-circle" 
+       				tal:attributes="src string:${context/absolute_url}/@@download/picture/${picture/filename};
+                         height picture/_height | nothing;
+                         width picture/_width | nothing;"/>
+          </div> -->
+       		<strong class="text-right" tal:content="python:view.created()">2015年4月5日</strong>
        	</div>      	
        </div>
        <div class="row">
@@ -170,40 +176,42 @@
 <metal:js fill-slot="javascript_bottom_slot">
 <script>
 	$(document).ready(function(){
-	//click a triger
-	$("#agent-retract").on("click","span",function() {
-	//display ajax input form
-	$("#agent-retract form").show();
-	//hide submit buttom
-	$("#agent-retract span").hide();
-	return false;	
-	}
-	
-$("#agent-retract button[name='ok']").on("click",function() {
-	var action = $("#agent-retract span a").attr('href');
-	var formval = $("#agent-retract textarea").val();
-	if formval ==="" {
-	alert( "must input subject" );
-	return false;
-	}
-	var data = {'subject':formval};
-	$.post(action,data,function(callback) {
-		$("#agent-retract form").hide();
-		$("#agent-retract span").show();
-		if callback['result'] {
-			$("#ajax-status-notify div").html(callback['message']);
-			$("#ajax-status-notify").show();
-			}
-	},'json');
-	return false;
-});
-
-$("#agent-retract button[name='cancel']").on("click",function() {
-		$("#agent-retract form").hide();
-		$("#agent-retract span").show();
+		//click a triger
+		$("#agent-retract").on("click","a",function() {
+		//display ajax input form
+		$("#agent-retract form").show();
+		//hide submit buttom
+		$("#agent-retract span").hide();
+		return false;	
+		});
+	$("#agent-retract button[name='ok']").on("click",function() {
+		var action = $("#agent-retract span a").attr('href');
+		var formval = $("#agent-retract textarea").val();
+		if (formval ==="") {
+		alert( "must input subject" );
 		return false;
-});
+		}
+		var data = {'subject':formval};
+		$.post(action,data,function(callback) {
+			$("#agent-retract form").hide();
+			$("#agent-retract span").show();
+			if (callback['result']) {
+			  location.reload(true);
+				$("#ajax-status-notify div").html(callback['message']);
+				$("#ajax-status-notify").show();
+			}				
+		},'json');
+		return false;
+	});
+
+	$("#agent-retract button[name='cancel']").on("click",function() {
+			$("#agent-retract form").hide();
+			$("#agent-retract span").show();
+			return false;
+	});	
+		
 }
+)
 </script>
 </metal:js>
 </body>

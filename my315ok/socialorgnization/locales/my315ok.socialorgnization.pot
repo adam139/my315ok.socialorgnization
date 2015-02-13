@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-12 05:02+0000\n"
+"POT-Creation-Date: 2015-02-13 13:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
 msgstr ""
 
-#: ./browser/orgnization_survey.py:217
+#: ./browser/orgnization_survey.py:230
 msgid "Create"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Some errors occured. Please check your CSV syntax and retry."
 msgstr ""
 
-#: ./browser/templates/survey_draft_view.pt:56
+#: ./browser/templates/survey_draft_view.pt:45
 msgid "Submit"
 msgstr ""
 
@@ -295,7 +295,7 @@ msgid "jijinhui"
 msgstr ""
 
 #. Default: "Anonymous User"
-#: ./browser/orgnization_survey.py:212
+#: ./browser/orgnization_survey.py:225
 msgid "label_anonymous_user"
 msgstr ""
 
@@ -413,10 +413,6 @@ msgstr ""
 msgid "the year for survey"
 msgstr ""
 
-#: ./content/orgnization.py:134
-msgid "traced history"
-msgstr ""
-
 #: ./vocabulary.py:27
 msgid "xiangtanshi"
 msgstr ""
@@ -445,11 +441,11 @@ msgstr ""
 msgid "zhuxiao"
 msgstr ""
 
-#: ./browser/templates/survey_draft_view.pt:56
+#: ./browser/templates/survey_draft_view.pt:45
 msgid "提交主管单位审核"
 msgstr ""
 
-#: ./browser/templates/survey_draft_view.pt:75
+#: ./browser/templates/survey_draft_view.pt:64
 msgid "提交民政局审核"
 msgstr ""
 

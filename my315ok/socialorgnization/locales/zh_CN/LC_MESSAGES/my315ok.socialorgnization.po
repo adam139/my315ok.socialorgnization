@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: my315ok.products\n"
-"POT-Creation-Date: 2015-02-12 05:02+0000\n"
-"PO-Revision-Date: 2015-02-12 11:07+0800\n"
+"POT-Creation-Date: 2015-02-13 13:54+0000\n"
+"PO-Revision-Date: 2015-02-13 22:00+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "点击将错误信息保存为CSV文件"
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
 msgstr "点击导出按钮，下载所有社会组织信息到一个CSV文件。该CSV文件格式和模板中的一致。"
 
-#: ./browser/orgnization_survey.py:217
+#: ./browser/orgnization_survey.py:230
 msgid "Create"
 msgstr "创建"
 
@@ -169,7 +169,7 @@ msgstr "市本级"
 msgid "Some errors occured. Please check your CSV syntax and retry."
 msgstr "出错！请检查你的CSV文件格式。"
 
-#: ./browser/templates/survey_draft_view.pt:56
+#: ./browser/templates/survey_draft_view.pt:45
 msgid "Submit"
 msgstr "提交"
 
@@ -296,7 +296,7 @@ msgid "jijinhui"
 msgstr "基金会"
 
 #. Default: "Anonymous User"
-#: ./browser/orgnization_survey.py:212
+#: ./browser/orgnization_survey.py:225
 msgid "label_anonymous_user"
 msgstr "匿名用户"
 
@@ -332,7 +332,7 @@ msgstr "社会组织名称"
 
 #: ./content/governmentdepartment.py:35
 msgid "organization summary"
-msgstr ""
+msgstr "政府部门摘要"
 
 #: ./profiles/default/types/my315ok.socialorgnization.orgnization.xml
 msgid "orgnization content type"
@@ -414,10 +414,6 @@ msgstr "审核结果"
 msgid "the year for survey"
 msgstr "年度"
 
-#: ./content/orgnization.py:134
-msgid "traced history"
-msgstr ""
-
 #: ./vocabulary.py:27
 msgid "xiangtanshi"
 msgstr "湘潭市"
@@ -446,11 +442,11 @@ msgstr "准予"
 msgid "zhuxiao"
 msgstr "注销"
 
-#: ./browser/templates/survey_draft_view.pt:56
+#: ./browser/templates/survey_draft_view.pt:45
 msgid "提交主管单位审核"
 msgstr ""
 
-#: ./browser/templates/survey_draft_view.pt:75
+#: ./browser/templates/survey_draft_view.pt:64
 msgid "提交民政局审核"
 msgstr ""
 
