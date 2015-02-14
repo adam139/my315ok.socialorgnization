@@ -40,6 +40,7 @@ def indexer_orgnization_passdate(obj, **kw):
 @indexer(IOrgnization_annual_survey)
 def indexer_orgnization_annual_survey(obj, **kw):
     return obj.annual_survey
+
 @indexer(IOrgnization_annual_survey)
 def indexer_orgnization_survey_year(obj, **kw):
     return obj.year

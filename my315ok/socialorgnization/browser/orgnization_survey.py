@@ -26,7 +26,9 @@ from my315ok.socialorgnization import _
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
+from dexterity.membrane.content.member import IMember
 from dexterity.membrane.content.member import IOrganizationMember
+from dexterity.membrane.content.member import ISponsorMember
 from xtshzz.policy.behaviors.org import IOrg
 
 from Products.CMFCore import permissions
@@ -115,7 +117,7 @@ class SurveyView(grok.View):
         member_data = self.pm().getAuthenticatedMember()
         id = member_data.getUserName()
 #        id = "12@qq.com"   # 测试时适应
-        query = {"object_provides":IOrganizationMember.__identifier__,'email':id}
+        query = {"object_provides":IMember.__identifier__,'email':id}
         bns = self.catalog()(query)
         if bns:
             member = bns[0]
@@ -126,13 +128,18 @@ class SurveyView(grok.View):
     def getSponsorOrg(self):
         "获取上级监管单位名称"
         
-        sponsor = IOrg(self.getCurrentMember().getObject()).getSponsor()
-
-        return sponsor
+        sid = self.context.sponsor
+        if sid: return sid
+        try:
+            sponsor = IOrg(self.getCurrentMember().getObject()).getSponsor()
+            self.context.sponsor = sponsor
+            return sponsor
+        except:
+            return ""
         
     def getSponsorAuditDate(self):
         "获取审核日期"
-        return self.created()       
+        return self.context.sponsor_audit_date       
         
     def getSponsorOperator(self):
         "获取上级监管单位的经手人，该经手人，在创建监管单位账号时，由事件更新"
@@ -161,7 +168,7 @@ class SurveyView(grok.View):
     
     def getAgentAuditDate(self):
         "获取民政局审核日期"
-        return self.getSponsorAuditDate()
+        return self.context.sponsor_audit_date
     
     def getAgentOperator(self):
         "获取民政局经手人"

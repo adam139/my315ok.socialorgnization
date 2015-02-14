@@ -103,6 +103,8 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
         source=possibleOrganization,     
         required=True
     )
+# 上级主管单位
+    sponsor = schema.Text(title=_(u"sponsor"), required=False)
 # 上级主管单位意见    
     sponsor_comments = schema.Text(title=_(u"sponsor comments"), required=False)
 # 民政局意见      
@@ -133,7 +135,7 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
 
 #    traced_history = schema.Text(title=_(u"traced history"), required=False)     
     
-    form.omitted('description','sponsor_comments','sponsor_audit_date','agent_audit_date','agent_comments','annual_survey')    
+    form.omitted('description','sponsor','sponsor_comments','sponsor_audit_date','agent_audit_date','agent_comments','annual_survey')    
 
 class IOrgnization_administrative_licence(form.Schema,IBasic):
 

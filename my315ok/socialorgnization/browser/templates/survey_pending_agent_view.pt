@@ -26,7 +26,7 @@
            	<span class="focuse" tal:content="python:context.year">2011</span>
            	<span>年度年检报告</span>
            </h3>
-           <h4 class="text-right"><span  i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h4>           
+           <h5 class="text-right"><span class="label">工作流状态：</span><span  i18n:domain="plone" i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h5>           
        </div>
 
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
@@ -39,17 +39,20 @@
 						class="btn btn-primary">同意</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
+						<div class="form-group">
+							<label for="InputRadio">年检评级</label>
 						<div class="radio">
 							<label>
-    							<input type="radio" name="optionsRadios" id="optionsRadios1" value="hege" checked>合格</label>
+    							<input type="radio" name="optionsQuality" id="optionsQuality1" value="hege" checked>合格</label>
              </div>
 						<div class="radio">
 							<label>
-    							<input type="radio" name="optionsRadios" id="optionsRadios2" value="jibenhege">基本合格</label>
+    							<input type="radio" name="optionsQuality" id="optionsQuality2" value="jibenhege">基本合格</label>
              </div> 
 						<div class="radio disabled">
 							<label>
-    							<input type="radio" name="optionsRadios" id="optionsRadios3" value="buhege" disabled>不合格</label>
+    							<input type="radio" name="optionsQuality" id="optionsQuality3" value="buhege" disabled>不合格</label>
+             </div>
              </div>                          
 			 			<div class="form-group">
 			 				<label for="InputComment">审核意见</label>
@@ -130,13 +133,18 @@
        	<div class="col-md-6 col-sd-12">
        		<span class="label">年检报告书：</span>
        		<span>
-       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}"/>
+       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}">
+       				点击查看</a>
        		</span>
        	</div>
        	<div class="col-md-6 col-sd-12">
-       		
+       		<span class="label">财务报告书：</span>
+       		<span>
+       			<a tal:attributes="href string:${context/absolute_url}/@@download/report/${context/report/filename}">
+       				点击查看</a>
+       		</span>       		
        	</div>
-       </div>     
+       </div>    
        <div class="row">
 				<table class="table table-bordered table-responsive">
         		<tbody>
@@ -214,11 +222,12 @@
 	$("#agent-agree button[name='ok']").on("click",function() {
 		var action = $("#agent-agree span a").attr('href');
 		var formval = $("#agent-agree textarea").val();
+		var quality = $("#agent-agree [name=optionsQuality]:checked").val();
 		if (formval ==="") {
 		alert( "must input subject" );
 		return false;
 		}
-		var data = {'subject':formval};
+		var data = {'subject':formval,'quality':quality};
 		$.post(action,data,function(callback) {
 			$("#agent-agree form").hide();
 			$("#agent-agree span").show();

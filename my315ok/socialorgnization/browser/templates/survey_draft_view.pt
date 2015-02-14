@@ -26,7 +26,7 @@
            	<span class="focuse" tal:content="python:context.year">2011</span>
            	<span>年度年检报告</span>
            </h3>
-           <h4 class="text-right"><span  i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h4>           
+           <h5 class="text-right"><span class="label">工作流状态：</span><span  i18n:domain="plone" i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h5>           
        </div>
       
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
@@ -46,7 +46,7 @@
 						title="Submit"  
 						i18n:attributes="title"
 						class="btn btn-primary"
-						i18n:translate="">提交主管单位审核</a>
+						>提交主管单位审核</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
 			 			<div class="form-group">
@@ -65,7 +65,7 @@
 						title="Submit"  
 						i18n:attributes="title"
 						class="btn btn-primary"
-						i18n:translate="">提交民政局审核</a>
+						>提交民政局审核</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
 			 			<div class="form-group">

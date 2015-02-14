@@ -3,6 +3,7 @@ from five import grok
 import json
 import datetime
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 
 from plone.memoize.instance import memoize
@@ -139,12 +140,12 @@ class SurveySubmitSponsor(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"draftview")
+
         sponsor = dview.getSponsorOrg()
         if sponsor:
             # 提交主管单位审核
             send_to = dview.getSponsorOperator()
-            import pdb
-            pdb.set_trace()
+
             wf = dview.wf()
             wf.doActionFor(context, 'submit2sponsor', comment=subject )
             # set default view as sponsor pending audit
@@ -188,6 +189,8 @@ class SurveySubmitAgent(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"sponsorview")
+        import pdb
+        pdb.set_trace()
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
@@ -233,12 +236,10 @@ class SurveySponsorReject(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"sponsorview")
-        sponsor = dview.getAgentOrg()
-#        import pdb
-#        pdb.set_trace()
-        if sponsor:
+        send_to = dview.creator()
+        if send_to:
             # 提交民政局审核
-            send_to = dview.getAgentOperator()
+#            send_to = dview.creator()
             wf = dview.wf()
 
             wf.doActionFor(context, 'sponsorreject', comment=subject )
@@ -285,6 +286,8 @@ class SurveySponsorAgree(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"sponsorview")
+#        import pdb
+#        pdb.set_trace()
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
@@ -333,10 +336,10 @@ class SurveyAgentReject(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"agentview")
-        sponsor = dview.getAgentOrg()
-        if sponsor:
+        send_to = dview.creator()
+        if send_to:
             # 提交民政局审核
-            send_to = dview.creator()
+#            send_to = dview.creator()
             wf = dview.wf()
 #            wf.doActionFor(context, 'submit2sponsor', comment=subject )
 #            wf.doActionFor(context, 'sponsoragree', comment=subject )
@@ -384,6 +387,8 @@ class SurveyAgentAgree(SurveyWorkflow):
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"agentview")
         sponsor = dview.getAgentOrg()
+#        import pdb
+#        pdb.set_trace()
         if sponsor:
             # 提交民政局审核
             send_to = dview.creator()
@@ -394,9 +399,11 @@ class SurveyAgentAgree(SurveyWorkflow):
             # set default view as agent pending audit
             context.setLayout("publishedview")
             context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
-            context.agent_comments = subject            
+            context.agent_comments = subject
+            context.annual_survey = quality
+            context.reindexObject()            
             # send notify mail
-            mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
+            mailbody = u"<h3>%(org)s%(year)s年度 年检报告，已审核通过。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
             ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交民政局！" % ({"org":context.title,
@@ -443,7 +450,9 @@ class SurveyAgentVeto(SurveyWorkflow):
             # set default view as agent pending audit
             context.setLayout("publishedview")
             context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
-            context.agent_comments = subject            
+            context.agent_comments = subject
+            context.annual_survey = "buhege"
+            context.reindexObject()            
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局否决，年检不合格。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
@@ -481,11 +490,11 @@ class SurveyAgentRetract(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"agentview")
-        sponsor = dview.creator()
-        if sponsor:
+        send_to = dview.creator()
+        if send_to:
             # 提交民政局审核
-            send_to = dview.getAgentOperator()
-            state = dview.workflow_state()
+#            send_to = dview.getAgentOperator()
+#            state = dview.workflow_state()
 #            import pdb
 #            pdb.set_trace()
             wf = dview.wf()

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-13 13:54+0000\n"
+"POT-Creation-Date: 2015-02-14 11:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr ""
 msgid "Annual survey Folder"
 msgstr ""
 
-#: ./content/orgnization.py:123
+#: ./content/orgnization.py:125
 msgid "Attach your anual report (word, etc)."
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
 msgstr ""
 
-#: ./browser/orgnization_survey.py:230
+#: ./browser/orgnization_survey.py:246
 msgid "Create"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: ./browser/ajax_view.py:110
+#: ./browser/ajax_view.py:111
 msgid "Not able to send notifications"
 msgstr ""
 
@@ -257,11 +257,11 @@ msgstr ""
 msgid "chenglidengji"
 msgstr ""
 
-#: ./content/orgnization.py:114
+#: ./content/orgnization.py:116
 msgid "civil agent audit date"
 msgstr ""
 
-#: ./content/orgnization.py:109
+#: ./content/orgnization.py:111
 msgid "civil agent comments"
 msgstr ""
 
@@ -295,7 +295,7 @@ msgid "jijinhui"
 msgstr ""
 
 #. Default: "Anonymous User"
-#: ./browser/orgnization_survey.py:225
+#: ./browser/orgnization_survey.py:241
 msgid "label_anonymous_user"
 msgstr ""
 
@@ -363,7 +363,7 @@ msgstr ""
 msgid "register code"
 msgstr ""
 
-#: ./content/orgnization.py:122
+#: ./content/orgnization.py:124
 msgid "report"
 msgstr ""
 
@@ -385,11 +385,11 @@ msgstr ""
 msgid "sponsor"
 msgstr ""
 
-#: ./content/orgnization.py:112
+#: ./content/orgnization.py:114
 msgid "sponsor audit date"
 msgstr ""
 
-#: ./content/orgnization.py:107
+#: ./content/orgnization.py:109
 msgid "sponsor comments"
 msgstr ""
 
@@ -397,19 +397,19 @@ msgstr ""
 msgid "supervisor organization"
 msgstr ""
 
-#: ./content/orgnization.py:152
+#: ./content/orgnization.py:154
 msgid "the item had been audited"
 msgstr ""
 
-#: ./content/orgnization.py:129
+#: ./content/orgnization.py:131
 msgid "the result of annual survey"
 msgstr ""
 
-#: ./content/orgnization.py:158
+#: ./content/orgnization.py:160
 msgid "the result of item that had been audited"
 msgstr ""
 
-#: ./content/orgnization.py:117
+#: ./content/orgnization.py:119
 msgid "the year for survey"
 msgstr ""
 
@@ -439,13 +439,5 @@ msgstr ""
 
 #: ./vocabulary.py:11
 msgid "zhuxiao"
-msgstr ""
-
-#: ./browser/templates/survey_draft_view.pt:45
-msgid "提交主管单位审核"
-msgstr ""
-
-#: ./browser/templates/survey_draft_view.pt:64
-msgid "提交民政局审核"
 msgstr ""
 
