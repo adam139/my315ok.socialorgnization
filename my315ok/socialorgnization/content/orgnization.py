@@ -8,6 +8,7 @@ from plone.directives import form, dexterity
 from plone.app.dexterity.behaviors.metadata import IBasic
 from my315ok.socialorgnization.registrysource import RegistrySource, DynamicVocabulary
 from plone.namedfile.field import NamedBlobImage, NamedBlobFile
+from plone.namedfile.interfaces import IImageScaleTraversable
 
 from collective import dexteritytextindexer
 
@@ -57,7 +58,7 @@ class IOrgnization(form.Schema,IBasic):
         vocabulary="my315ok.socialorgnization.vocabulary.organizationtype"
     )
     
-#归属地区：成立/变更/注销            
+#归属地区：市本级/湘潭县/韶山           
     belondto_area = schema.Choice(
         title=_(u"belondto area"),
         vocabulary="my315ok.socialorgnization.vocabulary.belondtoarea",
@@ -76,6 +77,10 @@ class IOrgnization(form.Schema,IBasic):
         description=u'',
         required=True,
     )
+#   公章     
+    image = NamedBlobImage(title=_(u"public sign"),
+                             description=_(u"a image of the public sign"),
+                             required=False,)    
 
 class ICostomTitle(Interface):
     """Get the name from parent object's id.

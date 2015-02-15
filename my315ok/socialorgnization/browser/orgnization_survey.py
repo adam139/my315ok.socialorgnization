@@ -3,6 +3,7 @@ from five import grok
 import json
 import datetime
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 
 from plone.memoize.instance import memoize
@@ -125,6 +126,7 @@ class SurveyView(grok.View):
         else:
             return None
 
+    @memoize
     def getSponsorOrg(self):
         "获取上级监管单位名称"
         
@@ -137,23 +139,55 @@ class SurveyView(grok.View):
         except:
             return ""
         
+    def dateformatTransfer(self,old):
+        "转换2012-02-12为2012年02月12日"
+        lt = old.split("-")
+        new = "%s年%s月%s日"  % (lt[0],lt[1],lt[2])
+        return new
+    
     def getSponsorAuditDate(self):
         "获取审核日期"
-        return self.context.sponsor_audit_date       
         
+        old = self.context.sponsor_audit_date
+        return self.dateformatTransfer(old)       
+        
+    @memoize
     def getSponsorOperator(self):
-        "获取上级监管单位的经手人，该经手人，在创建监管单位账号时，由事件更新"
+        "获取上级监管单位的经手人，该经手人，在启用该监管单位账号时，由事件更新返回邮件地址"
                
         sponsor = self.getSponsorOrg()
         if not sponsor:return None
         from my315ok.socialorgnization.content.governmentdepartment import IOrgnization
         # 获得该政府部门
         query = {"object_provides":IOrgnization.__identifier__,'Title':sponsor}
-        bs = self.catalog()(query)
+        bs = self.catalog()(query)      
 
-        if bs: return bs[0].getObject().operator
+        if bs: 
+            email = bs[0].getObject().operator
+            return self.email2Title(email)
         return None
     
+    def email2Title(self,email):
+        "根据登陆邮件地址，查询用户名"
+        
+        query = {"object_provides":IMember.__identifier__,'email':email}
+        bns = self.catalog()(query)
+        if bns:
+            member = bns[0]
+            return member.Title
+        else:
+            return email        
+        
+    def getOrg(self):
+        "获取该协会的法人名称，协会对象是年检对象的父对象。"
+        org = aq_parent(self.context)
+        return org
+             
+    def getLegalPerson(self):
+        "获取该协会的法人名称，协会对象是年检对象的父对象。"
+#        org = aq_parent(self.context)
+        return self.getOrg().legal_person
+        
     def getAgentOrg(self):
         "获取民政局,为民政局 单位对象指定id:minzhengju,以此简便获取到民政局对象"
         
@@ -168,15 +202,19 @@ class SurveyView(grok.View):
     
     def getAgentAuditDate(self):
         "获取民政局审核日期"
-        return self.context.sponsor_audit_date
+        old = self.context.sponsor_audit_date
+        return self.dateformatTransfer(old)
     
+    @memoize
     def getAgentOperator(self):
         "获取民政局经手人"
         from my315ok.socialorgnization.content.governmentdepartment import IOrgnization
         # 获得该政府部门
         query = {"object_provides":IOrgnization.__identifier__,'id':"minzhengju"}
         bs = self.catalog()(query)
-        if bs: return bs[0].getObject().operator
+        if bs: 
+            email = bs[0].getObject().operator
+            return self.email2Title(email)
         return None
     
     def tranVoc(self,value):
