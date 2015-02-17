@@ -20,15 +20,30 @@
         <div class="event_list_page container">
             <!--搜索框、搜索条件选择-->
             <div class="event_list_search">
-                <ul class="search row hidden-phone">
+
+      		<div class="row ajaxsearch">
+      			<div class="form-group col-xs-9 col-sm-6 col-sm-offset-3">
+        <input type="text"
+        	onkeypress="if(event.keyCode==13) {searchEventParent();return false}" 
+        	placeholder="搜索社会组织" 
+        	name="SearchableText"
+        	id="searchKeyword" 
+        	class="form-control search-query">
+        </div>
+      <div id="search" class="col-sm-3 col-xs-3">
+      	<button value="搜索" class="btn btn-default " type="submit">&nbsp;&nbsp;搜索</button>
+      	</div>
+</div>
+               
+             <!--   <ul class="search row hidden-phone">
                     <li class="a">
                         <input type="text" onkeypress="if(event.keyCode==13) {searchEventParent();return false}" id="searchKeyword">
                     </li>
-                    <!-- onkeydown="enterSearch(event,'searchKeyword','currEventText');"-->
+
                     <li class="b">
-                        <a href="javascript:searchEventParent()">&nbsp;&nbsp;搜索</a><!-- 搜索 -->
+                        <a href="javascript:searchEventParent()">&nbsp;&nbsp;搜索</a>
                     </li>
-                </ul>
+                </ul> -->
                 <input type="hidden" value="0" id="dateSearch">
                 <input type="hidden" value="0" id="addressSearch">
                 <input type="hidden" value="0" id="categorySearch">                      	                

@@ -346,6 +346,9 @@ $(document).ready(function(){
                 $("#eventListSort a").attr("style", "");
                 $(this).attr("style", "font-weight:bold;color:#279006;");
        return false;               
-        }); 
+        });
+   $("#search").on("click","button",function() {searchEventParent();
+return false;               
+});    
                  
 });
