@@ -415,7 +415,15 @@ class SiteRootAllOrgnizationListingView(SiteRootOrgnizationListingView):
 #        catalog = getToolByName(self.context, 'portal_catalog')    
         return self.catalog()(query)        
 
+class AllOrganizationListingView(SiteRootAllOrgnizationListingView):
+    """
+    AJAX 查询，返回分页结果
+    """
+    grok.context(ISiteRoot)
+    grok.template('allorgnization_listings_b3')
+    grok.name('allorgnization_listings_b3')
 
+    
 class yuhuquorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IYuhuquOrgnizationFolder)     
     grok.template('yuhuqu_allorgnization_listings')

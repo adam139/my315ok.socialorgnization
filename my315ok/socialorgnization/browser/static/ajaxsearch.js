@@ -163,14 +163,19 @@ function showResultRemind(d, a, c, e) {
 }
 
 var generatePageLink = function(c, n, a) {
-    var f = $("#bottomPageId");
-    var k = Math.floor(a / n) + (a % n === 0 ? 0 : 1);
+    // c: start n:size  a: total
+	  var f = $("#bottomPageId");
+    // k pages number
+	  var k = Math.floor(a / n) + (a % n === 0 ? 0 : 1);
     if (k === 0) {
         k = 1
     }
+    // l current page number
     var l = Math.floor(c / n) + 1;
     var j = $("#fastPageList");
     j.html("");
+    // e fast link
+    // d pagenation link 
     var d = "";
     var e = "";
     var m = $("#searchtext").val();
@@ -178,14 +183,19 @@ var generatePageLink = function(c, n, a) {
         m = ""
     }
     if (l <= 1) {
-        e += "<a href='javascript:void(0)'><img src='++resource++my315ok.socialorgnization/event_list_bg10.png'/></a>";
-        d += "<a href='javascript:void(0)' class='page'>首页</a>";
-        d += "<a href='javascript:void(0)' class='page'>上一页</a>"
+        e += "<li class='previous'><a href='javascript:void(0)'>" +
+        		"<span aria-hidden='true'>&larr;</span> 前一页</a></li>";
+        d += "<li class='disabled'><a href='javascript:void(0)' >首页</a></li>";
+        d += "<li class='disabled'><a aria-label='Previous' href='javascript:void(0)' >" +
+        		"<span aria-hidden='true'>&laquo;</span></a></li>"
     } else {
-        e += "<a href='javascript:searchEvent(" + (l - 1) + ",10)'><img src='++resource++my315ok.socialorgnization/event_list_bg10.png'/></a>";
-        d += "<a href=javascript:searchEvent(1,10) class='page'>首页</a><a href=javascript:searchEvent(" + (l - 1) + ",10) class='page'>上一页</a>"
+        e += "<li class='previous'><a href='javascript:searchEvent(" +
+        (l - 1) + ",10)'><span aria-hidden='true'>&larr;</span> 前一页</a></li>";
+        d += "<li><a href=javascript:searchEvent(1,10) >首页</a></li>" +
+        		"<li><a page_over num active href=javascript:searchEvent(" + (l - 1) + ",10) >" +
+        		"<span aria-hidden='true'>&laquo;</span></a></li>"
     }
-    e += "<span>" + l + "/" + k + "</span>";
+    e += "<li><span>" + l + "/" + k + "</span></li>";
     var b = 1;
     var h = 3;
     if (l == 1) {
@@ -208,18 +218,20 @@ var generatePageLink = function(c, n, a) {
     }
     for (var g = b; g <= h; g++) {
         if (l == g) {
-            d += "<a href='#' class='page_over num active'>" + g + "</a>"
+            d += "<li class='active'><a href='#'>" + g + "</a></li>"
         } else {
-            d += "<a href=javascript:searchEvent(" + g + ",10) class='page num'>" + g + "</a>"
+            d += "<li><a href=javascript:searchEvent(" + g + ",10) class='page num'>" + g + "</a></li>"
         }
     }
     if (l == k || k < 2) {
-        e += "<a href='javascript:void(0)'><img src='++resource++my315ok.socialorgnization/event_list_bg11.png'/></a>";
-        d += "<a href='javascript:void(0)' class='page'>下一页</a>";
-        d += "<a href='javascript:void(0)' class='page'>末页</a>"
+        e += "<li class='next'><a href='javascript:void(0)'><span aria-hidden='true'>&rarr;</span> 下一页</a></li>";
+        d += "<li class='disabled'><a href='javascript:void(0)' >" +
+        		"<span aria-hidden='true'>&raquo;</span></a></li>";
+        d += "<li class='disabled'><a href='javascript:void(0)' >末页</a></li>"
     } else {
-        e += "<a href='javascript:searchEvent(" + (l + 1) + ",10)'><img src='++resource++my315ok.socialorgnization/event_list_bg11.png'/></a>";
-        d += "<a href=javascript:searchEvent(" + (l + 1) + ",10) class='page'>下一页</a><a href=javascript:searchEvent(" + (k) + ",10) class='page'>末页</a>"
+        e += "<li class='next'><a href='javascript:searchEvent(" + (l + 1) + ",10)'><span aria-hidden='true'>&rarr;</span> 下一页</a></li>";
+        d += "<li><a href=javascript:searchEvent(" + (l + 1) + ",10)><span aria-hidden='true'>&raquo;</span></a>" +
+        		"<li><a href=javascript:searchEvent(" + (k) + ",10) >末页</a></li>"
     }
    f.html(d);
    j.html(e);
@@ -286,7 +298,7 @@ $(document).ready(function(){
                searchEvent();
     }
 
-    $("#dateRangeSearchUl li").live("click",function() {        
+    $("#dateRangeSearchUl").on("click","li",function() {        
                  if ($(this).attr("class") == "title") {} else {
                     $("#dateRangeSearchUl > .over").removeClass("over");
                     $(this).addClass("over");
@@ -295,7 +307,7 @@ $(document).ready(function(){
        return false;
     });
 
-   $("#addressSelectSearch li span").live("click",function() {
+   $("#addressSelectSearch li").on("click","span",function() {
                 if ($(this).attr("class") == "title" || $(this).attr("class") == "more") {} else 
                 {
                     $("#addressSelectSearch li> .over").removeClass("over");
@@ -305,7 +317,7 @@ $(document).ready(function(){
                 }
        return false; 
     }); 
-   $("#categorySelectSearch li span").live("click",function() {    
+   $("#categorySelectSearch li").on("click","span",function() {    
                     if ($(this).attr("class") == "title" || $(this).attr("class") == "more") {} else 
                     {
                     $("#categorySelectSearch li> .over").removeClass("over");
@@ -316,7 +328,7 @@ $(document).ready(function(){
        return false; 
     });                 
 
-   $("#eventListSort a").live("click",function() {             
+   $("#eventListSort").on("click","a",function() {             
                 $("#solrSortColumn").attr("value", $(this).attr("name"));
                 if ($(this).attr("class") == "a") {
                     $(this).attr("class", "b");
@@ -329,7 +341,7 @@ $(document).ready(function(){
        return false; 
         });
         
-   $("#eventListSort a").live("click",function() { 
+   $("#eventListSort").on("click","a",function() {
                 $("#eventListSort > .over").removeClass("over");
                 $("#eventListSort a").attr("style", "");
                 $(this).attr("style", "font-weight:bold;color:#279006;");
