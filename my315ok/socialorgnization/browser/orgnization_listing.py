@@ -6,16 +6,13 @@ from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 
 from plone.memoize.instance import memoize
-
 from zope.i18n.interfaces import ITranslationDomain
 from zope.component import queryUtility
 from zope.component import getMultiAdapter
 
 from Products.CMFCore.interfaces import ISiteRoot
 from plone.app.layout.navigation.interfaces import INavigationRoot
-
 from my315ok.socialorgnization import _
-
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
@@ -85,7 +82,6 @@ class Orgnizations_adminView(grok.View):
     def getOrgnizationFolder(self):
 
         topicfolder = self.catalog()({'object_provides': IOrgnizationFolder.__identifier__})
-
         canManage = self.pm().checkPermission(permissions.AddPortalContent,self.context)        
         if (len(topicfolder) > 0) and  canManage:
             tfpath = topicfolder[0].getURL()
@@ -97,7 +93,6 @@ class Orgnizations_adminView(grok.View):
     def getMemberList(self):
         """获取社会组织列表"""
         mlist = []        
-        
         memberbrains = self.catalog()({'object_provides':IOrgnization.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
                              'sort_order': 'reverse',
@@ -133,7 +128,6 @@ class GovernmentDepartmentListing(Orgnizations_adminView):
     def getMemberList(self):
         """获取政府部门列表"""
         mlist = []
-
         from my315ok.socialorgnization.content.governmentdepartment import IOrgnization as IDepartment        
         memberbrains = self.catalog()({'object_provides':IDepartment.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
@@ -180,7 +174,6 @@ class OrgnizationsView(Orgnizations_adminView):
             objtitle = braindata[i].Title
             annual_survey = self.tranVoc(braindata[i].orgnization_annual_survey)
             year = braindata[i].orgnization_survey_year
-
             
             out = """<tr>
             <td class="title"><a href="%(objurl)s">%(title)s</a></td>
@@ -202,16 +195,13 @@ class OrgnizationsView(Orgnizations_adminView):
                              'sort_on': 'created'}                              
                                               )
         outhtml = ""
-        brainnum = len(braindata)
-        
+        brainnum = len(braindata)        
         for i in range(brainnum):
             objurl = braindata[i].getURL()
             objtitle = braindata[i].Title
             audit_item = self.tranVoc(braindata[i].orgnization_audit_item)
             audit_result = self.tranVoc(braindata[i].orgnization_audit_result)
             audit_date = braindata[i].orgnization_audit_date.strftime('%Y-%m-%d')
-
-
             
             out = """<tr>
             <td class="title"><a href="%(objurl)s">%(title)s</a></td>
@@ -256,15 +246,13 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
                              'sort_order': 'reverse',
                              'sort_on': 'created'})
         outhtml = ""
-        brainnum = len(braindata)
-        
+        brainnum = len(braindata)        
         for i in range(brainnum):
             objurl = braindata[i].getURL()
             objtitle = braindata[i].Title
             annual_survey = self.tranVoc(braindata[i].orgnization_annual_survey)
             year = braindata[i].orgnization_survey_year
-
-            
+                        
             out = """<tr>
             <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
             <td class="item">%(year)s</td>
@@ -300,17 +288,14 @@ class Orgnizations_administrativeView(Orgnizations_adminView):
                                               )
 
         outhtml = ""
-        brainnum = len(braindata)
-        
+        brainnum = len(braindata)        
         for i in range(brainnum):
-#            import pdb
-#            pdb.set_trace()
+
             objurl = braindata[i].getURL()
             objtitle = braindata[i].Title
             audit_item = self.tranVoc(braindata[i].orgnization_audit_item)
             audit_result = self.tranVoc(braindata[i].orgnization_audit_result)
-
-            
+                        
             out = """<tr>
             <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
             <td class="item">%(audit_item)s</td>
@@ -334,13 +319,11 @@ class SiteRootOrgnizationListingView(Orgnizations_adminView):
     
     def update(self):
         # Hide the editable-object border
-        self.request.set('disable_border', True)
-  
+        self.request.set('disable_border', True)  
     
     def getOrgnizationFolder(self):
-
+        
         topicfolder = self.catalog()({'object_provides': IOrgnizationFolder.__identifier__})
-
         canManage = self.pm().checkPermission(permissions.AddPortalContent,context)        
         if (len(topicfolder) > 0) and  canManage:
             tfpath = topicfolder[0].getURL()
@@ -370,7 +353,7 @@ class SiteRootAllOrgnizationListingView(SiteRootOrgnizationListingView):
     AJAX 查询，返回分页结果
     """
     grok.context(ISiteRoot)
-    grok.template('allorgnization_listings')
+    grok.template('allorgnization_listings_b3')
     grok.name('allorgnization_listings')
      
     def update(self):
@@ -384,11 +367,21 @@ class SiteRootAllOrgnizationListingView(SiteRootOrgnizationListingView):
         else:
             return b
     
+    def buildAjaxViewName(self):
+        "根据当前上下文，构建ajax view 名称"
+        context = aq_inner(self.context)
+        if ISiteRoot.providedBy(context):return "oajaxsearch"
+        elif IYuhuquOrgnizationFolder.providedBy(context):return "yuhuqusearch"
+        elif IYuetangquOrgnizationFolder.providedBy(context):return "yuetangqusearch"
+        elif IXiangxiangshiOrgnizationFolder.providedBy(context):return "xiangxiangshisearch"
+        elif IXiangtanxianOrgnizationFolder.providedBy(context):return "xiangtanxiansearch"                
+        elif IShaoshanshiOrgnizationFolder.providedBy(context):return "shaoshanshisearch"
+        else:return "xiangtanshisearch"        
+        
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
-
 
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'sort_order': 'reverse',
@@ -420,18 +413,18 @@ class AllOrganizationListingView(SiteRootAllOrgnizationListingView):
     AJAX 查询，返回分页结果
     """
     grok.context(ISiteRoot)
-    grok.template('allorgnization_listings_b3')
-    grok.name('allorgnization_listings_b3')
+    grok.template('allorgnization_listings')
+    grok.name('allorgnization_listings_b2')
 
     
 class yuhuquorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IYuhuquOrgnizationFolder)     
-    grok.template('yuhuqu_allorgnization_listings')
+#    grok.template('yuhuqu_allorgnization_listings')
     grok.name('view')   
     
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'orgnization_belondtoArea':'yuhuqu',
@@ -440,12 +433,12 @@ class yuhuquorgnizations(SiteRootAllOrgnizationListingView):
         
 class yuetangquorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IYuetangquOrgnizationFolder)     
-    grok.template('yuetangqu_allorgnization_listings')
+#    grok.template('yuetangqu_allorgnization_listings')
     grok.name('view')   
     
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'orgnization_belondtoArea':'yuetangqu',
@@ -454,12 +447,12 @@ class yuetangquorgnizations(SiteRootAllOrgnizationListingView):
         
 class xiangxiangshiorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IXiangxiangshiOrgnizationFolder)     
-    grok.template('xiangxiangshi_allorgnization_listings')
+#    grok.template('xiangxiangshi_allorgnization_listings')
     grok.name('view')   
     
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'orgnization_belondtoArea':'xiangxiangshi',
@@ -468,12 +461,12 @@ class xiangxiangshiorgnizations(SiteRootAllOrgnizationListingView):
 
 class shaoshanshiorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IShaoshanshiOrgnizationFolder)     
-    grok.template('shaoshanshi_allorgnization_listings')
+#    grok.template('shaoshanshi_allorgnization_listings')
     grok.name('view')   
     
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'orgnization_belondtoArea':'shaoshanshi',
@@ -482,12 +475,12 @@ class shaoshanshiorgnizations(SiteRootAllOrgnizationListingView):
         
 class xiangtanxianorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IXiangtanxianOrgnizationFolder)     
-    grok.template('xiangtanxian_allorgnization_listings')
+#    grok.template('xiangtanxian_allorgnization_listings')
     grok.name('view')   
     
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'orgnization_belondtoArea':'xiangtanxian',
@@ -496,12 +489,12 @@ class xiangtanxianorgnizations(SiteRootAllOrgnizationListingView):
            
 class shibenjiorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IShibenjiOrgnizationFolder)     
-    grok.template('xiangtanshi_allorgnization_listings')
+#    grok.template('xiangtanshi_allorgnization_listings')
     grok.name('view')   
     
     def getorgnizations(self):
  
-        """返回 all conference
+        """返回 all organizations
         """
         return self.catalog()({'object_provides': IOrgnization.__identifier__,
                              'orgnization_belondtoArea':'xiangtanshi',
@@ -575,18 +568,20 @@ class ajaxsearch(grok.View):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+#        brainnum = len(braindata)         
         del origquery 
-        del totalquery,totalbrains            
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(data)                    
        
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
+       
+    def output(self,start,size,totalnum,braindata):
+        "根据参数total,braindata,返回jason 输出"
         outhtml = ""
-
+        brainnum = len(braindata)
 #        import pdb
-#        pdb.set_trace()
-        
+#        pdb.set_trace()        
         for i in range(brainnum):
             objurl = braindata[i].getURL()
             objtitle = braindata[i].Title
@@ -595,16 +590,14 @@ class ajaxsearch(grok.View):
             legal_person = braindata[i].orgnization_legalPerson
             objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
             sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
+            numindex = str(i + 1)            
+            out = """<tr class="text-left">
                                 <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
+                                <td class="col-md-2 text-left"><a href="%(objurl)s">%(title)s</a></td>
                                 <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
+                                <td class="col-md-3 text-left">%(address)s</td>
+                                <td class="col-md-2 text-left">%(sponsor)s</td>
+                                <td class="col-md-1 text-left">%(legal_person)s</td>
                                 <td class="col-md-2">%(pass_date)s</td>                                
                             </tr> """% dict(objurl=objurl,
                                             num=numindex,
@@ -613,13 +606,12 @@ class ajaxsearch(grok.View):
                                             address=address,
                                             sponsor=sponsor,
                                             legal_person = legal_person,
-                                            pass_date = objdate)
-           
+                                            pass_date = objdate)           
             outhtml = outhtml + out 
            
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
-        self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data)
+        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}
+        return data        
+
                               
 class yuhuqusearchlist(ajaxsearch):
     grok.name('yuhuqusearch')
@@ -662,50 +654,14 @@ class yuhuqusearchlist(ajaxsearch):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+                 
         del origquery 
-        del totalquery,totalbrains            
-       
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
-        outhtml = ""
-
-
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
-                                <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
-                                <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)
-           
-            outhtml = outhtml + out 
-           
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data)     
+        return json.dumps(data)             
+       
+  
 
 class yuetangqusearchlist(ajaxsearch):
     grok.name('yuetangqusearch')
@@ -748,51 +704,14 @@ class yuetangqusearchlist(ajaxsearch):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+                 
         del origquery 
-        del totalquery,totalbrains            
-       
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
-        outhtml = ""
-
-#        import pdb
-#        pdb.set_trace()
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
-                                <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
-                                <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)
-           
-            outhtml = outhtml + out 
-           
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data)
+        return json.dumps(data)             
+       
+
     
 class xiangxiangshisearchlist(ajaxsearch):
     grok.name('xiangxiangshisearch')
@@ -835,51 +754,14 @@ class xiangxiangshisearchlist(ajaxsearch):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+                 
         del origquery 
-        del totalquery,totalbrains            
-       
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
-        outhtml = ""
-
-#        import pdb
-#        pdb.set_trace()
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
-                                <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
-                                <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)
-           
-            outhtml = outhtml + out 
-           
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data) 
+        return json.dumps(data)             
+       
+ 
     
 class shaoshanshisearchlist(ajaxsearch):
     grok.name('shaoshanshisearch')
@@ -922,51 +804,14 @@ class shaoshanshisearchlist(ajaxsearch):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+                 
         del origquery 
-        del totalquery,totalbrains            
-       
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
-        outhtml = ""
-
-#        import pdb
-#        pdb.set_trace()
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
-                                <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
-                                <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)
-           
-            outhtml = outhtml + out 
-           
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data)
+        return json.dumps(data)             
+       
+
     
 class xiangtanxiansearchlist(ajaxsearch):
     grok.name('xiangtanxiansearch')
@@ -1009,51 +854,14 @@ class xiangtanxiansearchlist(ajaxsearch):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+                 
         del origquery 
-        del totalquery,totalbrains            
-       
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
-        outhtml = ""
-
-#        import pdb
-#        pdb.set_trace()
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
-                                <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
-                                <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)
-           
-            outhtml = outhtml + out 
-           
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data) 
+        return json.dumps(data)             
+       
+ 
     
 class xiangtanshisearchlist(ajaxsearch):
     grok.name('xiangtanshisearch')
@@ -1096,48 +904,11 @@ class xiangtanshisearchlist(ajaxsearch):
         totalbrains = searchview.search_multicondition(totalquery)
         totalnum = len(totalbrains)         
         braindata = searchview.search_multicondition(origquery)
-        brainnum = len(braindata)         
+                 
         del origquery 
-        del totalquery,totalbrains            
-       
-        # Capture a status message and translate it
-#        translation_service = getToolByName(self.context, 'translation_service')        
-#        searchview = getMultiAdapter((self.context, self.request),name=u"allconference_listings")         
-        outhtml = ""
-
-#        import pdb
-#        pdb.set_trace()
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-#            objid = braindata[i].id.replace('.','_')
-            numindex = str(i + 1)
-            
-            out = """<tr>
-                                <td class="col-md-1">%(num)s</td>
-                                <td class="col-md-2"><a href="%(objurl)s">%(title)s</a></td>
-                                <td class="col-md-1">%(code)s</td>
-                                <td class="col-md-2">%(address)s</td>
-                                <td class="col-md-2">%(sponsor)s</td>
-                                <td class="col-md-2">%(legal_person)s</td>
-                                <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)
-           
-            outhtml = outhtml + out 
-           
-        data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}        
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data)                   
+        return json.dumps(data)             
+       
+                   
