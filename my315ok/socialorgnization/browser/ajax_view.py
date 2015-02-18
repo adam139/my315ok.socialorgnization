@@ -189,8 +189,8 @@ class SurveySubmitAgent(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"sponsorview")
-        import pdb
-        pdb.set_trace()
+#        import pdb
+#        pdb.set_trace()
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
