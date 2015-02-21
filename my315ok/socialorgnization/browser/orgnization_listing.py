@@ -248,7 +248,7 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
         outhtml = ""
         brainnum = len(braindata)        
         for i in range(brainnum):
-            objurl = braindata[i].getURL()
+            objurl =  "%s/@@view" % braindata[i].getURL()
             objtitle = braindata[i].Title
             annual_survey = self.tranVoc(braindata[i].orgnization_annual_survey)
             year = braindata[i].orgnization_survey_year
