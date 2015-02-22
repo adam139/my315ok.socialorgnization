@@ -149,6 +149,7 @@ class SurveyView(grok.View):
         "获取审核日期"
         
         old = self.context.sponsor_audit_date
+        if old == "" or old ==None:return ""
         return self.dateformatTransfer(old)       
         
     @memoize
@@ -203,6 +204,7 @@ class SurveyView(grok.View):
     def getAgentAuditDate(self):
         "获取民政局审核日期"
         old = self.context.sponsor_audit_date
+        if old == "" or old ==None:return ""
         return self.dateformatTransfer(old)
     
     @memoize
