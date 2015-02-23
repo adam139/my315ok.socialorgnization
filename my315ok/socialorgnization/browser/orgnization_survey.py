@@ -372,7 +372,7 @@ class SurveyDraftView(SurveyView):
     
        
 class SurveyPendingSponsorView(SurveyView):
-    """survey report view based workflow status: 'pendsponsor'"""
+    """survey report view based workflow status: 'pendingsponsor'"""
     grok.template('survey_pending_sponsor_view')
     grok.name('sponsorview')
     grok.require('zope2.View')
