@@ -152,8 +152,12 @@ class SurveyView(grok.View):
         if old == "" or old ==None:return ""
         return self.dateformatTransfer(old)       
         
-    @memoize
     def getSponsorOperator(self):
+        "获取经收人姓名"
+        return self.email2Title(self.getSponsorOperatorEmail())
+    
+    @memoize
+    def getSponsorOperatorEmail(self):
         "获取上级监管单位的经手人，该经手人，在启用该监管单位账号时，由事件更新返回邮件地址"
                
         sponsor = self.getSponsorOrg()
@@ -165,7 +169,7 @@ class SurveyView(grok.View):
 
         if bs: 
             email = bs[0].getObject().operator
-            return self.email2Title(email)
+            return email
         return None
     
     def email2Title(self,email):
@@ -210,13 +214,18 @@ class SurveyView(grok.View):
     @memoize
     def getAgentOperator(self):
         "获取民政局经手人"
+        return self.email2Title(self.getAgentOperatorEmail())
+            
+    @memoize
+    def getAgentOperatorEmail(self):
+        "获取民政局经手人"
         from my315ok.socialorgnization.content.governmentdepartment import IOrgnization
         # 获得该政府部门
         query = {"object_provides":IOrgnization.__identifier__,'id':"minzhengju"}
         bs = self.catalog()(query)
         if bs: 
             email = bs[0].getObject().operator
-            return self.email2Title(email)
+            return email
         return None
     
     def tranVoc(self,value):

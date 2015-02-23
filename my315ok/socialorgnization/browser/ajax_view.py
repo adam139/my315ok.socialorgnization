@@ -144,7 +144,7 @@ class SurveySubmitSponsor(SurveyWorkflow):
         sponsor = dview.getSponsorOrg()
         if sponsor:
             # 提交主管单位审核
-            send_to = dview.getSponsorOperator()
+            send_to = dview.getSponsorOperatorEmail()
 
             wf = dview.wf()
             wf.doActionFor(context, 'submit2sponsor', comment=subject )
@@ -194,7 +194,7 @@ class SurveySubmitAgent(SurveyWorkflow):
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
-            send_to = dview.getAgentOperator()
+            send_to = dview.getAgentOperatorEmail()
             wf = dview.wf()
             wf.doActionFor(context, 'submit2agent', comment=subject )
             # set default view as agent pending audit
@@ -291,7 +291,7 @@ class SurveySponsorAgree(SurveyWorkflow):
         sponsor = dview.getAgentOrg()
         if sponsor:
             # 提交民政局审核
-            send_to = dview.getAgentOperator()
+            send_to = dview.getAgentOperatorEmail()
             wf = dview.wf()
 #            wf.doActionFor(context, 'submit2sponsor', comment=subject )
             wf.doActionFor(context, 'sponsoragree', comment=subject )
@@ -386,12 +386,12 @@ class SurveyAgentAgree(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"agentview")
-        sponsor = dview.getAgentOrg()
+        send_to = dview.creator()
 #        import pdb
 #        pdb.set_trace()
-        if sponsor:
+        if send_to:
             # 提交民政局审核
-            send_to = dview.creator()
+#            send_to = dview.creator()
             wf = dview.wf()
 #            wf.doActionFor(context, 'submit2sponsor', comment=subject )
 #            wf.doActionFor(context, 'sponsoragree', comment=subject )
@@ -439,10 +439,10 @@ class SurveyAgentVeto(SurveyWorkflow):
 #        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"agentview")
-        sponsor = dview.getAgentOrg()
-        if sponsor:
+        send_to = dview.creator()
+        if send_to:
             # 提交民政局审核
-            send_to = dview.creator()
+#            send_to = dview.creator()
             wf = dview.wf()
 #            wf.doActionFor(context, 'submit2sponsor', comment=subject )
 #            wf.doActionFor(context, 'sponsoragree', comment=subject )
