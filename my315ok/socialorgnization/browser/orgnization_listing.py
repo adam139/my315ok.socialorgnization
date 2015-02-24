@@ -30,9 +30,10 @@ from Products.CMFCore import permissions
 grok.templatedir('templates') 
 
 class Orgnizations_adminView(grok.View):
+    "social organizations list page"
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_listing_admin')
-    grok.name('view')
+    grok.name('listview')
     grok.require('zope2.View')    
     
     def update(self):
@@ -164,6 +165,7 @@ class OrgnizationsView(Orgnizations_adminView):
         
         braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
+                                'review_state':"published",
                              'sort_order': 'reverse',
                              'sort_on': 'created'})
         outhtml = ""
@@ -264,12 +266,14 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
         return outhtml        
 
 class AnnualsurveyFullView(Orgnizations_annualsurveyView):
+    "all annual survey recorders list"
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_annual_survey_fullview')
     grok.name('orgnizations_survey_fullview')
     grok.require('zope2.View')           
  
 class Orgnizations_administrativeView(Orgnizations_adminView):
+    "all administrative licences roll list"
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_administrative_licence_roll')
     grok.name('orgnizations_administrative')
@@ -307,6 +311,7 @@ class Orgnizations_administrativeView(Orgnizations_adminView):
         return outhtml
 
 class AdministrativeFullView(Orgnizations_administrativeView):
+    "all administrative licences list"    
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_administrative_licence_fullview')
     grok.name('orgnizations_administrative_fullview')
@@ -320,16 +325,17 @@ class SiteRootOrgnizationListingView(Orgnizations_adminView):
     def update(self):
         # Hide the editable-object border
         self.request.set('disable_border', True)  
-    
-    def getOrgnizationFolder(self):
-        
-        topicfolder = self.catalog()({'object_provides': IOrgnizationFolder.__identifier__})
-        canManage = self.pm().checkPermission(permissions.AddPortalContent,context)        
-        if (len(topicfolder) > 0) and  canManage:
-            tfpath = topicfolder[0].getURL()
-        else:
-            tfpath = None            
-        return tfpath
+#    
+#    def getOrgnizationFolder(self):
+#        
+#        topicfolder = self.catalog()({'object_provides': IOrgnizationFolder.__identifier__})
+#        context = self.context
+#        canManage = self.pm().checkPermission(permissions.AddPortalContent,context)        
+#        if (len(topicfolder) > 0) and  canManage:
+#            tfpath = topicfolder[0].getURL()
+#        else:
+#            tfpath = None            
+#        return tfpath
 
     def getorgnizations(self,num=10):
  
@@ -348,7 +354,7 @@ class SiteRootOrgnizationListingView(Orgnizations_adminView):
                              'sort_order': 'reverse',
                              'sort_on':'conference_passDate'})    
 
-class SiteRootAllOrgnizationListingView(SiteRootOrgnizationListingView):
+class SiteRootAllOrgnizationListingView(Orgnizations_adminView):
     """
     AJAX 查询，返回分页结果
     """
@@ -416,7 +422,12 @@ class AllOrganizationListingView(SiteRootAllOrgnizationListingView):
     grok.template('allorgnization_listings')
     grok.name('allorgnization_listings_b2')
 
-    
+class OrgAdminList(SiteRootAllOrgnizationListingView):
+    grok.context(IOrgnizationFolder)     
+    grok.template('organizations_admin_listings_b3')
+    grok.name('view')     
+
+
 class yuhuquorgnizations(SiteRootAllOrgnizationListingView):
     grok.context(IYuhuquOrgnizationFolder)     
 #    grok.template('yuhuqu_allorgnization_listings')
@@ -510,7 +521,7 @@ class ajaxsearch(grok.View):
     grok.require('zope2.View')
 
     def Datecondition(self,key):        
-
+        "构造日期搜索条件"
         end = datetime.datetime.today()
 #最近一周        
         if key == 1:  
@@ -564,17 +575,18 @@ class ajaxsearch(grok.View):
 
         totalquery = origquery.copy()
         origquery['b_size'] = size 
-        origquery['b_start'] = start                         
+        origquery['b_start'] = start
+        # search all                         
         totalbrains = searchview.search_multicondition(totalquery)
-        totalnum = len(totalbrains)         
+        totalnum = len(totalbrains)
+        # batch search         
         braindata = searchview.search_multicondition(origquery)
 #        brainnum = len(braindata)         
         del origquery 
         del totalquery,totalbrains
         data = self.output(start,size,totalnum, braindata)
         self.request.response.setHeader('Content-Type', 'application/json')
-        return json.dumps(data)                    
-       
+        return json.dumps(data)       
        
     def output(self,start,size,totalnum,braindata):
         "根据参数total,braindata,返回jason 输出"
@@ -612,7 +624,44 @@ class ajaxsearch(grok.View):
         data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}
         return data        
 
-                              
+
+####################################################3333333333
+class OrgAdminListAjax(ajaxsearch):
+    grok.name('org_admin_list')
+    
+    def render(self):    
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+        searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
+        
+        datadic = self.request.form
+        start = int(datadic['start']) # batch search start position
+#        datekey = int(datadic['datetype'])  # 对应 最近一周，一月，一年……
+        size = int(datadic['size'])      # batch search size          
+#        provincekey = int(datadic['province'])  # 对应 成立公告，变更公告，注销公告
+#        typekey = int(datadic['type']) # 对应 社会团体，民非，基金会
+        sortcolumn = datadic['sortcolumn']
+        sortdirection = datadic['sortdirection']
+#        keyword = (datadic['searchabletext']).strip()     
+
+        origquery = {'object_provides': IOrgnization.__identifier__}
+        origquery['sort_on'] = sortcolumn  
+        origquery['sort_order'] = sortdirection
+#        origquery['b_size'] = size 
+#        origquery['b_start'] = start                 
+ 
+        totalquery = origquery.copy()
+        origquery['b_size'] = size 
+        origquery['b_start'] = start                         
+        totalbrains = searchview.search_multicondition(totalquery)
+        totalnum = len(totalbrains)         
+        braindata = searchview.search_multicondition(origquery)
+                 
+        del origquery 
+        del totalquery,totalbrains
+        data = self.output(start,size,totalnum, braindata)
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(data) 
+######################################################                              
 class yuhuqusearchlist(ajaxsearch):
     grok.name('yuhuqusearch')
     

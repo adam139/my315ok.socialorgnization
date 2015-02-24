@@ -12,7 +12,8 @@
 		</head>
 <body>
 <metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main" tal:define="pview context/@@plone;text_to_html nocall:context/@@my315ok-socialorgnization-macros/text_to_html">
+    <tal:main-macro metal:define-macro="main" 
+    	tal:define="pview context/@@plone;text_to_html nocall:context/@@my315ok-socialorgnization-macros/text_to_html">
 
        <section id="profile">
 			<div class="page-header">
