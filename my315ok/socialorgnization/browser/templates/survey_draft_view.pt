@@ -26,7 +26,7 @@
            	<span class="focuse" tal:content="python:context.year">2011</span>
            	<span>年度年检报告</span>
            </h3>
-           <h5 class="text-right"><span class="label">工作流状态：</span><span  i18n:domain="plone" i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h5>           
+           <h5 class="text-right"><span class="label">工作流状态：</span><span class="text-warning" i18n:domain="plone" i18n:translate="" tal:content="python:view.workflow_state()">草稿</span></h5>           
        </div>
       
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
@@ -60,7 +60,7 @@
 				</div>	
 				<div class="col-md-3">
 					<div id="submit2agent">
-					<span tal:condition="python:view.canbeSubmit()">
+					<span tal:condition="python:view.canbeSubmitAgent()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_submit_agent'" 
 						title="Submit"  
 						i18n:attributes="title"

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.component import queryUtility
@@ -68,3 +69,36 @@ class DynamicVocabulary(object):
                 terms.append(SimpleVocabulary.createTerm(id,id,title))
         return SimpleVocabulary(terms)
 
+class FirstDynamicVocabulary(object):
+    """提取监管单位是列表inlist中的所有社会组织，构建词汇
+    """
+    grok.implements(IContextSourceBinder)
+    
+    def __init__(self,key,mo,inlist,**kw):
+        """key:package name;mo:content object interface;
+        kw as catalog search condition"""
+        self.key = key
+        self.mo = mo
+        self.query = kw
+        self.inlist = inlist
+        
+    def __call__(self,context):
+        terms = []
+#        import pdb
+#        pdb.set_trace()
+        exec("from %s import %s as mo"%(self.key,self.mo))
+        catalog = getToolByName(context,"portal_catalog")
+        if mo:
+            self.query.update({"object_provides":mo.__identifier__})
+            all = []
+            for k in self.inlist:
+                self.query.update({"orgnization_supervisor":k})                
+                group = catalog.unrestrictedSearchResults(self.query)
+                all.append(group)                
+            
+            for m in all: 
+                for bs in m:
+                    title = bs.Title
+                    id = bs.id
+                    terms.append(SimpleVocabulary.createTerm(id,id,title))
+        return SimpleVocabulary(terms)

@@ -104,7 +104,17 @@ class SurveyView(grok.View):
         status = self.workflow_state()
 # checkPermission function must be use Title style permission
         canbe = self.pm().checkPermission("my315ok.socialorgnization:Add anual report",self.context)
-        return (status == 'draft') and canbe
+        return (status == 'draft') and canbe and not self.canbeSubmitAgent()
+    
+    def canbeSubmitAgent(self,sponsor=u"市民政局"):
+        status = self.workflow_state()
+# checkPermission function must be use Title style permission
+        canbe = self.pm().checkPermission("my315ok.socialorgnization:Add anual report",self.context)
+        spon = self.getSponsorOrg()
+        import pdb
+        pdb.set_trace()
+        
+        return (status == 'draft') and canbe and (spon == sponsor) 
 
     
     def canbeRetract(self):
