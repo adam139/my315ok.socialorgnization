@@ -366,24 +366,19 @@ class favoritemore(grok.View):
     grok.require('zope2.View')            
     
     def render(self):
-
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
-        
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
-        nextstart = formstart+10                
+        nextstart = formstart + 10                
         favorite_view = getMultiAdapter((self.context, self.request),name=u"view")
         favoritenum = len(favorite_view.allitems())
         
         if nextstart>=favoritenum :
             ifmore =  1
         else :
-            ifmore = 0
-            
-        braindata = favorite_view.getATDocuments(formstart,10)      
-     
-        
+            ifmore = 0            
+        braindata = favorite_view.getATDocuments(formstart,10)        
         outhtml = ""
         brainnum = len(braindata)
         for i in range(brainnum):

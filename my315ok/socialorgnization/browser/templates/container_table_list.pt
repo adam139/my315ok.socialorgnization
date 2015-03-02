@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
@@ -31,7 +31,7 @@
 						</span>
 					</div>
        </div>
-       <div class="col-md-12"id="ajaxdisplay" tal:attributes="data-ajax-target string:${context/absolute_url}/@@favoritemore">
+       <div class="col-md-12" id="ajaxdisplay" tal:attributes="data-ajax-target string:${context/absolute_url}/@@favoritemore">
        	<table class="table table-striped table-bordered table-condensed listing">
        		<thead>
        			<tr>
@@ -50,5 +50,9 @@
       </section>          
     </tal:main-macro>
 </metal:main>
+  <metal:js fill-slot="javascript_bottom_slot">
+	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">>	  	
+	</script>	
+	</metal:js>
 </body>
 </html>
