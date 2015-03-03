@@ -328,13 +328,14 @@ $(document).ready(function(){
        return false; 
     });                 
 
-   $("#eventListSort").on("click","a",function() {             
+   $("#eventListSort").on("click",".glyphicon",function() {             
                 $("#solrSortColumn").attr("value", $(this).attr("name"));
-                if ($(this).attr("class") == "a") {
-                    $(this).attr("class", "b");
+                if ($(this).attr("class") == "glyphicon glyphicon-arrow-up") {
+                    $(this).attr("class", "glyphicon glyphicon-arrow-down");
+                    $(this).parent().attr("class", "text-success");
                     $("#solrSortDirection").attr("value", "ascending")
                 } else {
-                    $(this).attr("class", "a");
+                    $(this).attr("class", "glyphicon glyphicon-arrow-up");                    
                     $("#solrSortDirection").attr("value", "reverse")
                 }
                 searchEvent();

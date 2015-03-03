@@ -54,8 +54,8 @@
             	 <!--搜索选择结果排序 start-->
                 <div id="eventListSort" class="paixu col-xs-12 col-sm-9">
                     <span>排序：</span>                   
-                    <a class="a" name="orgnization_passDate" id="startTimestamp" href="javascript:void(0)">批准时间</a>
-                    <a class="b" name="created" id="publishTimestamp" href="javascript:void(0)">发布时间</a>
+                    <a  id="startTimestamp" href="javascript:void(0)"><span name="orgnization_passDate" class="glyphicon glyphicon-arrow-up">批准时间</span></a><!-- 开始时间 -->
+                    <a  id="publishTimestamp" href="javascript:void(0)"><span name="created" class="glyphicon glyphicon-arrow-down">发布时间</span></a>
                 </div>
                 <!-- 排序 end --> 
                 <!--快速翻页 start-->

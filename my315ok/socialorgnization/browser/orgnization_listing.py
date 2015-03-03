@@ -154,6 +154,7 @@ class GovernmentDepartmentListing(Orgnizations_adminView):
         return mlist            
     
 class OrgnizationsView(Orgnizations_adminView):
+    """社会组织主视图，包括该组织的年检列表和行政许可列表"""
     grok.context(IOrgnization)
     grok.template('orgnization_view')
     grok.name('view')
@@ -220,6 +221,7 @@ class OrgnizationsView(Orgnizations_adminView):
     
 #年检默认视图    
 class AnnualsurveyView(Orgnizations_adminView):
+    """年检文件夹默认视图"""
     grok.context(IOrgnization_annual_survey)
     grok.template('orgnization_annual_survey')
     grok.name('view')
@@ -232,21 +234,42 @@ class AdministrativeLicenceView(Orgnizations_adminView):
     grok.name('view')
     grok.require('zope2.View')                
 
+
 class Orgnizations_annualsurveyView(Orgnizations_adminView):
+    """年检滚动视图已改为ajax more加载,该视图已废弃，仅仅保留该类作为基类"""
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_annual_survey_roll')
     grok.name('orgnizations_survey')
     grok.require('zope2.View')
 
-    @memoize
-    def getMemberList(self):
-        """获取年检结果列表"""
-       
+    @memoize    
+    def allitems(self):
         
         braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
                              'sort_order': 'reverse',
-                             'sort_on': 'created'})
+                             'sort_on': 'created'})        
+        return braindata
+    
+
+    def getMemberList(self,start=0,size=0):
+        """获取年检结果列表"""
+        
+        if size == 0:
+            braindata = self.allitems()
+            return self.outputList(braindata)      
+
+        else:
+            braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
+                                'path':"/".join(self.context.getPhysicalPath()),
+                             'sort_order': 'reverse',
+                             'sort_on': 'created',
+                             'b_start':start,
+                             'b_size':size})
+            
+            return self.outputList(braindata)           
+            
+    def outputList(self,braindata):
         outhtml = ""
         brainnum = len(braindata)        
         for i in range(brainnum):
@@ -271,26 +294,69 @@ class AnnualsurveyFullView(Orgnizations_annualsurveyView):
     grok.template('orgnization_annual_survey_fullview')
     grok.name('orgnizations_survey_fullview')
     grok.require('zope2.View')           
+
+class SurveyMore(grok.View):
+    """annual survey list view AJAX action for click more.
+    """
+    
+    grok.context(IOrgnizationFolder)
+    grok.name('surveymore')
+    grok.require('zope2.View')            
+    
+    def render(self):
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+        form = self.request.form
+        formst = form['formstart']
+        formstart = int(formst)*10 
+        nextstart = formstart + 10                
+        favorite_view = getMultiAdapter((self.context, self.request),name=u"orgnizations_survey_fullview")
+        favoritenum = len(favorite_view.allitems())
+        
+        if nextstart>=favoritenum :
+            ifmore =  1
+        else :
+            ifmore = 0            
+        outhtml = favorite_view.getMemberList(formstart,10)            
+        data = {'outhtml': outhtml,'ifmore':ifmore}
+    
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(data)
  
 class Orgnizations_administrativeView(Orgnizations_adminView):
     "all administrative licences roll list"
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_administrative_licence_roll')
     grok.name('orgnizations_administrative')
-    grok.require('zope2.View')  
-
-
-    @memoize        
-    def getMemberList(self):
-        """获取行政许可列表"""
-       
+    grok.require('zope2.View')
+      
+    @memoize
+    def allitems(self):
         
         braindata = self.catalog()({'object_provides':IOrgnization_administrative_licence.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
                              'sort_order': 'reverse',
-                             'sort_on': 'created'}                              
-                                              )
+                             'sort_on': 'created'})        
+        return braindata
+    
 
+    def getMemberList(self,start=0,size=0):
+        """获取年检结果列表"""
+        
+        if size == 0:
+            braindata = self.allitems()
+            return self.outputList(braindata)      
+
+        else:
+            braindata = self.catalog()({'object_provides':IOrgnization_administrative_licence.__identifier__, 
+                                'path':"/".join(self.context.getPhysicalPath()),
+                             'sort_order': 'reverse',
+                             'sort_on': 'created',
+                             'b_start':start,
+                             'b_size':size})
+            
+            return self.outputList(braindata)
+
+    def outputList(self,braindata): 
         outhtml = ""
         brainnum = len(braindata)        
         for i in range(brainnum):
@@ -315,8 +381,36 @@ class AdministrativeFullView(Orgnizations_administrativeView):
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_administrative_licence_fullview')
     grok.name('orgnizations_administrative_fullview')
-    grok.require('zope2.View')              
+    grok.require('zope2.View')        
     
+class AdministMore(grok.View):
+    """administrative  list view AJAX action for click more.
+    """
+    
+    grok.context(IOrgnizationFolder)
+    grok.name('administmore')
+    grok.require('zope2.View')            
+    
+    def render(self):
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+        form = self.request.form
+        formst = form['formstart']
+        formstart = int(formst)*10 
+        nextstart = formstart + 10                
+        favorite_view = getMultiAdapter((self.context, self.request),name=u"orgnizations_administrative_fullview")
+        favoritenum = len(favorite_view.allitems())
+        
+        if nextstart>=favoritenum :
+            ifmore =  1
+        else :
+            ifmore = 0            
+        outhtml = favorite_view.getMemberList(formstart,10)            
+        data = {'outhtml': outhtml,'ifmore':ifmore}
+    
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(data)
+
+
 class SiteRootOrgnizationListingView(Orgnizations_adminView):
     grok.context(ISiteRoot)
     grok.template('orgnization_listings')

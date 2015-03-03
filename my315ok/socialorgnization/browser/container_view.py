@@ -524,80 +524,58 @@ class AdminstrativePunishTableListView(ContainerTableListView):
         outhtml = outhtml + "</tbody></table>"
         return outhtml     
     
-    
-    
-    
-class AdministrativeLicenceFolderView(OrgnizationsView):
-    grok.context(IAdministrativeLicenceFolder)
-    grok.template('administrative_licence_folder')
-    grok.name('view')
-    grok.require('zope2.View')   
-         
-    
-    @memoize
-    def getAdministrativeLicenceList(self):
-        """获取行政许可列表"""
-       
-        
-        braindata = self.catalog()({'object_provides':IOrgnization_administrative_licence.__identifier__,
-                             'sort_order': 'reverse',
-                             'sort_on': 'created'}                              
-                                              )
-        outhtml = ""
-        brainnum = len(braindata)
-        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            audit_item = self.tranVoc(braindata[i].orgnization_audit_item)
-            audit_result = self.tranVoc(braindata[i].orgnization_audit_result)
-            audit_date = braindata[i].orgnization_audit_date.strftime('%Y-%m-%d')            
-
-            
-            out = """<tr>
-            <td class="title"><a href="%(objurl)s">%(title)s</a></td>
-            <td class="item">%(audit_item)s</td>
-            <td class="result">%(audit_result)s</td>
-            <td class="result">%(audit_date)s</td>            
-            </tr>""" % dict(objurl=objurl,
-                                            title=objtitle,
-                                            audit_item= audit_item,
-                                            audit_result=audit_result,
-                                            audit_date= audit_date)           
-            outhtml = outhtml + out
-        return outhtml
-    
-    
 class AnnualSurveyFolderView(OrgnizationsView):
+    """信息公开，年检公告"""
     grok.context(IAnnualSurveyFolder)
     grok.template('annual_survey_folder')
     grok.name('view')
     grok.require('zope2.View')
     
-    @memoize    
-    def getAnnualSurveyList(self):
+    
+    def getOrganizationFolder(self):
+        braindata = self.catalog()({'object_provides':IOrgnizationFolder.__identifier__})
+        if len(braindata) == 0:return None
+        return braindata[0].getObject()        
+    
+    
+    # orgnization_annual_survey_fullview
+    @memoize
+    def allitems(self):
+        
+        folder = self.getOrganizationFolder()
+        mview = getMultiAdapter((folder, self.request),name=u"orgnizations_survey_fullview")
+        return mview.allitems()         
+            
+    def getMemberList(self,start=0,size=10):
         """获取年检结果列表"""
        
         
-        braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__,
-                             'sort_order': 'reverse',
-                             'sort_on': 'orgnization_annual_survey'})
-        outhtml = ""
-        brainnum = len(braindata)
-
+        folder = self.getOrganizationFolder()
+        mview = getMultiAdapter((folder, self.request),name=u"orgnizations_survey_fullview")
+        return mview.getMemberList(start=start,size=size)     
+    
+    
+class AdministrativeLicenceFolderView(AnnualSurveyFolderView):
+    grok.context(IAdministrativeLicenceFolder)
+    grok.template('administrative_licence_folder')
+    grok.name('view')
+    grok.require('zope2.View')   
+         
+    @memoize
+    def allitems(self):
         
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            annual_survey = self.tranVoc(braindata[i].orgnization_annual_survey)
-            year = braindata[i].orgnization_survey_year
+        folder = self.getOrganizationFolder()
+        mview = getMultiAdapter((folder, self.request),name=u"orgnizations_administrative_fullview")
+        return mview.allitems()         
             
-            out = """<tr>
-            <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
-            <td class="item">%(year)s</td>
-            <td class="result">%(annual_survey)s</td></tr>""" % dict(objurl=objurl,
-                                            title=objtitle,
-                                            annual_survey= annual_survey,
-                                            year=year)           
-            outhtml = outhtml + out
-        return outhtml 
+    def getMemberList(self,start=0,size=10):
+        """获取年检结果列表"""
+       
+        
+        folder = self.getOrganizationFolder()
+        mview = getMultiAdapter((folder, self.request),name=u"orgnizations_administrative_fullview")
+        return mview.getMemberList(start=start,size=size)     
+
+    
+    
+        
