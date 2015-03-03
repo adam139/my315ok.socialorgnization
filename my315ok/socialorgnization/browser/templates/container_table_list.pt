@@ -22,7 +22,8 @@
        	tal:condition="iseditable">
        		<div class="col-md-3 col-md-offset-3">
        			<span class="overlay" >
-       				<a tal:attributes="href  python:context.absolute_url() + '/folder_contents'" 
+       				<!-- createObject?type_name=Document-->
+       				<a tal:attributes="href  python:context.absolute_url() + '/createObject?type_name=Document'" 
 				title="Add"
 				i18n:attributes="title"
 				i18n:domain="plone"
