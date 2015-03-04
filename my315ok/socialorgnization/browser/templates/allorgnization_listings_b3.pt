@@ -152,13 +152,13 @@
             <!--分页-->
            <nav class="row">          	
             <ul id="bottomPageId" class="col-xs-11 pagination col-sm-3 center">
-            	<a class="page" href="javascript:void(0)">首页</a>
-            	<a class="page" href="javascript:void(0)">上一页</a>
-            	<a class="page_over num" href="#">1</a>
-            	<a class="page num" href="javascript:searchEvent(2,10)">2</a>
-            	<a class="page num" href="javascript:searchEvent(3,10)">3</a>
-            	<a class="page" href="javascript:searchEvent(2,10)">下一页</a>
-            	<a class="page" href="javascript:searchEvent(16,10)">末页</a>
+            	<li><a class="page" href="javascript:void(0)">首页</a></li>
+            	<li><a class="page" href="javascript:void(0)">上一页</a></li>
+            	<li><a class="page_over num" href="#">1</a></li>
+            	<li><a class="page num" href="javascript:searchEvent(2,10)">2</a></li>
+            	<li><a class="page num" href="javascript:searchEvent(3,10)">3</a></li>
+            	<li><a class="page" href="javascript:searchEvent(2,10)">下一页</a></li>
+            	<li><a class="page" href="javascript:searchEvent(16,10)">末页</a></li>
             </ul>
 				  </nav>
 		</div>
