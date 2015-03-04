@@ -27,17 +27,17 @@ function closeSearchEventsDiv(flag) {
     if (flag == 1) {
         $("#dateSearch").val("0");
         $("#dateRangeSearchUl > .over").removeClass("over");
-        $("#dateRangeSearchUl").find("li[name='0']").addClass("over");
+        $("#dateRangeSearchUl").find("li[data-name='0']").addClass("over");
         searchEvent();
     } else if (flag == 2) {
         $("#addressSearch").val("0");
         $("#addressSelectSearch li> .over").removeClass("over");
-        $("#addressSelectSearch").find("li span[name='0']").addClass("over");
+        $("#addressSelectSearch").find("li span[data-name='0']").addClass("over");
         searchEvent();
     } else if (flag == 3) {
         $("#categorySearch").val("0");
         $("#categorySelectSearch li> .over").removeClass("over");
-        $("#categorySelectSearch").find("li span[name='0']").addClass("over");
+        $("#categorySelectSearch").find("li span[data-name='0']").addClass("over");
         searchEvent();
     }
 }
@@ -267,14 +267,14 @@ function createStringSearch(d, a, c, g) {
     if (c == "0") {
         f = "所有"
     } else {
-        f = $(document.getElementById("addressSelectSearch")).find("span[name='" + c + "'] a").html();
+        f = $(document.getElementById("addressSelectSearch")).find("span[data-name='" + c + "'] a").html();
         b += "<div class='select' onclick=\"closeSearchEventsDiv(2)\">公告类别：<span style='cursor: pointer;vertical-align: middle;' >" + f + " </span></div>"
     }
     var e = "";
     if (g == "0") {
         e = "所有"
     } else {
-        e = $(document.getElementById("categorySelectSearch")).find("span[name='" + g + "'] a").html();
+        e = $(document.getElementById("categorySelectSearch")).find("span[data-name='" + g + "'] a").html();
         b += "<div class='select' onclick=\"closeSearchEventsDiv(3)\">分类：<span style='cursor: pointer;vertical-align: middle;' >" + e + " </span></div>"
     }
     if (d === "") {
@@ -302,7 +302,7 @@ $(document).ready(function(){
                  if ($(this).attr("class") == "title") {} else {
                     $("#dateRangeSearchUl > .over").removeClass("over");
                     $(this).addClass("over");
-                    $("#dateSearch").attr("value", $(this).attr("name"));
+                    $("#dateSearch").attr("value", $(this).attr("data-name"));
                     searchEvent();}       
        return false;
     });
@@ -312,7 +312,7 @@ $(document).ready(function(){
                 {
                     $("#addressSelectSearch li> .over").removeClass("over");
                     $(this).addClass("over");
-                    $("#addressSearch").attr("value", $(this).attr("name"));
+                    $("#addressSearch").attr("value", $(this).attr("data-name"));
                     searchEvent();
                 }
        return false; 
@@ -322,14 +322,14 @@ $(document).ready(function(){
                     {
                     $("#categorySelectSearch li> .over").removeClass("over");
                     $(this).addClass("over");
-                    $("#categorySearch").attr("value", $(this).attr("name"));
+                    $("#categorySearch").attr("value", $(this).attr("data-name"));
                     searchEvent();
                 }
        return false; 
     });                 
 
    $("#eventListSort").on("click",".glyphicon",function() {             
-                $("#solrSortColumn").attr("value", $(this).attr("name"));
+                $("#solrSortColumn").attr("value", $(this).attr("data-name"));
                 if ($(this).attr("class") == "glyphicon glyphicon-arrow-up") {
                     $(this).attr("class", "glyphicon glyphicon-arrow-down");
                     $(this).parent().attr("class", "text-success");

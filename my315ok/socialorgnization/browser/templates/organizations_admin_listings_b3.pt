@@ -5,11 +5,7 @@
       metal:use-macro="here/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
       i18n:domain="my315ok.socialorgnization">        
-<head>
-   <metal:block fill-slot="style_slot">
-      <metal:block use-macro="context/@@my315ok-socialorgnization-macros/macros/styles"/>
-   </metal:block>
-</head>
+
 <body>
 	<div metal:fill-slot="main">
 		<div id="ajaxsearch" style="display: none" 
@@ -54,8 +50,8 @@
             	 <!--搜索选择结果排序 start-->
                 <div id="eventListSort" class="paixu col-xs-12 col-sm-9">
                     <span>排序：</span>                   
-                    <a  id="startTimestamp" href="javascript:void(0)"><span name="orgnization_passDate" class="glyphicon glyphicon-arrow-up">批准时间</span></a><!-- 开始时间 -->
-                    <a  id="publishTimestamp" href="javascript:void(0)"><span name="created" class="glyphicon glyphicon-arrow-down">发布时间</span></a>
+                    <a  id="startTimestamp" href="javascript:void(0)"><span data-name="orgnization_passDate" class="glyphicon glyphicon-arrow-up">批准时间</span></a><!-- 开始时间 -->
+                    <a  id="publishTimestamp" href="javascript:void(0)"><span data-name="created" class="glyphicon glyphicon-arrow-down">发布时间</span></a>
                 </div>
                 <!-- 排序 end --> 
                 <!--快速翻页 start-->
@@ -73,7 +69,7 @@
             <!--搜索结果列表 start-->
             <div  class="row">
             	<div class="event_list_search_list">
-            		<table class="table table-striped table-bordered table-condensed">
+            		<table class="table table-striped table-bordered table-condensed listing">
             			<thead>
             				<tr>
             					<th class="col-md-1 text-center" i18n:translate="">Number</th>
