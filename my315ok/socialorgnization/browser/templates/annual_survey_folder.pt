@@ -5,11 +5,7 @@
       metal:use-macro="here/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
       i18n:domain="my315ok.socialorgnization">        
-      <head>
-   		<metal:block fill-slot="style_slot">
-      	<metal:block use-macro="here/@@my315ok-socialorgnization-macros/macros/styles"/>
-   		</metal:block>
-		</head>
+
 <body>
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
