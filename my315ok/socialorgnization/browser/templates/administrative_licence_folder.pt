@@ -32,11 +32,23 @@
        	  </tbody>
           </div>
        </table>
-          	<div id="ajaxmore-link" class="text-right" tal:condition="python:datalist > 10">
-		    		<div id="ajaxmore" class="btn btn-primary">更多</div>
-		    		</div>                		                		
+               		                		
                 	</div>    
       </div>
+         <div class="row" tal:define="total python:len(view.allitems())">
+         	<div class="col-sm-4 col-sm-offset-4 	col-md-3 col-md-offset-6">
+         		<div class="text-info">
+         			<span>总共：</span>
+         			<span class="total text-warning" tal:content="python:total">30</span>
+         			<span>条，还剩</span>
+         			<span id="pending" class="text-warning" tal:content="python:view.pendingDefault()">20</span>
+         			<span>条。</span>
+         		</div>         		
+         	</div>
+          	<div id="ajaxmore-link" class="col-sm-4 col-md-3 text-right" tal:condition="python:total > 10">
+		    		<div id="ajaxmore" class="btn btn-primary">更多</div>
+		    		</div>     
+      </div>        
       </section>          
     </tal:main-macro>
 </metal:main>

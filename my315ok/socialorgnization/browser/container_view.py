@@ -374,13 +374,16 @@ class favoritemore(grok.View):
         favorite_view = getMultiAdapter((self.context, self.request),name=u"view")
         favoritenum = len(favorite_view.allitems())
         
-        if nextstart>=favoritenum :
+        if nextstart >= favoritenum :
             ifmore =  1
+            pending = 0
         else :
-            ifmore = 0            
+            ifmore = 0  
+            pending = favoritenum - nextstart          
         braindata = favorite_view.getATDocuments(formstart,10)        
         outhtml = ""
         brainnum = len(braindata)
+        pending = "%s" % (pending)
         for i in range(brainnum):
             objurl = braindata[i].getURL()
             objtitle = braindata[i].Title
@@ -392,7 +395,7 @@ class favoritemore(grok.View):
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
             outhtml = outhtml + out
             
-        data = {'outhtml': outhtml,'ifmore':ifmore}
+        data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
     
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps(data)
@@ -456,6 +459,15 @@ class ContainerTableListView(OrgnizationsView):
 
         return braindata 
 
+    
+    def pendingDefault(self):
+        "计算缺省情况下，还剩多少条"
+        total = len(self.allitems())
+        if total > 10:
+            return total -10
+        else:
+            return 0
+        
     @memoize
     def getTableList(self,start,size):
         """获取行政许可列表"""

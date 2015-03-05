@@ -79,6 +79,15 @@ class Orgnizations_adminView(grok.View):
         else:
             return id
         
+    def pendingDefault(self):
+        "计算缺省情况下，还剩多少条"
+        total = len(self.allitems())
+        if total > 10:
+            return total -10
+        else:
+            return 0    
+    
+    
     @memoize         
     def getOrgnizationFolder(self):
 
@@ -312,12 +321,16 @@ class SurveyMore(grok.View):
         favorite_view = getMultiAdapter((self.context, self.request),name=u"orgnizations_survey_fullview")
         favoritenum = len(favorite_view.allitems())
         
-        if nextstart>=favoritenum :
+        if nextstart >= favoritenum :
             ifmore =  1
+            pending = 0
         else :
-            ifmore = 0            
+            ifmore = 0  
+            pending = favoritenum - nextstart          
+
+        pending = "%s" % (pending)          
         outhtml = favorite_view.getMemberList(formstart,10)            
-        data = {'outhtml': outhtml,'ifmore':ifmore}
+        data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
     
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps(data)
@@ -400,12 +413,16 @@ class AdministMore(grok.View):
         favorite_view = getMultiAdapter((self.context, self.request),name=u"orgnizations_administrative_fullview")
         favoritenum = len(favorite_view.allitems())
         
-        if nextstart>=favoritenum :
+        if nextstart >= favoritenum :
             ifmore =  1
+            pending = 0
         else :
-            ifmore = 0            
+            ifmore = 0  
+            pending = favoritenum - nextstart          
+
+        pending = "%s" % (pending)          
         outhtml = favorite_view.getMemberList(formstart,10)            
-        data = {'outhtml': outhtml,'ifmore':ifmore}
+        data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
     
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps(data)
