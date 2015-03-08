@@ -20,7 +20,7 @@ from my315ok.socialorgnization.content.annualsurveyfolder import IAnnualSurveyFo
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey,IOrgnization
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
-
+from my315ok.socialorgnization.content.page import IPage
 from plone.dexterity.utils import createContentInContainer
 from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
 
@@ -419,14 +419,14 @@ class ContainerTableListView(OrgnizationsView):
 
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,Iproduct.__identifier__],
+            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':IATDocument.__identifier__,
+            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -440,7 +440,7 @@ class ContainerTableListView(OrgnizationsView):
         if size ==0:return self.allitems()
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,Iproduct.__identifier__],
+            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -449,7 +449,7 @@ class ContainerTableListView(OrgnizationsView):
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':IATDocument.__identifier__,
+            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -457,6 +457,8 @@ class ContainerTableListView(OrgnizationsView):
                              'b_size':size}                               
                                               ) 
 
+#        import pdb
+#        pdb.set_trace()
         return braindata 
 
     
@@ -513,7 +515,7 @@ class AdminstrativePunishTableListView(ContainerTableListView):
         """获取行政许可列表"""
        
         
-        braindata = self.catalog()({'object_provides':IATDocument.__identifier__,
+        braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                     
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              

@@ -48,5 +48,8 @@
         for=".browser.orgnization_survey.SurveyPublishedView"
         ruleset="plone.content.itemView"
         /> 
-    
+     <cache:ruleset
+        for=".browser.page.PageView"
+        ruleset="plone.content.itemView"
+        />     
 </configure>
