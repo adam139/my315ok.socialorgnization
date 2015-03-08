@@ -110,8 +110,8 @@ class TestView(unittest.TestCase):
         browser.open(obj)
 
         outstr = "8341" 
-        import pdb
-        pdb.set_trace()       
+#        import pdb
+#        pdb.set_trace()       
         self.assertTrue(outstr in browser.contents)
         
     def test_shibenji_view(self):
@@ -127,8 +127,8 @@ class TestView(unittest.TestCase):
         transaction.commit()
         obj = portal['shibenji'].absolute_url() + '/@@view'        
         browser.open(obj)
-        import pdb
-        pdb.set_trace()
+#        import pdb
+#        pdb.set_trace()
         outstr = "834100"        
         self.assertTrue(outstr in browser.contents)        
         
@@ -217,8 +217,8 @@ class TestView(unittest.TestCase):
         import transaction
         transaction.commit()
         obj = portal['orgnizationfolder1']['orgnization1']['orgnizationadministrative1'].absolute_url() + '/@@view'        
-        import pdb
-        pdb.set_trace()
+#        import pdb
+#        pdb.set_trace()
         browser.open(obj)
         outstr = "biangen"        
         self.assertTrue(outstr in browser.contents) 

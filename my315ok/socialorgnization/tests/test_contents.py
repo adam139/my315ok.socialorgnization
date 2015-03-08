@@ -18,7 +18,9 @@ class Allcontents(unittest.TestCase):
         portal.invokeFactory('my315ok.socialorgnization.xiangtanxianfolder', 'xiangtanxian')
         portal.invokeFactory('my315ok.socialorgnization.yuetangqufolder', 'yuetangqu')
         portal.invokeFactory('my315ok.socialorgnization.yuhuqufolder', 'yuhuqu')  
-        portal.invokeFactory('my315ok.socialorgnization.shibenjifolder', 'shibenji')                                               
+        portal.invokeFactory('my315ok.socialorgnization.shibenjifolder', 'shibenji')
+        
+        portal.invokeFactory('my315ok.socialorgnization.page', 'page')                                                        
 
         
         portal['orgnizationfolder1'].invokeFactory('my315ok.socialorgnization.orgnization','orgnization1',
@@ -42,7 +44,8 @@ class Allcontents(unittest.TestCase):
         self.assertEqual(self.portal['xiangtanxian'].id,'xiangtanxian')
         self.assertEqual(self.portal['yuhuqu'].id,'yuhuqu')
         self.assertEqual(self.portal['yuetangqu'].id,'yuetangqu')        
-        self.assertEqual(self.portal['shibenji'].id,'shibenji')                                             
+        self.assertEqual(self.portal['shibenji'].id,'shibenji')
+                                                     
     
 
     
@@ -51,5 +54,5 @@ class Allcontents(unittest.TestCase):
         self.assertEqual(self.portal['orgnizationfolder1']['government1'].id,'government1')
         self.assertEqual(self.portal['orgnizationfolder1']['orgnization1']['orgnizationsurvey1'].id,'orgnizationsurvey1')        
         self.assertEqual(self.portal['orgnizationfolder1']['orgnization1']['orgnizationadministrative1'].id,'orgnizationadministrative1')     
-    
+        self.assertEqual(self.portal['page'].id,'page')     
         

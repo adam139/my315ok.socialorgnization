@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="my315ok.socialorgnization">        
+
+<body>
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main" 
+    	tal:define="pview context/@@plone;
+    						 text_to_html nocall:context/@@my315ok-socialorgnization-macros/text_to_html">
+
+    	<article class="page">
+           <h1 tal:content="python:context.title">           	
+           	Organization administration
+           </h1>
+           <h4 class="text-right" tal:content="python:context.description"></h4>
+                
+       <div class="row action-bar" tal:define="iseditable python:view.isEditable">
+				<div class="col-md-3 col-md-offset-6">
+					<span tal:condition="iseditable">
+						<a tal:attributes="href python:context.absolute_url() +'/edit'" 
+						title="Edit"  
+						i18n:attributes="title"
+						class="btn btn-primary"
+						i18n:translate="">Edit</a>
+					</span>
+				</div>	
+				<div class="col-md-3">
+					<div id="submit2sponsor">
+					<span tal:condition="iseditable">
+						<a  tal:attributes="href python:context.absolute_url() +'/delete_confirmation'" 
+						title="Submit"  
+						i18n:attributes="title"
+						class="btn btn-primary"
+						>删除</a>
+					</span>					
+		  		</div>					
+				</div>								 
+       </div>
+       <div class="row body">
+       	<div class="col-xs-12" 
+       		tal:define="con context/text" 
+       		tal:content="structure python:view.transfer2text(con)">rich text content
+       	</div>
+       </div>
+      </article>                
+    </tal:main-macro>
+</metal:main>
+</body>
+</html>
