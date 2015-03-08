@@ -32,7 +32,8 @@
     <cache:ruleset
         for=".browser.container_view.AdministrativeLicenceFolderView"
         ruleset="plone.content.folderView"
-        />          
+        />
+                  
     <cache:ruleset
         for=".browser.orgnization_listing.AnnualsurveyView"
         ruleset="plone.content.itemView"
