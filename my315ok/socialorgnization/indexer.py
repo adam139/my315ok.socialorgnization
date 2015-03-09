@@ -1,7 +1,8 @@
 from plone.indexer.decorator import indexer
 from Products.ZCatalog.interfaces import IZCatalog
-from five import grok
-from my315ok.socialorgnization.content.orgnization import IOrgnization,IOrgnization_annual_survey,IOrgnization_administrative_licence
+from my315ok.socialorgnization.content.orgnization import IOrgnization
+from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
+from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 
 
 @indexer(IOrgnization)
@@ -56,7 +57,4 @@ def indexer_orgnization_audit_date(obj, **kw):
 @indexer(IOrgnization_administrative_licence)
 def indexer_orgnization_audit_result(obj, **kw):
     return obj.audit_result
-
-
-
 

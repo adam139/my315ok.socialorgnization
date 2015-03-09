@@ -1,22 +1,18 @@
 #-*- coding: UTF-8 -*-
-from five import grok
-import json
-import datetime
-from Acquisition import aq_inner
-from Acquisition import aq_parent
-from Products.CMFCore.utils import getToolByName
-
-from plone.memoize.instance import memoize
-
 from zope.i18n.interfaces import ITranslationDomain
 from zope.component import queryUtility
 from zope.component import getMultiAdapter
-
+from Acquisition import aq_inner
+from Acquisition import aq_parent
+from five import grok
+import json
 from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.utils import getToolByName
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.memoize.instance import memoize
+import datetime
 
 from my315ok.socialorgnization import _
-
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
@@ -444,8 +440,6 @@ class SurveyAgentVeto(SurveyWorkflow):
             # 提交民政局审核
 #            send_to = dview.creator()
             wf = dview.wf()
-#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
-#            wf.doActionFor(context, 'sponsoragree', comment=subject )
             wf.doActionFor(context, 'agentveto', comment=subject )            
             # set default view as agent pending audit
             context.setLayout("publishedview")
@@ -493,14 +487,10 @@ class SurveyAgentRetract(SurveyWorkflow):
         send_to = dview.creator()
         if send_to:
             # 提交民政局审核
-#            send_to = dview.getAgentOperator()
-#            state = dview.workflow_state()
-#            import pdb
-#            pdb.set_trace()
+
+
             wf = dview.wf()
-#            wf.doActionFor(context, 'submit2sponsor', comment=subject )
-#            wf.doActionFor(context, 'sponsoragree', comment=subject )
-#            wf.doActionFor(context, 'agentagree', comment=subject ) 
+
             wf.doActionFor(context, 'retract', comment=subject )  
             # set default view as agent pending audit
             context.setLayout("draftview")

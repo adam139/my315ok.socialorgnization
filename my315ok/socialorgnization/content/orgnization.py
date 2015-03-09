@@ -6,7 +6,7 @@ import datetime
 
 from plone.directives import form, dexterity
 from plone.app.dexterity.behaviors.metadata import IBasic
-from my315ok.socialorgnization.registrysource import RegistrySource, DynamicVocabulary
+from my315ok.socialorgnization.registrysource import DynamicVocabulary
 from plone.namedfile.field import NamedBlobImage, NamedBlobFile
 from plone.namedfile.interfaces import IImageScaleTraversable
 

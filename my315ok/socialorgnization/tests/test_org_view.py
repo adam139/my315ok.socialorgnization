@@ -61,15 +61,7 @@ class TestProductlView(unittest.TestCase):
                                                    belondto_area='xiangtanshi', 
                                                    ) 
 
-        data = getFile('image.gif').read()
-        item = portal['orgnizationfolder1']['orgnization1']
-        item.image = NamedImage(data, 'image/gif', u'image.gif')
-        data2 = getFile('image.jpg').read()        
-        item2 = portal['orgnizationfolder1']['orgnization2']
-        item2.image = NamedImage(data2, 'image/jpeg', u'image.jpg')  
-        data3 = getFile('image.png').read()        
-        item3 = portal['orgnizationfolder1']['orgnization3']
-        item3.image = NamedImage(data3, 'image/png', u'image.png')                
+              
         self.portal = portal     
 
         
@@ -90,9 +82,8 @@ class TestProductlView(unittest.TestCase):
 #        open('/tmp/test.html', 'w').write(browser.contents)
 
 
-        outstr = '<a href="%s/@@images/image/large" title="Gif image">' % obj
-        import pdb
-        pdb.set_trace()
+        outstr = '<span class="content">宝庆商会</span>'
+
         
         self.assertTrue(outstr in browser.contents)
         

@@ -1,13 +1,12 @@
 #-*- coding: UTF-8 -*-
 from five import grok
-
-from my315ok.socialorgnization import _
 from z3c.form import field
 from plone.directives import dexterity
 
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
+from my315ok.socialorgnization import _
 
 class EditOrgnizationSurvey(dexterity.EditForm):
     grok.name('ajaxedit')

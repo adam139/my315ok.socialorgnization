@@ -1,29 +1,19 @@
 #-*- coding: UTF-8 -*-
+from zope.component import getMultiAdapter
+from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.viewlet.interfaces import IViewlet
+
 from five import grok
-import json
 import datetime
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
-
-from plone.memoize.instance import memoize
-
-from zope.i18n.interfaces import ITranslationDomain
-from zope.component import queryUtility
-from zope.component import getMultiAdapter
-
-from Products.CMFCore.interfaces import ISiteRoot
-from plone.app.layout.navigation.interfaces import INavigationRoot
+from Products.CMFCore import permissions
 
 from plone.app.customerize import registration
-from zope.traversing.interfaces import ITraverser,ITraversable
-from zope.publisher.interfaces import IPublishTraverse
-from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.viewlet.interfaces import IViewlet
-from zExceptions import NotFound
+from plone.memoize.instance import memoize
 
 from my315ok.socialorgnization import _
-
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
@@ -32,7 +22,6 @@ from dexterity.membrane.content.member import IOrganizationMember
 from dexterity.membrane.content.member import ISponsorMember
 from xtshzz.policy.behaviors.org import IOrg
 
-from Products.CMFCore import permissions
 grok.templatedir('templates') 
 
 class SurveyView(grok.View):
@@ -110,10 +99,7 @@ class SurveyView(grok.View):
         status = self.workflow_state()
 # checkPermission function must be use Title style permission
         canbe = self.pm().checkPermission("my315ok.socialorgnization:Add anual report",self.context)
-        spon = self.getSponsorOrg()
-        import pdb
-        pdb.set_trace()
-        
+        spon = self.getSponsorOrg()        
         return (status == 'draft') and canbe and (spon == sponsor) 
 
     

@@ -1,4 +1,5 @@
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
+from zope.schema.vocabulary import SimpleTerm
 from five import grok
 from zope.schema.interfaces import IVocabularyFactory
 #import unicodedata

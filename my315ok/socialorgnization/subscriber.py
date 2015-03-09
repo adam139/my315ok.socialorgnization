@@ -1,38 +1,18 @@
 #-*- coding: UTF-8 -*-
+from zope.site.hooks import getSite
 import json
 from five import grok
-from time import strftime, localtime 
-from zope.component import getMultiAdapter
-
-from my315ok.socialorgnization.interfaces import ICreateOrgEvent
-
 from Products.CMFCore.utils import getToolByName
-
 from plone.dexterity.utils import createContentInContainer
 
-from zope.site.hooks import getSite
-from zope.component import getUtility
-
-from zope.interface import Interface
-from ZODB.POSException import ConflictError
-from zExceptions import Forbidden
-
-from Products.statusmessages.interfaces import IStatusMessage
-from Products.CMFPlone import PloneMessageFactory as _p
-#from collective.singing import mail
-from my315ok.socialorgnization.content.orgnization import IOrgnization
-#from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
-#from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
-
+from my315ok.socialorgnization.interfaces import ICreateOrgEvent
 # be call by membrane.usersinout
 @grok.subscribe(ICreateOrgEvent)
 def CreateOrgEvent(event):
     """this event be fired by member join event, username,address password parameters to create a membrane object"""
     site = getSite()
-#    mp = getToolByName(site,'portal_membership')
-#    members = mp.getMembersFolder()
-#    if members is None: return      
+     
     catalog = getToolByName(site,'portal_catalog')
     try:
         newest = catalog.unrestrictedSearchResults({'object_provides': IOrgnizationFolder.__identifier__})
@@ -40,14 +20,11 @@ def CreateOrgEvent(event):
         return      
 
     memberfolder = newest[0].getObject()
-
-
     memberid = event.id        
     try:
         item =createContentInContainer(memberfolder,"my315ok.socialorgnization.orgnization",checkConstraints=False,id=memberid)
 #        setattr(memberfolder,'registrant_increment',memberid)
-        item.title = event.title 
-
+        item.title = event.title
         item.description = event.description
         item.address = event.address
         item.legal_person = event.legal_person 
@@ -78,10 +55,7 @@ def CreateOrgEvent(event):
             item.organization_type = "shetuan"
         else:
             item.organization_type = "jijinhui"
-        
-
-#        item.announcement_type = event.announcement_type
-        
+#        item.announcement_type = event.announcement_type        
         import datetime
         datearray = event.passDate.split('-')
         if len(datearray) >= 3:
@@ -95,8 +69,3 @@ def CreateOrgEvent(event):
 #        membrane.reindexObject(item)        
     except:
         return
-    
-                  
-                            
-    
-        

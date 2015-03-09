@@ -91,8 +91,7 @@ class TestView(unittest.TestCase):
 # Look up and invoke the view via traversal
         view = self.portal.restrictedTraverse('@@oajaxsearch')
         result = view()
-        import pdb
-        pdb.set_trace()
+
 
         self.assertEqual(json.loads(result)['size'],10)
 
@@ -116,8 +115,7 @@ class TestView(unittest.TestCase):
 # Look up and invoke the view via traversal
         view = self.portal.restrictedTraverse('@@yuhuqusearch')
         result = view()
-        import pdb
-        pdb.set_trace()
+
 
         self.assertEqual(json.loads(result)['size'],10)               
 

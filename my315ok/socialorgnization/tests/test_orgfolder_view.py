@@ -15,7 +15,7 @@ def getFile(filename):
     filename = os.path.join(os.path.dirname(__file__), filename)
     return open(filename, 'r')
 
-class TestProductsFolderView(unittest.TestCase):
+class TestOrgnazationFolderView(unittest.TestCase):
     
     layer = MY315OK_PRODUCTS_FUNCTIONAL_TESTING
 
@@ -65,15 +65,7 @@ class TestProductsFolderView(unittest.TestCase):
                                                    ) 
                
 
-        data = getFile('image.gif').read()
-        item = portal['orgnizationfolder1']['orgnization1']
-        item.image = NamedImage(data, 'image/gif', u'image.gif')
-        data2 = getFile('image.jpg').read()        
-        item2 = portal['orgnizationfolder1']['orgnization2']
-        item2.image = NamedImage(data2, 'image/jpeg', u'image.jpg')  
-        data3 = getFile('image.png').read()        
-        item3 = portal['orgnizationfolder1']['orgnization3']
-        item3.image = NamedImage(data3, 'image/png', u'image.png') 
+
                                 
         self.portal = portal                
         
@@ -94,8 +86,7 @@ class TestProductsFolderView(unittest.TestCase):
 
         browser.open(page)
 
-#        open('/tmp/test.html', 'w').write(browser.contents)
 
-        self.assertTrue('<div id="multiproducts">' in browser.contents)
+        self.assertTrue('<td class="col-md-1">' in browser.contents)
         
                       

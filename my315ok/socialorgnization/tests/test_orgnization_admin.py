@@ -114,23 +114,23 @@ class TestView(unittest.TestCase):
 #        pdb.set_trace()       
         self.assertTrue(outstr in browser.contents)
         
-    def test_shibenji_view(self):
-
-        app = self.layer['app']
-        portal = self.layer['portal']
-       
-        browser = Browser(app)
-        browser.handleErrors = False
-        browser.addHeader('Authorization', 'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD,))
-        
-        import transaction
-        transaction.commit()
-        obj = portal['shibenji'].absolute_url() + '/@@view'        
-        browser.open(obj)
-#        import pdb
-#        pdb.set_trace()
-        outstr = "834100"        
-        self.assertTrue(outstr in browser.contents)        
+#    def test_shibenji_view(self):
+#
+#        app = self.layer['app']
+#        portal = self.layer['portal']
+#       
+#        browser = Browser(app)
+#        browser.handleErrors = False
+#        browser.addHeader('Authorization', 'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD,))
+#        
+#        import transaction
+#        transaction.commit()
+#        obj = portal['shibenji'].absolute_url() + '/@@view'        
+#        browser.open(obj)
+#        url =  portal['orgnizationfolder1']['orgnization1'].absolute_url()
+#
+#        outstr = '<a href="%s">%s</a>' % (url,portal['orgnizationfolder1']['orgnization1'].title)        
+#        self.assertTrue(outstr in browser.contents)        
         
        
     def test_conferencelisting_admin_view(self):
