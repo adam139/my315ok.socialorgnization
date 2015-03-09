@@ -99,8 +99,12 @@ class SurveyView(grok.View):
         status = self.workflow_state()
 # checkPermission function must be use Title style permission
         canbe = self.pm().checkPermission("my315ok.socialorgnization:Add anual report",self.context)
-        spon = self.getSponsorOrg()        
-        return (status == 'draft') and canbe and (spon == sponsor) 
+        spon = self.getSponsorOrg()
+        base = (status == 'draft') and canbe
+        if (spon == sponsor):        
+            return base
+        else:
+            return base and (self.context.last_status == "pendingagent")  
 
     
     def canbeRetract(self):

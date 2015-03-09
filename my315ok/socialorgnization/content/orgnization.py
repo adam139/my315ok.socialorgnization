@@ -129,7 +129,10 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
     report = NamedBlobFile(title=_(u"report"),
         description=_(u"Attach your anual report (word, etc)."),
         required=False
-    ) 
+    )
+# 上次工作流状态
+    last_status = schema.TextLine(title=_(u"last status of the annual survey"),                             
+                             required=False,)
     
 #年检结果            
     annual_survey = schema.Choice(
@@ -140,7 +143,7 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
 
 #    traced_history = schema.Text(title=_(u"traced history"), required=False)     
     
-    form.omitted('description','sponsor','sponsor_comments','sponsor_audit_date','agent_audit_date','agent_comments','annual_survey')    
+    form.omitted('description','sponsor','sponsor_comments','sponsor_audit_date','agent_audit_date','agent_comments','last_status','annual_survey')    
 
 class IOrgnization_administrative_licence(form.Schema,IBasic):
 

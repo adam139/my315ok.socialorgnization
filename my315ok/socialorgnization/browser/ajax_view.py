@@ -34,7 +34,6 @@ class SurveyWorkflow(grok.View):
     @memoize    
     def catalog(self):
         context = aq_inner(self.context)
-
         pc = getToolByName(context, "portal_catalog")
         return pc
     
@@ -85,8 +84,7 @@ class SurveyWorkflow(grok.View):
         # According to RFC 2046, the last part of a multipart message, in this case
         # the HTML message, is best and preferred.
         msg.attach(part1)
-        msg.attach(part2)
-    
+        msg.attach(part2)    
         mail_host = getToolByName(object, 'MailHost')
         try:
             if debug_mode:
@@ -133,15 +131,12 @@ class SurveySubmitSponsor(SurveyWorkflow):
         data = self.request.form
         subject = data['subject']
         context = aq_inner(self.context)
-#        self.portal_state = getMultiAdapter((context, self.request), name=u"plone_portal_state")
         # call organization survey draft view
         dview = getMultiAdapter((context, self.request),name=u"draftview")
-
         sponsor = dview.getSponsorOrg()
         if sponsor:
             # 提交主管单位审核
             send_to = dview.getSponsorOperatorEmail()
-
             wf = dview.wf()
             wf.doActionFor(context, 'submit2sponsor', comment=subject )
             # set default view as sponsor pending audit
@@ -151,8 +146,9 @@ class SurveySubmitSponsor(SurveyWorkflow):
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
-            ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交！" % ({"org":context.title,
-                                                           "year":context.year})
+            ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交主管单位%(sponsor)s审核！" % ({"org":context.title,
+                                                           "year":context.year,
+                                                           "sponsor":sponsor})
             callback = {"result":True,'message':ajaxtext}
             self.request.response.setHeader('Content-Type', 'application/json')
             return json.dumps(callback)
@@ -199,7 +195,7 @@ class SurveySubmitAgent(SurveyWorkflow):
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
-            ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交！" % ({"org":context.title,
+            ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交民政局审核！" % ({"org":context.title,
                                                            "year":context.year})
             callback = {"result":True,'message':ajaxtext}
             self.request.response.setHeader('Content-Type', 'application/json')
@@ -237,19 +233,20 @@ class SurveySponsorReject(SurveyWorkflow):
             # 提交民政局审核
 #            send_to = dview.creator()
             wf = dview.wf()
-
             wf.doActionFor(context, 'sponsorreject', comment=subject )
             # set default view as agent pending audit
             context.setLayout("draftview")
             # set sponsor_audit_date
             
             context.sponsor_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            #update last workflow status
+            context.last_status = "pendingsponsor"             
             context.sponsor_comments = subject
             # send notify mail
             mailbody = u"<h3>%(org)s%(year)s年度 年检报告被打回，请根据审核意见，仔细核对。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
-            ajaxtext = u"%(org)s%(year)s年度 年检报告已被打回！" % ({"org":context.title,
+            ajaxtext = u"%(org)s%(year)s年度 年检报告已被主管单位打回！" % ({"org":context.title,
                                                            "year":context.year})
             callback = {"result":True,'message':ajaxtext}
             self.request.response.setHeader('Content-Type', 'application/json')
@@ -294,9 +291,11 @@ class SurveySponsorAgree(SurveyWorkflow):
             # set default view as agent pending audit
             context.setLayout("agentview")
             context.sponsor_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            #update last workflow status
+            context.last_status = "pendingsponsor"            
             context.sponsor_comments = subject            
             # send notify mail
-            mailbody = u"<h3>%(org)s%(year)s年度 年检报告，请审核。</h3>"  % ({"org":context.title,
+            mailbody = u"<h3>%(org)s%(year)s年度 年检报告通过了主管单位的初审，请民政局领导审核。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
             ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交民政局！" % ({"org":context.title,
@@ -343,9 +342,11 @@ class SurveyAgentReject(SurveyWorkflow):
             # set default view as agent pending audit
             context.setLayout("draftview")
             context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            #update last workflow status
+            context.last_status = "pendingagent"            
             context.agent_comments = subject            
             # send notify mail
-            mailbody = u"<h3>%(org)s%(year)s年度 年检报告被民政局打回，请根据审核意见仔细核对。</h3>"  % ({"org":context.title,
+            mailbody = u"<h3>%(org)s%(year)s年度 年检报告被民政局打回，请根据审核意见仔细核对、修改后重新提交。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
             ajaxtext = u"%(org)s%(year)s年度 年检报告已被民政局打回！" % ({"org":context.title,
@@ -396,13 +397,15 @@ class SurveyAgentAgree(SurveyWorkflow):
             context.setLayout("publishedview")
             context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
             context.agent_comments = subject
+            #update last workflow status
+            context.last_status = "pendingagent"
             context.annual_survey = quality
             context.reindexObject()            
             # send notify mail
-            mailbody = u"<h3>%(org)s%(year)s年度 年检报告，已审核通过。</h3>"  % ({"org":context.title,
+            mailbody = u"<h3>%(org)s%(year)s年度 年检报告，已由民政局审核通过。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
-            ajaxtext = u"%(org)s%(year)s年度 年检报告已成功提交民政局！" % ({"org":context.title,
+            ajaxtext = u"%(org)s%(year)s年度 年检报告已通过民政局审核！" % ({"org":context.title,
                                                            "year":context.year})
             callback = {"result":True,'message':ajaxtext}
             self.request.response.setHeader('Content-Type', 'application/json')
@@ -446,12 +449,14 @@ class SurveyAgentVeto(SurveyWorkflow):
             context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
             context.agent_comments = subject
             context.annual_survey = "buhege"
+            #update last workflow status
+            context.last_status = "pendingagent"
             context.reindexObject()            
             # send notify mail
-            mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局否决，年检不合格。</h3>"  % ({"org":context.title,
+            mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局否决，本次年检不合格。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
-            ajaxtext = u"%(org)s%(year)s年度 年检报告已被民政局否决，年检不合格！" % ({"org":context.title,
+            ajaxtext = u"%(org)s%(year)s年度 年检报告已被民政局否决，本次年检不合格！" % ({"org":context.title,
                                                            "year":context.year})
             callback = {"result":True,'message':ajaxtext}
             self.request.response.setHeader('Content-Type', 'application/json')
@@ -487,17 +492,14 @@ class SurveyAgentRetract(SurveyWorkflow):
         send_to = dview.creator()
         if send_to:
             # 提交民政局审核
-
-
             wf = dview.wf()
-
             wf.doActionFor(context, 'retract', comment=subject )  
             # set default view as agent pending audit
             context.setLayout("draftview")
             context.agent_audit_date = datetime.datetime.now().strftime("%Y-%m-%d")
             context.agent_comments = subject            
             # send notify mail
-            mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局收回，可以开启新一轮审批流程。</h3>"  % ({"org":context.title,
+            mailbody = u"<h3>%(org)s%(year)s年度 年检报告已被民政局收回，可以重新开启新一轮审批流程。</h3>"  % ({"org":context.title,
                                                            "year":context.year})
             self.sendMail(subject, mailbody, send_to)
             ajaxtext = u"%(org)s%(year)s年度 年检报告已被民政局收回！" % ({"org":context.title,
