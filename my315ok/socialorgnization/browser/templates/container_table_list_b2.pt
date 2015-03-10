@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="my315ok.socialorgnization">        
+
+<body>
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+       <section id="profile">
+			<div class="page-header">
+           <h3><span tal:content="python:context.title">社团</span></h3>           
+       </div>  
+       <div class="row-fluid action-bar" 
+       	tal:define="iseditable python:view.isEditable"
+       	tal:condition="iseditable">
+       		<div class="span3 offset3">
+       			<span class="overlay" >
+       				<!-- createObject?type_name=Document-->
+       				<a tal:attributes="href  python:context.absolute_url() + '/createObject?type_name=Document'" 
+				title="Add"
+				i18n:attributes="title"
+				i18n:domain="plone"
+				class="btn btn-primary" 
+				i18n:translate="">Add</a>
+						</span>
+					</div>
+       </div>
+       <div class="row-fluid" id="ajaxdisplay" tal:attributes="data-ajax-target string:${context/absolute_url}/@@favoritemoreb2">
+       	<table class="table table-striped table-bordered table-condensed listing">
+       		<thead>
+       			<tr>
+       				<th class="span9">标题</th><th class="span3" >发布时间</th>
+       			</tr>
+       		</thead>
+       		<div tal:omit-tag="" tal:define="itemlist python:view.getTableList(0,10);num python:len(itemlist)">
+       		<tbody id="tablecontent" tal:condition="num" tal:content="structure python:itemlist">
+       	  </tbody>
+           </div>
+          </table>
+         </div>
+         <div class="row-fluid" tal:define="total python:len(view.allitems())">
+         	<div class="span3 offset6">
+         		<div class="text-info">
+         			<span>总共：</span>
+         			<span class="total text-warning" tal:content="python:total">30</span>
+         			<span>条，还剩</span>
+         			<span id="pending" class="text-warning" tal:content="python:view.pendingDefault()">20</span>
+         			<span>条。</span>
+         		</div>         		
+         	</div>
+          	<div id="ajaxmore-link" class="span3 text-right" tal:condition="python:total > 10">
+		    		<div id="ajaxmore" class="btn btn-primary">更多</div>
+		    		</div>     
+      </div>
+      </section>          
+    </tal:main-macro>
+</metal:main>
+  <metal:js fill-slot="javascript_bottom_slot">
+	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">>	  	
+	</script>	
+	</metal:js>
+</body>
+</html>

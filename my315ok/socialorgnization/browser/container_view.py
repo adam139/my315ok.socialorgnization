@@ -4,25 +4,22 @@ import json
 from zope.interface import Interface
 from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
-from plone.memoize.instance import memoize
-from plone.app.layout.navigation.interfaces import INavigationRoot
-
-from my315ok.socialorgnization.browser.orgnization_listing import OrgnizationsView
-
 from Products.ATContentTypes.interfaces import IATFolder,IATFile,IATDocument
-from plone.app.collection.interfaces import ICollection
-
 from Products.Five.utilities.marker import mark
 from Products.CMFCore.interfaces import ISiteRoot
-
+from plone.memoize.instance import memoize
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.collection.interfaces import ICollection
+from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
+from plone.dexterity.utils import createContentInContainer
+from my315ok.socialorgnization.browser.orgnization_listing import OrgnizationsView
 from my315ok.socialorgnization.content.administrativelicencefolder import IAdministrativeLicenceFolder
 from my315ok.socialorgnization.content.annualsurveyfolder import IAnnualSurveyFolder
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey,IOrgnization
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
+from xtshzz.policy.browser.interfaces import IXtshzzThemeSpecific as IThemeSpecific
 from my315ok.socialorgnization.content.page import IPage
-from plone.dexterity.utils import createContentInContainer
-from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
 
 class IContainerdownloadablelist(Interface):
     """
@@ -358,7 +355,7 @@ class ContainerDownloadableListView(OrgnizationsView):
         return outhtml        
 
 class favoritemore(grok.View):
-    """AJAX action for click more.
+    """AJAX action for container table click more.
     """
     
     grok.context(IContainerTablelist)
@@ -400,9 +397,52 @@ class favoritemore(grok.View):
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps(data)
 
+class favoritemoreb2(favoritemore):
+    """AJAX action for container table click more. bootsrap v2
+    """
+    
+
+    grok.name('favoritemoreb2')
+           
+    
+    def render(self):
+        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+        form = self.request.form
+        formst = form['formstart']
+        formstart = int(formst)*10 
+        nextstart = formstart + 10                
+        favorite_view = getMultiAdapter((self.context, self.request),name=u"view")
+        favoritenum = len(favorite_view.allitems())
+        
+        if nextstart >= favoritenum :
+            ifmore =  1
+            pending = 0
+        else :
+            ifmore = 0  
+            pending = favoritenum - nextstart          
+        braindata = favorite_view.getATDocuments(formstart,10)        
+        outhtml = ""
+        brainnum = len(braindata)
+        pending = "%s" % (pending)
+        for i in range(brainnum):
+            objurl = braindata[i].getURL()
+            objtitle = braindata[i].Title
+            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+          
+            out = """<tr>
+            <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
+            <td class="span3 item">%(pubtime)s</td>
+            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            outhtml = outhtml + out
+            
+        data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
+    
+        self.request.response.setHeader('Content-Type', 'application/json')
+        return json.dumps(data)
+
 class ContainerTableListView(OrgnizationsView):
     grok.context(IContainerTablelist)
-    grok.template('container_table_list')
+    grok.template('container_table_list_b2')       
     grok.name('view')
     grok.require('zope2.View')        
 
@@ -416,7 +456,6 @@ class ContainerTableListView(OrgnizationsView):
                                               )
  
     def allitems(self):
-
         try:
             from my315ok.products.product import Iproduct
             braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
@@ -457,8 +496,6 @@ class ContainerTableListView(OrgnizationsView):
                              'b_size':size}                               
                                               ) 
 
-#        import pdb
-#        pdb.set_trace()
         return braindata 
 
     
@@ -473,35 +510,47 @@ class ContainerTableListView(OrgnizationsView):
     @memoize
     def getTableList(self,start,size):
         """获取行政许可列表"""
-       
-        
-#        braindata = self.catalog()({'object_provides':IATDocument.__identifier__,
-#                             'path':"/".join(self.context.getPhysicalPath()),                                     
-#                             'sort_order': 'reverse',
-#                             'sort_on': 'created'}                              
-#                                              )
+
         braindata = self.getATDocuments(start,size)
-#        outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-#        <tr><th class="col-md-9">标题</th><th class="col-md-3" >发布时间</th></tr>
-#        </thead><tbody>"""
-        outhtml = ""
-        
-        brainnum = len(braindata)
-        
+        return self.outhtmlList(braindata)
+    
+    def outhtmlList(self,braindata):
+        outhtml = ""        
+        brainnum = len(braindata)        
         for i in range(brainnum):
             objurl = braindata[i].getURL()
             objtitle = braindata[i].Title
             pubtime = braindata[i].created.strftime('%Y-%m-%d')
-#            downloadlink = objurl + "/download"
+            
+            out = """<tr>
+            <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
+            <td class="span3 item">%(pubtime)s</td>
+            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            outhtml = outhtml + out
+        return outhtml         
 
+
+class ContainerTableListb2View(ContainerTableListView):
+    grok.context(IContainerTablelist)
+    grok.template('container_table_list')
+    grok.layer(IThemeSpecific)  
+         
+    def outhtmlList(self,braindata):
+        outhtml = ""        
+        brainnum = len(braindata)        
+        for i in range(brainnum):
+            objurl = braindata[i].getURL()
+            objtitle = braindata[i].Title
+            pubtime = braindata[i].created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
             outhtml = outhtml + out
-#        outhtml = outhtml + "</tbody></table>"
         return outhtml 
+ 
+
 
 class AdminstrativePunishTableListView(ContainerTableListView):
     grok.context(IPunishTablelist)
