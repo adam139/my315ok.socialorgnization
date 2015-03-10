@@ -1,22 +1,16 @@
 #-*- coding: UTF-8 -*-
 import csv
 from StringIO import StringIO
-
-#from dexterity.membrane.events import CreateMembraneEvent
 from zope import event
-
 from zope.interface import implements
-import transaction
 
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from Products.statusmessages.interfaces import IStatusMessage
-
 from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
 
 from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.events import CreateOrgEvent
-
 from my315ok.socialorgnization import _
 
 data_PROPERTIES = [
@@ -31,6 +25,7 @@ data_PROPERTIES = [
     'announcement_type',
     'passDate'
     ] 
+# need byte string
 data_VALUES = [
                u"社会组织名称".encode('utf-8'),
                u"经营范围".encode('utf-8'),
@@ -66,6 +61,18 @@ class DataInOut (BrowserView):
 
         if self.request.form.get('form.button.Export'):
             return self.exportData()
+        
+        if self.request.form.get('form.button.ExportXiangtanshi'):
+            return self.exportData(orgnization_belondtoArea="xiangtanshi")        
+        
+        if self.request.form.get('form.button.ExportXiangtanshiShetuan'):
+            return self.exportData(orgnization_belondtoArea="xiangtanshi",orgnization_orgnizationType="shetuan")
+        
+        if self.request.form.get('form.button.ExportXiangtanshiMinfei'):
+            return self.exportData(orgnization_belondtoArea="xiangtanshi",orgnization_orgnizationType="minfei") 
+                      
+        if self.request.form.get('form.button.ExportXiangtanshiJijinhui'):
+            return self.exportData(orgnization_belondtoArea="xiangtanshi",orgnization_orgnizationType="jijinhui") 
 
     def getCSVTemplate(self):
         """Return a CSV template to use when importing members."""
@@ -162,10 +169,10 @@ class DataInOut (BrowserView):
             return # XXX
         return self._createRequest(users_sheet_errors, "orgs_sheet_errors.csv")
 
-    def exportData(self):
+    def exportData(self,**kw):
         """Export Data within CSV file."""
 
-        datafile = self._createCSV(self._getDataInfos())
+        datafile = self._createCSV(self._getDataInfos(**kw))
         return self._createRequest(datafile.getvalue(), "orgs_sheet_export.csv")
 
     def tranVoc(self,value):
@@ -180,11 +187,14 @@ class DataInOut (BrowserView):
                                                   default=u"未填写")
         return title 
 
-    def _getDataInfos(self):
+    def _getDataInfos(self,**kw):
         """Generator filled with the orgs data."""
 
         catalog = getToolByName(self.context, "portal_catalog")
-        brains = catalog(object_provides=IOrgnization.__identifier__)
+        query = kw
+        query.update({"object_provides":IOrgnization.__identifier__})
+        
+        brains = catalog(query)
         
         for i in brains:
             dataobj = i.getObject()                                

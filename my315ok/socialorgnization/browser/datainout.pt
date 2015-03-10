@@ -130,7 +130,36 @@
                    value="Export"
                    name="form.button.Export"
                    i18n:attributes="value"
+                   i18n:domain="my315ok.socialorgnization"
                    />
+            <input class="standalone btn btn-primary"
+                   type="submit"
+                   value="ExportXiangtanshi"
+                   name="form.button.ExportXiangtanshi"
+                   i18n:attributes="value"
+                   i18n:domain="my315ok.socialorgnization"
+                   />  
+            <input class="standalone btn btn-primary"
+                   type="submit"
+                   value="ExportXiangtanshiShetuan"
+                   name="form.button.ExportXiangtanshiShetuan"
+                   i18n:attributes="value"
+                   i18n:domain="my315ok.socialorgnization"
+                   />  
+            <input class="standalone btn btn-primary"
+                   type="submit"
+                   value="ExportXiangtanshiMinfei"
+                   name="form.button.ExportXiangtanshiMinfei"
+                   i18n:attributes="value"
+                   i18n:domain="my315ok.socialorgnization"
+                   />
+            <input class="standalone btn btn-primary"
+                   type="submit"
+                   value="ExportXiangtanshiJijinhui"
+                   name="form.button.ExportXiangtanshiJijinhui"
+                   i18n:attributes="value"
+                   i18n:domain="my315ok.socialorgnization"
+                   />                                                                               
           </div>
         </fieldset>
         <input tal:replace="structure context/@@authenticator/authenticator" />

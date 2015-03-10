@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-03-08 08:49+0000\n"
+"POT-Creation-Date: 2015-03-10 01:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Click on the Export button in order to download the full list of the social organizations as a CSV file. The CSV syntax is the same used in the template."
 msgstr ""
 
-#: ./browser/orgnization_survey.py:305
+#: ./browser/orgnization_survey.py:295
 msgid "Create"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Data In/Out"
 msgstr ""
 
-#: ./browser/datainout.py:150
+#: ./browser/datainout.py:157
 msgid "Data successfully imported."
 msgstr ""
 
@@ -75,15 +75,15 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: ./browser/orgnization.py:37
+#: ./browser/orgnization.py:36
 msgid "Edit Organization"
 msgstr ""
 
-#: ./browser/orgnization.py:26
+#: ./browser/orgnization.py:25
 msgid "Edit Organization Licence"
 msgstr ""
 
-#: ./browser/orgnization.py:15
+#: ./browser/orgnization.py:14
 msgid "Edit Organization Survey"
 msgstr ""
 
@@ -95,6 +95,22 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
+#: ./browser/datainout.pt:135
+msgid "ExportXiangtanshi"
+msgstr ""
+
+#: ./browser/datainout.pt:156
+msgid "ExportXiangtanshiJijinhui"
+msgstr ""
+
+#: ./browser/datainout.pt:149
+msgid "ExportXiangtanshiMinfei"
+msgstr ""
+
+#: ./browser/datainout.pt:142
+msgid "ExportXiangtanshiShetuan"
+msgstr ""
+
 #: ./profiles/default/types/my315ok.socialorgnization.governmentorgnization.xml
 msgid "Government Orgnization"
 msgstr ""
@@ -103,7 +119,7 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: ./browser/ajax_view.py:111
+#: ./browser/ajax_view.py:105
 msgid "Not able to send notifications"
 msgstr ""
 
@@ -170,7 +186,7 @@ msgstr ""
 msgid "Shi ben ji Orgnization Folder"
 msgstr ""
 
-#: ./browser/datainout.py:147
+#: ./browser/datainout.py:154
 msgid "Some errors occured. Please check your CSV syntax and retry."
 msgstr ""
 
@@ -184,7 +200,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: ./browser/datainout.py:92
+#: ./browser/datainout.py:99
 msgid "Wrong specification of the CSV file. Please correct it and retry."
 msgstr ""
 
@@ -241,11 +257,11 @@ msgstr ""
 msgid "belondto area"
 msgstr ""
 
-#: ./vocabulary.py:10
+#: ./vocabulary.py:11
 msgid "biangeng"
 msgstr ""
 
-#: ./vocabulary.py:69
+#: ./vocabulary.py:70
 msgid "biangengdengji"
 msgstr ""
 
@@ -253,19 +269,19 @@ msgstr ""
 msgid "body text"
 msgstr ""
 
-#: ./vocabulary.py:56
+#: ./vocabulary.py:57
 msgid "buhege"
 msgstr ""
 
-#: ./vocabulary.py:82
+#: ./vocabulary.py:83
 msgid "buyu"
 msgstr ""
 
-#: ./vocabulary.py:9
+#: ./vocabulary.py:10
 msgid "chengli"
 msgstr ""
 
-#: ./vocabulary.py:68
+#: ./vocabulary.py:69
 msgid "chenglidengji"
 msgstr ""
 
@@ -285,7 +301,7 @@ msgstr ""
 msgid "group(s) added."
 msgstr ""
 
-#: ./vocabulary.py:54
+#: ./vocabulary.py:55
 msgid "hege"
 msgstr ""
 
@@ -298,16 +314,16 @@ msgstr ""
 msgid "here"
 msgstr ""
 
-#: ./vocabulary.py:55
+#: ./vocabulary.py:56
 msgid "jibenhege"
 msgstr ""
 
-#: ./vocabulary.py:42
+#: ./vocabulary.py:43
 msgid "jijinhui"
 msgstr ""
 
 #. Default: "Anonymous User"
-#: ./browser/orgnization_survey.py:300
+#: ./browser/orgnization_survey.py:290
 msgid "label_anonymous_user"
 msgstr ""
 
@@ -316,13 +332,17 @@ msgstr ""
 msgid "label_register_code"
 msgstr ""
 
+#: ./content/orgnization.py:134
+msgid "last status of the annual survey"
+msgstr ""
+
 #: ./browser/templates/allorgnization_listings.pt:128
 #: ./browser/templates/allorgnization_listings_b3.pt:133
 #: ./browser/templates/organizations_admin_listings_b3.pt:80
 msgid "legal person"
 msgstr ""
 
-#: ./vocabulary.py:41
+#: ./vocabulary.py:42
 msgid "minfei"
 msgstr ""
 
@@ -389,11 +409,11 @@ msgstr ""
 msgid "sector"
 msgstr ""
 
-#: ./vocabulary.py:26
+#: ./vocabulary.py:27
 msgid "shaoshanshi"
 msgstr ""
 
-#: ./vocabulary.py:40
+#: ./vocabulary.py:41
 msgid "shetuan"
 msgstr ""
 
@@ -415,15 +435,15 @@ msgstr ""
 msgid "supervisor organization"
 msgstr ""
 
-#: ./content/orgnization.py:159
+#: ./content/orgnization.py:162
 msgid "the item had been audited"
 msgstr ""
 
-#: ./content/orgnization.py:136
+#: ./content/orgnization.py:139
 msgid "the result of annual survey"
 msgstr ""
 
-#: ./content/orgnization.py:165
+#: ./content/orgnization.py:168
 msgid "the result of item that had been audited"
 msgstr ""
 
@@ -431,31 +451,31 @@ msgstr ""
 msgid "the year for survey"
 msgstr ""
 
-#: ./vocabulary.py:27
+#: ./vocabulary.py:28
 msgid "xiangtanshi"
 msgstr ""
 
-#: ./vocabulary.py:28
+#: ./vocabulary.py:29
 msgid "xiangtanxian"
 msgstr ""
 
-#: ./vocabulary.py:25
+#: ./vocabulary.py:26
 msgid "xiangxiangshi"
 msgstr ""
 
-#: ./vocabulary.py:24
+#: ./vocabulary.py:25
 msgid "yuetangqu"
 msgstr ""
 
-#: ./vocabulary.py:23
+#: ./vocabulary.py:24
 msgid "yuhuqu"
 msgstr ""
 
-#: ./vocabulary.py:81
+#: ./vocabulary.py:82
 msgid "zhunyu"
 msgstr ""
 
-#: ./vocabulary.py:11
+#: ./vocabulary.py:12
 msgid "zhuxiao"
 msgstr ""
 
