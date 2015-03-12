@@ -44,10 +44,6 @@
 						<div class="radio">
 							<label>
     							<input type="radio" name="optionsQuality" id="optionsQuality2" value="jibenhege">基本合格</label>
-             </div> 
-						<div class="radio disabled">
-							<label>
-    							<input type="radio" name="optionsQuality" id="optionsQuality3" value="buhege" disabled>不合格</label>
              </div>
              </div>                          
 			 			<div class="form-group">
@@ -85,6 +81,14 @@
 						class="btn btn-primary">否决</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
+						<div class="form-group">
+							<label for="InputRadio">年检评级</label>
+
+						<div class="radio">
+							<label>
+    							<input type="radio" name="optionsQuality" id="optionsQuality4" value="buhege"  checked="checked">不合格</label>
+             </div>
+             </div> 						
 			 			<div class="form-group">
 			 				<label for="InputComment">审核意见</label>
 							<textarea class="form-control" rows="3" tal:attributes="placeholder python:context.sponsor_comments"/>
