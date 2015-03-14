@@ -363,7 +363,7 @@ class favoritemore(grok.View):
     grok.require('zope2.View')            
     
     def render(self):
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
@@ -399,14 +399,12 @@ class favoritemore(grok.View):
 
 class favoritemoreb2(favoritemore):
     """AJAX action for container table click more. bootsrap v2
-    """
-    
+    """   
 
-    grok.name('favoritemoreb2')
-           
+    grok.name('favoritemoreb2')          
     
     def render(self):
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
@@ -632,13 +630,8 @@ class AdministrativeLicenceFolderView(AnnualSurveyFolderView):
         return mview.allitems()         
             
     def getMemberList(self,start=0,size=10):
-        """获取年检结果列表"""
-       
+        """获取年检结果列表"""      
         
         folder = self.getOrganizationFolder()
         mview = getMultiAdapter((folder, self.request),name=u"orgnizations_administrative_fullview")
-        return mview.getMemberList(start=start,size=size)     
-
-    
-    
-        
+        return mview.getMemberList(start=start,size=size)  

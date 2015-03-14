@@ -91,7 +91,7 @@
                 </ul>
             </div>
             <!--搜索框、搜索条件选择 End-->
-            <!--搜索选择结果-->
+            <!--搜索选择结果start-->
             <div class="event_list_search_select row">
                 <ul id="all_result_recordinfo" class="col-xs-12 col-sm-4 col-sm-offset-4">
                 	<li class="a">已选择：</li>

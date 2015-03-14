@@ -306,7 +306,7 @@ class SurveyMore(grok.View):
     grok.require('zope2.View')            
     
     def render(self):
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
@@ -398,7 +398,7 @@ class AdministMore(grok.View):
     grok.require('zope2.View')            
     
     def render(self):
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
@@ -514,8 +514,7 @@ class SiteRootAllOrgnizationListingView(Orgnizations_adminView):
         else:
             return "zhuxiao"
          
-    def search_multicondition(self,query):
-#        catalog = getToolByName(self.context, 'portal_catalog')    
+    def search_multicondition(self,query):  
         return self.catalog()(query)        
 
 class AllOrganizationListingView(SiteRootAllOrgnizationListingView):
@@ -647,7 +646,7 @@ class ajaxsearch(grok.View):
         return datecondition  
           
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -734,7 +733,7 @@ class OrgAdminListAjax(ajaxsearch):
     grok.name('org_admin_list')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -770,7 +769,7 @@ class yuhuqusearchlist(ajaxsearch):
     grok.name('yuhuqusearch')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -820,7 +819,7 @@ class yuetangqusearchlist(ajaxsearch):
     grok.name('yuetangqusearch')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -870,7 +869,7 @@ class xiangxiangshisearchlist(ajaxsearch):
     grok.name('xiangxiangshisearch')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -920,7 +919,7 @@ class shaoshanshisearchlist(ajaxsearch):
     grok.name('shaoshanshisearch')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -970,7 +969,7 @@ class xiangtanxiansearchlist(ajaxsearch):
     grok.name('xiangtanxiansearch')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
@@ -1020,7 +1019,7 @@ class xiangtanshisearchlist(ajaxsearch):
     grok.name('xiangtanshisearch')
     
     def render(self):    
-        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
+#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")
         searchview = getMultiAdapter((self.context, self.request),name=u"allorgnization_listings")        
         
         datadic = self.request.form
