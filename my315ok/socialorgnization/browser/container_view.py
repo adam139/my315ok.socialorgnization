@@ -20,6 +20,7 @@ from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_su
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
 from xtshzz.policy.browser.interfaces import IXtshzzThemeSpecific as IThemeSpecific
 from my315ok.socialorgnization.content.page import IPage
+import datetime
 
 class IContainerdownloadablelist(Interface):
     """
@@ -593,6 +594,11 @@ class AnnualSurveyFolderView(OrgnizationsView):
     grok.require('zope2.View')
     
     
+    def getLastYear(self):
+        id = (datetime.datetime.today() + datetime.timedelta(-365)).strftime("%Y")
+        return id
+        
+        
     def getOrganizationFolder(self):
         braindata = self.catalog()({'object_provides':IOrgnizationFolder.__identifier__})
         if len(braindata) == 0:return None

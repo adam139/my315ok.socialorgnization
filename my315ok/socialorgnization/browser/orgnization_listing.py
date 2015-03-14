@@ -19,6 +19,7 @@ from my315ok.socialorgnization.content.xiangxiangshifolder import IXiangxiangshi
 from my315ok.socialorgnization.content.xiangtanxianfolder import IXiangtanxianOrgnizationFolder
 from my315ok.socialorgnization.content.shaoshanshifolder import IShaoshanshiOrgnizationFolder
 from my315ok.socialorgnization.content.shibenjifolder import IShibenjiOrgnizationFolder
+from my315ok.socialorgnization.browser.orgnization_survey import SurveyView
 
 grok.templatedir('templates') 
 
@@ -222,7 +223,7 @@ class OrgnizationsView(Orgnizations_adminView):
         return outhtml
     
 #年检默认视图    
-class AnnualsurveyView(Orgnizations_adminView):
+class AnnualsurveyView(SurveyView):
     """年检文件夹默认视图"""
     grok.context(IOrgnization_annual_survey)
     grok.template('orgnization_annual_survey')

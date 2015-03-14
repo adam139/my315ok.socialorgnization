@@ -11,7 +11,7 @@
     <tal:main-macro metal:define-macro="main">
        <section id="profile">
 			<div class="page-header">
-           <h3>2012年社会组织年检结果公告</h3>           
+           <h3><span class="text-info" tal:content="python:view.getLastYear()">2012</span>年社会组织年检结果公告</h3>           
        </div>      
        <div class="row" tal:define="datalist python:view.allitems();num python:len(datalist)">
        <div  id="ajaxdisplay" class="hidden"

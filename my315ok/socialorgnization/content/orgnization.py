@@ -128,7 +128,7 @@ class IOrgnization_annual_survey(form.Schema,IBasic):
 #年检报告书    
     report = NamedBlobFile(title=_(u"report"),
         description=_(u"Attach your anual report (word, etc)."),
-        required=False
+        required=True
     )
 # 上次工作流状态
     last_status = schema.TextLine(title=_(u"last status of the annual survey"),                             

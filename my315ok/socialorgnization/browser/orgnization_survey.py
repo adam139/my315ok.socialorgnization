@@ -237,7 +237,7 @@ class SurveyView(grok.View):
                                                   mapping={},
                                                   target_language='zh_CN',
                                                   context=self.context,
-                                                  default="chengli")
+                                                  default="")
         return title   
         
     def fromid2title(self,id):
