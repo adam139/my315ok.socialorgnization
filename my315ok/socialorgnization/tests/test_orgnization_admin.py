@@ -183,7 +183,7 @@ class TestView(unittest.TestCase):
 
 
         outstr = "不合格"        
-        self.assertTrue(outstr in browser.contents)               
+        self.assertFalse(outstr in browser.contents)               
 
     def test_licence_folder_view(self):
 

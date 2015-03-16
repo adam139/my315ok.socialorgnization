@@ -188,7 +188,7 @@ class OrgnizationsView(Orgnizations_adminView):
                                             title=objtitle,
                                             annual_survey= annual_survey,
                                             year=year)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
         return outhtml             
     
     def getAdministrativeLicenceList(self):
@@ -219,7 +219,7 @@ class OrgnizationsView(Orgnizations_adminView):
                                             audit_item= audit_item,
                                             audit_result=audit_result,
                                             audit_date= audit_date)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
         return outhtml
     
 #年检默认视图    
@@ -250,6 +250,7 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
         
         braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
+                                'review_state':"published",
                              'sort_order': 'reverse',
                              'sort_on': 'created'})        
         return braindata
@@ -265,6 +266,7 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
         else:
             braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
+                                'review_state':"published",
                              'sort_order': 'reverse',
                              'sort_on': 'created',
                              'b_start':start,
@@ -288,7 +290,7 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
                                             title=objtitle,
                                             annual_survey= annual_survey,
                                             year=year)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
         return outhtml        
 
 class AnnualsurveyFullView(Orgnizations_annualsurveyView):
@@ -307,7 +309,7 @@ class SurveyMore(grok.View):
     grok.require('zope2.View')            
     
     def render(self):
-#        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
+       
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
@@ -380,7 +382,7 @@ class Orgnizations_administrativeView(Orgnizations_adminView):
                                             title=objtitle,
                                             audit_item= audit_item,
                                             audit_result=audit_result)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
         return outhtml
 
 class AdministrativeFullView(Orgnizations_administrativeView):
@@ -430,17 +432,7 @@ class SiteRootOrgnizationListingView(Orgnizations_adminView):
     def update(self):
         # Hide the editable-object border
         self.request.set('disable_border', True)  
-#    
-#    def getOrgnizationFolder(self):
-#        
-#        topicfolder = self.catalog()({'object_provides': IOrgnizationFolder.__identifier__})
-#        context = self.context
-#        canManage = self.pm().checkPermission(permissions.AddPortalContent,context)        
-#        if (len(topicfolder) > 0) and  canManage:
-#            tfpath = topicfolder[0].getURL()
-#        else:
-#            tfpath = None            
-#        return tfpath
+
 
     def getorgnizations(self,num=10):
  
@@ -723,7 +715,7 @@ class ajaxsearch(grok.View):
                                             sponsor=sponsor,
                                             legal_person = legal_person,
                                             pass_date = objdate)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
             k = k + 1 
            
         data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}

@@ -351,8 +351,8 @@ class ContainerDownloadableListView(OrgnizationsView):
                                             title = objtitle,
                                             pubtime = pubtime,
                                             downloadlink = downloadlink)           
-            outhtml = outhtml + out
-        outhtml = outhtml + "</tbody></table>"
+            outhtml = "%s%s" %(outhtml ,out)
+        outhtml = "%s</tbody></table>" %(outhtml)
         return outhtml        
 
 class favoritemore(grok.View):
@@ -391,7 +391,7 @@ class favoritemore(grok.View):
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
             
         data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
     
@@ -432,7 +432,7 @@ class favoritemoreb2(favoritemore):
             <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="span3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
             
         data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
     
@@ -525,7 +525,7 @@ class ContainerTableListView(OrgnizationsView):
             <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="span3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
         return outhtml         
 
 
@@ -546,7 +546,7 @@ class ContainerTableListb2View(ContainerTableListView):
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
-            outhtml = outhtml + out
+            outhtml = "%s%s" %(outhtml ,out)
         return outhtml 
  
 
@@ -582,8 +582,8 @@ class AdminstrativePunishTableListView(ContainerTableListView):
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
             </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
-            outhtml = outhtml + out
-        outhtml = outhtml + "</tbody></table>"
+            outhtml = "%s%s" %(outhtml ,out)
+        outhtml = "%s</tbody></table>" %(outhtml)
         return outhtml     
     
 class AnnualSurveyFolderView(OrgnizationsView):
