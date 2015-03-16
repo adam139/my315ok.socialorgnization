@@ -15,32 +15,33 @@
            <h3><span tal:replace="python:context.title">Organization administration</span>行政许可信息</h3>           
        </div>
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
-	<div class="col-md-3 "col-md-offset-9">
-		<span tal:condition="iseditable">
-			<a tal:attributes="href python:context.absolute_url() +'/@@ajaxedit'" 
-				title="Edit"  
-				i18n:attributes="title"
-				class="btn btn-primary"
-				i18n:translate="">Edit</a>
-		</span>
-	</div>	 
+				<div class="col-md-3 "col-md-offset-9">
+					<span tal:condition="iseditable">
+						<a tal:attributes="href python:context.absolute_url() +'/@@ajaxedit'" 
+							title="Edit"  
+							i18n:attributes="title"
+							class="btn btn-primary"
+							i18n:translate="">Edit</a>
+					</span>
+				</div>	 
        </div>      
        <div class="row">
-       <div class="col-md-12" id="ajaxdisplay" 
-				tal:attributes="data-ajax-target string:${context/absolute_url}/@@administmore"></div>
-    	<table class="table table-striped table-bordered table-condensed">
-			<thead><tr class="theader">
-			  <th class="col-md-6">社会组织名称</th>
-			  <th class="col-md-2">许可事项</th>
-			  <th class="col-md-2">结果</th>
-			</tr>
-		</thead>                  
+       	<div class="hidden" id="ajaxdisplay" 
+					tal:attributes="data-ajax-target string:${context/absolute_url}/@@administmore">
+				</div>
+    			<table class="table table-striped table-bordered table-condensed listing">
+					<thead>
+						<tr class="theader">
+			  				<th class="col-md-6">社会组织名称</th>
+			  				<th class="col-md-2">许可事项</th>
+			  				<th class="col-md-2">结果</th>
+						</tr>
+					</thead>                  
        	<div tal:omit-tag="" tal:define="itemlist python:view.getMemberList(0,10);num python:len(itemlist)">
        		<tbody id="tablecontent" tal:condition="num" tal:content="structure python:itemlist">
        	  </tbody>
-          </div>
-    </table>
-    
+        </div>
+    		</table>    
     </div>
          <div class="row" tal:define="total python:len(view.allitems())">
          	<div class="col-sm-4 col-sm-offset-4 	col-md-3 col-md-offset-6">
@@ -60,7 +61,7 @@
     </tal:main-macro>
 </metal:main>
   <metal:js fill-slot="javascript_bottom_slot">
-	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">>	  	
+	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">	  	
 	</script>	
 	</metal:js>
 </body>

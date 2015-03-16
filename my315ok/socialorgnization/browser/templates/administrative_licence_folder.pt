@@ -11,7 +11,7 @@
     <tal:main-macro metal:define-macro="main">
        <section id="profile">
 			<div class="page-header">
-           <h3>社会组织行政许可公告</h3>           
+           <h3>sht湘潭市市本级社会组织行政许可公告</h3>           
        </div>      
        <div class="row" tal:define="datalist python:view.allitems();num python:len(datalist)">
        <div  id="ajaxdisplay" class="hidden"
@@ -23,8 +23,7 @@
                 				<tr>
                 					<th class="col-md-7">社会组织名称</th>
                 					<th class="col-md-3" >许可事项</th>
-                					<th class="col-md-2" >结果</th>
-                	<!--				<th class="col-md-2" >登记时间</th> -->                					
+                					<th class="col-md-2" >结果</th>             					
                 				</tr>
                 			</thead>
        	<div tal:omit-tag="" tal:define="itemlist python:view.getMemberList(0,10);num python:len(itemlist)">
@@ -32,8 +31,7 @@
        	  </tbody>
           </div>
        </table>
-               		                		
-                	</div>    
+       </div>    
       </div>
          <div class="row" tal:define="total python:len(view.allitems())">
          	<div class="col-sm-4 col-sm-offset-4 	col-md-3 col-md-offset-6">
@@ -53,7 +51,7 @@
     </tal:main-macro>
 </metal:main>
   <metal:js fill-slot="javascript_bottom_slot">
-	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">>	  	
+	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">	  	
 	</script>	
 	</metal:js>
 </body>
