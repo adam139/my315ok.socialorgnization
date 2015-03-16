@@ -175,11 +175,11 @@ class OrgnizationsView(Orgnizations_adminView):
         outhtml = ""
         brainnum = len(braindata)
         
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            annual_survey = self.tranVoc(braindata[i].orgnization_annual_survey)
-            year = braindata[i].orgnization_survey_year
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            annual_survey = self.tranVoc(i.orgnization_annual_survey)
+            year = i.orgnization_survey_year
             
             out = """<tr>
             <td class="title"><a href="%(objurl)s">%(title)s</a></td>
@@ -202,12 +202,12 @@ class OrgnizationsView(Orgnizations_adminView):
                                               )
         outhtml = ""
         brainnum = len(braindata)        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            audit_item = self.tranVoc(braindata[i].orgnization_audit_item)
-            audit_result = self.tranVoc(braindata[i].orgnization_audit_result)
-            audit_date = braindata[i].orgnization_audit_date.strftime('%Y-%m-%d')
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            audit_item = self.tranVoc(i.orgnization_audit_item)
+            audit_result = self.tranVoc(i.orgnization_audit_result)
+            audit_date = i.orgnization_audit_date.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="title"><a href="%(objurl)s">%(title)s</a></td>
@@ -260,7 +260,7 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
         
         if size == 0:
             braindata = self.allitems()
-            return self.outputList(braindata)      
+#            return self.outputList(braindata)      
 
         else:
             braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
@@ -270,16 +270,16 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
                              'b_start':start,
                              'b_size':size})
             
-            return self.outputList(braindata)           
+        return self.outputList(braindata)           
             
     def outputList(self,braindata):
         outhtml = ""
         brainnum = len(braindata)        
-        for i in range(brainnum):
-            objurl =  "%s/@@view" % braindata[i].getURL()
-            objtitle = braindata[i].Title
-            annual_survey = self.tranVoc(braindata[i].orgnization_annual_survey)
-            year = braindata[i].orgnization_survey_year
+        for i in braindata:
+            objurl =  "%s/@@view" % i.getURL()
+            objtitle = i.Title
+            annual_survey = self.tranVoc(i.orgnization_annual_survey)
+            year = i.orgnization_survey_year
                         
             out = """<tr>
             <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
@@ -366,12 +366,12 @@ class Orgnizations_administrativeView(Orgnizations_adminView):
     def outputList(self,braindata): 
         outhtml = ""
         brainnum = len(braindata)        
-        for i in range(brainnum):
+        for i in braindata:
 
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            audit_item = self.tranVoc(braindata[i].orgnization_audit_item)
-            audit_result = self.tranVoc(braindata[i].orgnization_audit_result)
+            objurl = i.getURL()
+            objtitle = i.Title
+            audit_item = self.tranVoc(i.orgnization_audit_item)
+            audit_result = self.tranVoc(i.orgnization_audit_result)
                         
             out = """<tr>
             <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
@@ -696,17 +696,17 @@ class ajaxsearch(grok.View):
         "根据参数total,braindata,返回jason 输出"
         outhtml = ""
         brainnum = len(braindata)
-#        import pdb
-#        pdb.set_trace()        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            address = braindata[i].orgnization_address
-            register_code = braindata[i].orgnization_registerCode
-            legal_person = braindata[i].orgnization_legalPerson
-            objdate = braindata[i].orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = braindata[i].orgnization_supervisor            
-            numindex = str(i + 1)            
+      
+        k = 0
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            address = i.orgnization_address
+            register_code = i.orgnization_registerCode
+            legal_person = i.orgnization_legalPerson
+            objdate = i.orgnization_passDate.strftime('%Y-%m-%d')
+            sponsor = i.orgnization_supervisor            
+            numindex = str(k + 1)            
             out = """<tr class="text-left">
                                 <td class="col-md-1">%(num)s</td>
                                 <td class="col-md-2 text-left"><a href="%(objurl)s">%(title)s</a></td>
@@ -723,7 +723,8 @@ class ajaxsearch(grok.View):
                                             sponsor=sponsor,
                                             legal_person = legal_person,
                                             pass_date = objdate)           
-            outhtml = outhtml + out 
+            outhtml = outhtml + out
+            k = k + 1 
            
         data = {'searchresult': outhtml,'start':start,'size':size,'total':totalnum}
         return data        

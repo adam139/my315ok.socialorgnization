@@ -335,12 +335,12 @@ class ContainerDownloadableListView(OrgnizationsView):
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr><th class="col-md-7">文件名称</th><th class="col-md-3" >发布时间</th><th class="col-md-2" >下载链接</th></tr>
         </thead><tbody>"""
-        brainnum = len(braindata)
+
         
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            pubtime = i.created.strftime('%Y-%m-%d')
             downloadlink = objurl + "/download"
 
             
@@ -380,12 +380,12 @@ class favoritemore(grok.View):
             pending = favoritenum - nextstart          
         braindata = favorite_view.getATDocuments(formstart,10)        
         outhtml = ""
-        brainnum = len(braindata)
+
         pending = "%s" % (pending)
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            pubtime = i.created.strftime('%Y-%m-%d')
           
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
@@ -421,12 +421,12 @@ class favoritemoreb2(favoritemore):
             pending = favoritenum - nextstart          
         braindata = favorite_view.getATDocuments(formstart,10)        
         outhtml = ""
-        brainnum = len(braindata)
+
         pending = "%s" % (pending)
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            pubtime = i.created.strftime('%Y-%m-%d')
           
             out = """<tr>
             <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
@@ -515,11 +515,11 @@ class ContainerTableListView(OrgnizationsView):
     
     def outhtmlList(self,braindata):
         outhtml = ""        
-        brainnum = len(braindata)        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+       
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            pubtime = i.created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
@@ -536,11 +536,11 @@ class ContainerTableListb2View(ContainerTableListView):
          
     def outhtmlList(self,braindata):
         outhtml = ""        
-        brainnum = len(braindata)        
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+        
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            pubtime = i.created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
@@ -571,12 +571,12 @@ class AdminstrativePunishTableListView(ContainerTableListView):
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr><th class="col-md-9">社会组织名称</th><th class="col-md-3" >发布时间</th></tr>
         </thead><tbody>"""
-        brainnum = len(braindata)
+
         
-        for i in range(brainnum):
-            objurl = braindata[i].getURL()
-            objtitle = braindata[i].Title
-            pubtime = braindata[i].created.strftime('%Y-%m-%d')
+        for i in braindata:
+            objurl = i.getURL()
+            objtitle = i.Title
+            pubtime = i.created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>

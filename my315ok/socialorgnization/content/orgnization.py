@@ -2,20 +2,18 @@
 from five import grok
 from zope import schema
 from zope.interface import Interface
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 import datetime
 
 from plone.directives import form, dexterity
 from plone.app.dexterity.behaviors.metadata import IBasic
-from my315ok.socialorgnization.registrysource import DynamicVocabulary
 from plone.namedfile.field import NamedBlobImage, NamedBlobFile
 from plone.namedfile.interfaces import IImageScaleTraversable
-
 from collective import dexteritytextindexer
 
-from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 #from collective.dexteritytextindexer.behavior import IDexterityTextIndexer
-
+from my315ok.socialorgnization.registrysource import DynamicVocabulary
 from my315ok.socialorgnization import _
 
 class IOrgnization(form.Schema,IBasic):
@@ -38,19 +36,17 @@ class IOrgnization(form.Schema,IBasic):
 #   法人     
     legal_person = schema.TextLine(title=_(u"legal person"),
                              default=u"",
-                             required=False,)
+                             required=True,)
 # 主管单位    
     supervisor = schema.TextLine(title=_(u"supervisor organization"),
                              default=u"",
-                             required=False,)    
+                             required=True,)    
 #登记证号    
     register_code = schema.ASCIILine(
             title=_("label_register_code",
                 default=u"register code"),
             description=_("help_register_code",
-                default=u"A code identifying this sector. register "
-                        u"codes are defined by national standards bodies "
-                        u"and based on revision 2 of the NACE standard."),
+                default=u"A code identifying this organization."),
             required=True)
 #组织类别            
     organization_type = schema.Choice(
