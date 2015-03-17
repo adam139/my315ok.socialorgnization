@@ -59,7 +59,7 @@
 					<div id="agent-reject">
 					<span tal:condition="python:view.canbeAuditByAgent()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_agent_reject'" 
-						title="打回" 
+						title="退回给提交人，允许其继续修改，重新提交" 
 						class="btn btn-primary">打回</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
@@ -77,7 +77,7 @@
 					<div id="agent-veto">
 					<span tal:condition="python:view.canbeAuditByAgent()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_agent_veto'" 
-						title="打回" 
+						title="本次年检直接判定为不合格" 
 						class="btn btn-primary">否决</a>
 					</span>
 					<form class="ajaxform" style=" display:none;">
