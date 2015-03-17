@@ -338,19 +338,18 @@ class ContainerDownloadableListView(OrgnizationsView):
 
         
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            pubtime = i.created.strftime('%Y-%m-%d')
-            downloadlink = objurl + "/download"
-
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            pubtime = i.created.strftime('%Y-%m-%d')
+#            downloadlink = objurl + "/download"
             
             out = """<tr>
             <td class="col-md-7 title">%(title)s</td>
             <td class="col-md-3 item">%(pubtime)s</td>
-            <td class="col-md-2 result"><a href="%(downloadlink)s">下载</a></td></tr>""" % dict(objurl=objurl,
-                                            title = objtitle,
-                                            pubtime = pubtime,
-                                            downloadlink = downloadlink)           
+            <td class="col-md-2 result"><a href="%(downloadlink)s">下载</a></td></tr>""" % dict(objurl=i.getURL(),
+                                            title = i.Title,
+                                            pubtime = i.created.strftime('%Y-%m-%d'),
+                                            downloadlink = "%s/download" % i.getURL())           
             outhtml = "%s%s" %(outhtml ,out)
         outhtml = "%s</tbody></table>" %(outhtml)
         return outhtml        
@@ -383,14 +382,16 @@ class favoritemore(grok.View):
 
         pending = "%s" % (pending)
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            pubtime = i.created.strftime('%Y-%m-%d')
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            pubtime = i.created.strftime('%Y-%m-%d')
           
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
-            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            </tr>""" % dict(url = i.getURL(),
+                            title = i.Title,
+                            pubtime = i.created.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
             
         data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
@@ -424,14 +425,16 @@ class favoritemoreb2(favoritemore):
 
         pending = "%s" % (pending)
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            pubtime = i.created.strftime('%Y-%m-%d')
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            pubtime = i.created.strftime('%Y-%m-%d')
           
             out = """<tr>
             <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="span3 item">%(pubtime)s</td>
-            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            </tr>""" % dict(url = i.getURL(),
+                            title = i.Title,
+                            pubtime = i.created.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
             
         data = {'outhtml': outhtml,'pending':pending,'ifmore':ifmore}
@@ -517,14 +520,16 @@ class ContainerTableListView(OrgnizationsView):
         outhtml = ""        
        
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            pubtime = i.created.strftime('%Y-%m-%d')
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            pubtime = i.created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="span9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="span3 item">%(pubtime)s</td>
-            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            </tr>""" % dict(url = i.getURL(),
+                            title = i.Title,
+                            pubtime = i.created.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
         return outhtml         
 
@@ -535,17 +540,19 @@ class ContainerTableListb2View(ContainerTableListView):
     grok.layer(IThemeSpecific)  
          
     def outhtmlList(self,braindata):
-        outhtml = ""        
+        outhtml = ""
         
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            pubtime = i.created.strftime('%Y-%m-%d')
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            pubtime = i.created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
-            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            </tr>""" % dict(url = i.getURL(),
+                            title = i.Title,
+                            pubtime = i.created.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
         return outhtml 
  
@@ -574,14 +581,16 @@ class AdminstrativePunishTableListView(ContainerTableListView):
 
         
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            pubtime = i.created.strftime('%Y-%m-%d')
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            pubtime = i.created.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="col-md-9 title"><a href="%(url)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
-            </tr>""" % dict(url = objurl,title = objtitle,pubtime = pubtime)           
+            </tr>""" % dict(url = i.getURL(),
+                            title = i.Title,
+                            pubtime = i.created.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
         outhtml = "%s</tbody></table>" %(outhtml)
         return outhtml     

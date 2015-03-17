@@ -173,21 +173,20 @@ class OrgnizationsView(Orgnizations_adminView):
                              'sort_order': 'reverse',
                              'sort_on': 'created'})
         outhtml = ""
-        brainnum = len(braindata)
         
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            annual_survey = self.tranVoc(i.orgnization_annual_survey)
-            year = i.orgnization_survey_year
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            annual_survey = self.tranVoc(i.orgnization_annual_survey)
+#            year = i.orgnization_survey_year
             
             out = """<tr>
             <td class="title"><a href="%(objurl)s">%(title)s</a></td>
             <td class="item">%(year)s</td>
-            <td class="result">%(annual_survey)s</td></tr>""" % dict(objurl=objurl,
-                                            title=objtitle,
-                                            annual_survey= annual_survey,
-                                            year=year)           
+            <td class="result">%(annual_survey)s</td></tr>""" % dict(objurl=i.getURL(),
+                                            title=i.Title,
+                                            annual_survey= self.tranVoc(i.orgnization_annual_survey),
+                                            year=i.orgnization_survey_year)           
             outhtml = "%s%s" %(outhtml ,out)
         return outhtml             
     
@@ -201,24 +200,24 @@ class OrgnizationsView(Orgnizations_adminView):
                              'sort_on': 'created'}                              
                                               )
         outhtml = ""
-        brainnum = len(braindata)        
+        
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            audit_item = self.tranVoc(i.orgnization_audit_item)
-            audit_result = self.tranVoc(i.orgnization_audit_result)
-            audit_date = i.orgnization_audit_date.strftime('%Y-%m-%d')
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            audit_item = self.tranVoc(i.orgnization_audit_item)
+#            audit_result = self.tranVoc(i.orgnization_audit_result)
+#            audit_date = i.orgnization_audit_date.strftime('%Y-%m-%d')
             
             out = """<tr>
             <td class="title"><a href="%(objurl)s">%(title)s</a></td>
             <td class="item">%(audit_item)s</td>
             <td class="result">%(audit_result)s</td>
             <td class="result">%(audit_date)s</td>            
-            </tr>""" % dict(objurl=objurl,
-                                            title=objtitle,
-                                            audit_item= audit_item,
-                                            audit_result=audit_result,
-                                            audit_date= audit_date)           
+            </tr>""" % dict(objurl=i.getURL(),
+                                            title=i.Title,
+                                            audit_item= self.tranVoc(i.orgnization_audit_item),
+                                            audit_result=self.tranVoc(i.orgnization_audit_result),
+                                            audit_date= i.orgnization_audit_date.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
         return outhtml
     
@@ -276,20 +275,20 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
             
     def outputList(self,braindata):
         outhtml = ""
-        brainnum = len(braindata)        
+      
         for i in braindata:
-            objurl =  "%s/@@view" % i.getURL()
-            objtitle = i.Title
-            annual_survey = self.tranVoc(i.orgnization_annual_survey)
-            year = i.orgnization_survey_year
+#            objurl =  "%s/@@view" % i.getURL()
+#            objtitle = i.Title
+#            annual_survey = self.tranVoc(i.orgnization_annual_survey)
+#            year = i.orgnization_survey_year
                         
             out = """<tr>
             <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
             <td class="item">%(year)s</td>
-            <td class="result">%(annual_survey)s</td></tr>""" % dict(objurl=objurl,
-                                            title=objtitle,
-                                            annual_survey= annual_survey,
-                                            year=year)           
+            <td class="result">%(annual_survey)s</td></tr>""" % dict(objurl="%s/@@view" % i.getURL(),
+                                            title=i.Title,
+                                            annual_survey= self.tranVoc(i.orgnization_annual_survey),
+                                            year=i.orgnization_survey_year)           
             outhtml = "%s%s" %(outhtml ,out)
         return outhtml        
 
@@ -367,21 +366,20 @@ class Orgnizations_administrativeView(Orgnizations_adminView):
 
     def outputList(self,braindata): 
         outhtml = ""
-        brainnum = len(braindata)        
+       
         for i in braindata:
-
-            objurl = i.getURL()
-            objtitle = i.Title
-            audit_item = self.tranVoc(i.orgnization_audit_item)
-            audit_result = self.tranVoc(i.orgnization_audit_result)
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            audit_item = self.tranVoc(i.orgnization_audit_item)
+#            audit_result = self.tranVoc(i.orgnization_audit_result)
                         
             out = """<tr>
             <td class="title"><a target="_blank" href="%(objurl)s">%(title)s</a></td>
             <td class="item">%(audit_item)s</td>
-            <td class="result">%(audit_result)s</td></tr>""" % dict(objurl=objurl,
-                                            title=objtitle,
-                                            audit_item= audit_item,
-                                            audit_result=audit_result)           
+            <td class="result">%(audit_result)s</td></tr>""" % dict(objurl=i.getURL(),
+                                            title=i.Title,
+                                            audit_item= self.tranVoc(i.orgnization_audit_item),
+                                            audit_result=self.tranVoc(i.orgnization_audit_result))           
             outhtml = "%s%s" %(outhtml ,out)
         return outhtml
 
@@ -686,19 +684,17 @@ class ajaxsearch(grok.View):
        
     def output(self,start,size,totalnum,braindata):
         "根据参数total,braindata,返回jason 输出"
-        outhtml = ""
-        brainnum = len(braindata)
-      
+        outhtml = ""      
         k = 0
         for i in braindata:
-            objurl = i.getURL()
-            objtitle = i.Title
-            address = i.orgnization_address
-            register_code = i.orgnization_registerCode
-            legal_person = i.orgnization_legalPerson
-            objdate = i.orgnization_passDate.strftime('%Y-%m-%d')
-            sponsor = i.orgnization_supervisor            
-            numindex = str(k + 1)            
+#            objurl = i.getURL()
+#            objtitle = i.Title
+#            address = i.orgnization_address
+#            register_code = i.orgnization_registerCode
+#            legal_person = i.orgnization_legalPerson
+#            objdate = i.orgnization_passDate.strftime('%Y-%m-%d')
+#            sponsor = i.orgnization_supervisor            
+#            numindex = str(k + 1)            
             out = """<tr class="text-left">
                                 <td class="col-md-1">%(num)s</td>
                                 <td class="col-md-2 text-left"><a href="%(objurl)s">%(title)s</a></td>
@@ -707,14 +703,14 @@ class ajaxsearch(grok.View):
                                 <td class="col-md-2 text-left">%(sponsor)s</td>
                                 <td class="col-md-1 text-left">%(legal_person)s</td>
                                 <td class="col-md-2">%(pass_date)s</td>                                
-                            </tr> """% dict(objurl=objurl,
-                                            num=numindex,
-                                            title=objtitle,
-                                            code= register_code,
-                                            address=address,
-                                            sponsor=sponsor,
-                                            legal_person = legal_person,
-                                            pass_date = objdate)           
+                            </tr> """% dict(objurl=i.getURL(),
+                                            num=str(k + 1),
+                                            title=i.Title,
+                                            code= i.orgnization_registerCode,
+                                            address=i.orgnization_address,
+                                            sponsor=i.orgnization_supervisor,
+                                            legal_person = i.orgnization_legalPerson,
+                                            pass_date = i.orgnization_passDate.strftime('%Y-%m-%d'))           
             outhtml = "%s%s" %(outhtml ,out)
             k = k + 1 
            
