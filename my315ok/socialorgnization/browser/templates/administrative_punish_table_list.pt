@@ -27,7 +27,8 @@
 						</span>
 					</div>
        </div>     
-       <div class="col-md-12" tal:define="itemlist python:view.getTableList();num python:len(itemlist)">
+       <div class="col-md-12" 
+       	tal:define="itemlist python:view.getTableList();num python:len(itemlist)">
        	<div tal:condition="num" tal:content="structure python:itemlist">
             		               		
                 	</div>    
@@ -35,5 +36,10 @@
       </section>          
     </tal:main-macro>
 </metal:main>
+  <metal:js fill-slot="javascript_bottom_slot">
+	<script>
+		     $('[data-toggle="tooltip"]').tooltip() 
+	</script>		
+	</metal:js>
 </body>
 </html>

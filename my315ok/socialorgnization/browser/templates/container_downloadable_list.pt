@@ -29,7 +29,8 @@
 					</div>
        </div>
             
-       <div class="col-md-12" tal:define="itemlist python:view.getDownloadFileList(0,10);num python:len(itemlist)">
+       <div class="col-md-12" 
+       	tal:define="itemlist python:view.getDownloadFileList(0,10);num python:len(itemlist)">
        	<div tal:condition="num" tal:content="structure python:itemlist"></div>    
       </div>
       </section>          

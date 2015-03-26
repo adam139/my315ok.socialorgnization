@@ -333,7 +333,7 @@ class ContainerDownloadableListView(OrgnizationsView):
                                               )
             
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-        <tr><th class="col-md-7">文件名称</th><th class="col-md-3" >发布时间</th><th class="col-md-2" >下载链接</th></tr>
+        <tr data-toggle="tooltip" title="点击排序"><th class="col-md-7">文件名称</th><th class="col-md-3" >发布时间</th><th class="col-md-2" >下载链接</th></tr>
         </thead><tbody>"""
 
         
@@ -576,7 +576,7 @@ class AdminstrativePunishTableListView(ContainerTableListView):
                              'sort_on': 'created'}                              
                                               )
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
-        <tr><th class="col-md-9">社会组织名称</th><th class="col-md-3" >发布时间</th></tr>
+        <tr data-toggle="tooltip" title="点击排序"><th class="col-md-9">社会组织名称</th><th class="col-md-3" >发布时间</th></tr>
         </thead><tbody>"""
 
         
