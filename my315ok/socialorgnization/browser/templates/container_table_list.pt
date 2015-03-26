@@ -59,9 +59,10 @@
     </tal:main-macro>
 </metal:main>
   <metal:js fill-slot="javascript_bottom_slot">
-	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js">	
-		$('[data-toggle="tooltip"]').tooltip()  	
-	</script>	
+	<script src="http://images.315ok.org/xtshzz/js/ajaxload_more.min.js"></script>
+	<script>
+		     $('[data-toggle="tooltip"]').tooltip() 
+	</script>		
 	</metal:js>
 </body>
 </html>

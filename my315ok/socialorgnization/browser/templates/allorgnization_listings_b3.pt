@@ -169,8 +169,10 @@
   <metal:js fill-slot="javascript_bottom_slot">
 	<script type="text/javascript"
 		tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-     tal:attributes="src string:${navroot}/++resource++my315ok.socialorgnization/ajaxsearch.min.js">	
-     $('[data-toggle="tooltip"]').tooltip()  	
+     tal:attributes="src string:${navroot}/++resource++my315ok.socialorgnization/ajaxsearch.min.js">		
+	</script>
+	<script>
+     $('[data-toggle="tooltip"]').tooltip()  		
 	</script>	
 	</metal:js>
 </body>
