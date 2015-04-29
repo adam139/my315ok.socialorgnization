@@ -314,7 +314,7 @@ class ContainerDownloadableListView(OrgnizationsView):
         return braindata 
 
     @memoize
-    def getDownloadFileList(self,start=0,size=10):
+    def getDownloadFileList(self,start=0,size=15):
         """获取行政许可列表"""
        
         if size == 0:
