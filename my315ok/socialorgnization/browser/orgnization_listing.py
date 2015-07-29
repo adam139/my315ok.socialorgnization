@@ -238,7 +238,7 @@ class AdministrativeLicenceView(Orgnizations_adminView):
 
 
 class Orgnizations_annualsurveyView(Orgnizations_adminView):
-    """年检滚动视图已改为ajax more加载,该视图已废弃，仅仅保留该类作为基类"""
+    """年检滚动视图已改为ajax more加载,该视图已废弃，仅仅保留该类作为基类,但首页年检结果滚动数据仍然来自此视图"""
     grok.context(IOrgnizationFolder)
     grok.template('orgnization_annual_survey_roll')
     grok.name('orgnizations_survey')
