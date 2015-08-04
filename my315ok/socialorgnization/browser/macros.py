@@ -47,6 +47,17 @@ class Macros(BrowserView):
             'description':t['Description']
         } for t in navtree_view.navigationTree()['children']]
 
+    @memoize    
+    def pm(self):
+        context = aq_inner(self.context)
+        pm = getToolByName(context, "portal_membership")
+        return pm
+
+    def canbeRetract(self):
+#        status = self.workflow_state()
+# checkPermission function must be use Title style permission
+        canbe = self.pm().checkPermission("my315ok.socialorgnization:Review lastly anual report",self.context)
+        return canbe
 
     def text_to_html(self, text):
         text = text or ''

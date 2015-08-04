@@ -56,7 +56,8 @@
 		  		</div>					
 				</div>												 
        </div>
-			<metal:block use-macro="context/@@my315ok-socialorgnization-macros/macros/report-body"/> 
+			<!--<metal:block use-macro="context/@@my315ok-socialorgnization-macros/macros/report-body"/> -->
+				<metal:block use-macro="context/@@my315ok-socialorgnization-macros/macros/report-body-hidden-attach"/>			
       </section>
          
     </tal:main-macro>

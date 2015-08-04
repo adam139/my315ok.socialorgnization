@@ -15,6 +15,7 @@ from plone.dexterity.utils import createContentInContainer
 from my315ok.socialorgnization.browser.orgnization_listing import OrgnizationsView
 from my315ok.socialorgnization.content.administrativelicencefolder import IAdministrativeLicenceFolder
 from my315ok.socialorgnization.content.annualsurveyfolder import IAnnualSurveyFolder
+from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey,IOrgnization
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
@@ -238,6 +239,40 @@ class addtablemarkinterface(grok.View):
         
         return "I has marked %s folders!" % (j) 
 
+class reject4drafting(grok.View):
+    """
+    reject all item to initial status for re-drafting
+    """
+    grok.context(IOrgnizationFolder)
+    grok.name('reject2draft')
+    grok.require('cmf.ManagePortal') 
+    
+    def getOrgs(self):
+        """获取当前文件夹所有已发布的社会组织对象，"""       
+
+        braindata = self.catalog()({'object_provides':IOrgnization.__identifier__,
+                             'path':"/".join(self.context.getPhysicalPath()),
+                             'review_status':"published",                                  
+                             'sort_order': 'reverse',
+                             'sort_on': 'created'}                              
+                                              )    
+
+    def render(self):
+        j = 0
+        comment = "administrator retract the organization to private status"
+        for obj in self.getOrgs():
+            j = j+1
+            org = obj.getObject()
+            wf = getToolByName(org, "portal_workflow")
+#            dview = getMultiAdapter((context, self.request),name=u"draftview")
+#            wf = dview.wf()
+            wf.doActionFor(org, 'reject', comment=subject )            
+
+#            mark(folder,IContainerdownloadablelist)
+        
+        return "I has reject %s social organizations to private status!" % (j)   
+    
+    
 class addFolderDownloadablelistmarkinterface(grok.View):
 ## mark the current folder     
     grok.context(IATFolder)
