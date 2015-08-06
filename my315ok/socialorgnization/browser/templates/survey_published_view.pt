@@ -38,7 +38,16 @@
 		  </div> -->
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
 
-				<div class="col-md-3 col-md-offset-9">
+				<div class="col-md-3 col-md-offset-6">
+					<div id="agent-edit">
+					<span tal:condition="python:view.canbeRetract()">
+						<a  tal:attributes="href python:context.absolute_url() +'/edit'" 
+						title="编辑" 
+						class="btn btn-primary">编辑</a>
+					</span>
+					</div>					
+		  		</div>	
+				<div class="col-md-3">
 					<div id="agent-retract">
 					<span tal:condition="python:view.canbeRetract()">
 						<a  tal:attributes="href python:context.absolute_url() +'/@@ajax_agent_retract'" 
@@ -53,7 +62,7 @@
 						<button class="btn btn-default" name="ok">确定</button>
 						<button class="btn btn-default" name="cancel">取消</button>
 			 		</form>
-		  		</div>					
+		  		</div>			  						
 				</div>												 
        </div>
 			<!--<metal:block use-macro="context/@@my315ok-socialorgnization-macros/macros/report-body"/> -->
