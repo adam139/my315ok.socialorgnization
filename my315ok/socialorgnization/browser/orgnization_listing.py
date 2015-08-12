@@ -247,24 +247,40 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
     @memoize    
     def allitems(self):
         
+#        end = datetime.datetime.today()
+#        start = end - datetime.timedelta(365)
+        stamp = self.getStart()
+        date_range_query = {'query':stamp,'range':'min'}
         braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
+                                'created':date_range_query,
                                 'review_state':"published",
                              'sort_order': 'reverse',
                              'sort_on': 'created'})        
         return braindata
-    
+
+    def getStart(self):
+        year = datetime.datetime.today().year
+        start = datetime.datetime(year,1,1)
+        import time
+        start = time.mktime(start.timetuple())
+        return start    
 
     def getMemberList(self,start=0,size=0):
         """获取年检结果列表"""
-        
+    
+       
         if size == 0:
             braindata = self.allitems()
 #            return self.outputList(braindata)      
 
         else:
+            stamp = self.getStart()             
+
+            date_range_query = {'query':stamp,'range':'min'}            
             braindata = self.catalog()({'object_provides':IOrgnization_annual_survey.__identifier__, 
                                 'path':"/".join(self.context.getPhysicalPath()),
+                                'created':date_range_query,
                                 'review_state':"published",
                              'sort_order': 'reverse',
                              'sort_on': 'created',
