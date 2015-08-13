@@ -283,10 +283,12 @@ class Orgnizations_annualsurveyView(Orgnizations_adminView):
                                 'created':date_range_query,
                                 'review_state':"published",
                              'sort_order': 'reverse',
-                             'sort_on': 'created',
+#                             'sort_on': 'created',
                              'b_start':start,
                              'b_size':size})
             
+#        import pdb
+#        pdb.set_trace()
         return self.outputList(braindata)           
             
     def outputList(self,braindata):
@@ -328,7 +330,9 @@ class SurveyMore(grok.View):
         form = self.request.form
         formst = form['formstart']
         formstart = int(formst)*10 
-        nextstart = formstart + 10                
+        nextstart = formstart + 10 
+#        import pdb
+#        pdb.set_trace()               
         favorite_view = getMultiAdapter((self.context, self.request),name=u"orgnizations_survey_fullview")
         favoritenum = len(favorite_view.allitems())
         
