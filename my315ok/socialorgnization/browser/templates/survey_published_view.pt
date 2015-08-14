@@ -38,7 +38,7 @@
 		  </div> -->
        <div class="row action-bar" tal:define="iseditable python:view.isEditable">
 
-				<div class="col-md-3 col-md-offset-6">
+				<div class="col-md-3 col-md-offset-3">
 					<div id="agent-edit">
 					<span tal:condition="python:view.canbeRetract()">
 						<a  tal:attributes="href python:context.absolute_url() +'/edit'" 
@@ -47,6 +47,13 @@
 					</span>
 					</div>					
 		  		</div>	
+		  		<div class="col-md-3">
+					<span tal:condition="python:view.canbeRetract()">
+						<a  tal:attributes="href python:context.absolute_url() +'/@@edit-annual-survey'" 
+						title="更新年检结论" 
+						class="btn btn-primary">更新年检结论</a>
+					</span>		  			
+		  		</div>
 				<div class="col-md-3">
 					<div id="agent-retract">
 					<span tal:condition="python:view.canbeRetract()">

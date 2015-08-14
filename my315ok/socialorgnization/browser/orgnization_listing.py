@@ -7,6 +7,8 @@ from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import permissions
 from Products.CMFCore.interfaces import ISiteRoot
+from plone.directives import dexterity
+from plone.directives import form
 from plone.memoize.instance import memoize
 from my315ok.socialorgnization import _
 from my315ok.socialorgnization.content.orgnization import IOrgnization
@@ -1073,4 +1075,14 @@ class xiangtanshisearchlist(ajaxsearch):
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps(data)             
        
-                   
+from z3c.form import field
+class EditAnnualSurvey(dexterity.EditForm):
+    grok.name('edit-annual-survey')
+    grok.context(IOrgnization_annual_survey)    
+    label = _(u'edit annual survey comments and result')
+# avoid autoform functionality
+    def updateFields(self):
+        pass
+    @property
+    def fields(self):
+        return field.Fields(IOrgnization_annual_survey).select('sponsor_comments','agent_comments','annual_survey')                   
