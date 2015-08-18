@@ -19,6 +19,8 @@ from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey,IOrgnization
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
+from my315ok.socialorgnization.content.yuhuqufolder import IYuhuquOrgnizationFolder
+from my315ok.socialorgnization.content.yuetangqufolder import IYuetangquOrgnizationFolder
 from xtshzz.policy.browser.interfaces import IXtshzzThemeSpecific as IThemeSpecific
 from my315ok.socialorgnization.content.page import IPage
 import datetime
@@ -832,7 +834,7 @@ class favoritemoreb2(favoritemore):
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps(data)
 
-class ContainerTableListView(OrgnizationsView):
+class ContainerTableListb2View(OrgnizationsView):
     grok.context(IContainerTablelist)
     grok.template('container_table_list_b2')       
     grok.name('view')
@@ -850,14 +852,14 @@ class ContainerTableListView(OrgnizationsView):
     def allitems(self):
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -871,7 +873,7 @@ class ContainerTableListView(OrgnizationsView):
         if size ==0:return self.allitems()
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -880,7 +882,7 @@ class ContainerTableListView(OrgnizationsView):
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -924,7 +926,7 @@ class ContainerTableListView(OrgnizationsView):
         return outhtml         
 
 
-class ContainerTableListb2View(ContainerTableListView):
+class ContainerTableListView(ContainerTableListb2View):
     grok.context(IContainerTablelist)
     grok.template('container_table_list')
     grok.layer(IThemeSpecific)  
