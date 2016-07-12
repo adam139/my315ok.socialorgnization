@@ -44,6 +44,6 @@ class NameFromParentId(object):
 
     @property
     def title(self):
-        import pdb
-        pdb.set_trace()
+#         import pdb
+#         pdb.set_trace()
         return get_title_from_parent(self.context)

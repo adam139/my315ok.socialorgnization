@@ -25,6 +25,7 @@ setup(name='my315ok.socialorgnization',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.directives.dexterity',
           'plone.app.dexterity',
           'collective.autopermission',
           # -*- Extra requirements: -*-

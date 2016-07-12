@@ -5,7 +5,7 @@ from my315ok.socialorgnization.testing import MY315OK_PRODUCTS_FUNCTIONAL_TESTIN
 from plone.app.testing import TEST_USER_ID, login, TEST_USER_NAME, \
     TEST_USER_PASSWORD, setRoles
 from plone.testing.z2 import Browser
-import unittest2 as unittest
+import unittest
 
 
 class TestView(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestView(unittest.TestCase):
         portal.invokeFactory('my315ok.socialorgnization.page','page1',
                                                    title=u"通知",
                                                    description=u"5.16通知",
-                                                   text=u"<p><strong>body text 正文</strong></p>"
+                                                   text=u"<p><strong>body text </strong></p>"
                                                    )
         
         
@@ -38,6 +38,6 @@ class TestView(unittest.TestCase):
         obj = portal['page1'].absolute_url() + '/@@view'        
         browser.open(obj)
 
-        outstr = u"<p><strong>body text 正文</strong></p>" 
+        outstr = u"<p><strong>body text </strong></p>" 
      
         self.assertTrue(outstr in browser.contents)        

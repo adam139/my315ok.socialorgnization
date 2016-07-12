@@ -4,12 +4,12 @@ import json
 from zope.interface import Interface
 from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
-from Products.ATContentTypes.interfaces import IATFolder,IATFile,IATDocument
+from plone.app.contenttypes.interfaces import IFolder,IFile,IDocument
 from Products.Five.utilities.marker import mark
 from Products.CMFCore.interfaces import ISiteRoot
 from plone.memoize.instance import memoize
 from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.collection.interfaces import ICollection
+
 from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
 from plone.dexterity.utils import createContentInContainer
 from my315ok.socialorgnization.browser.orgnization_listing import OrgnizationsView
@@ -540,7 +540,7 @@ class maintainmarkinterface(grok.View):
         """获取行政许可列表"""       
         catalog = getToolByName(self.context, "portal_catalog")
 
-        braindata = catalog({'object_provides':IATFolder.__identifier__,
+        braindata = catalog({'object_provides':IFolder.__identifier__,
                              'path':path,                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -567,7 +567,7 @@ class addtablemarkinterface(grok.View):
 #        mlist = []        
         catalog = getToolByName(self.context, "portal_catalog")
 #        memberbrains = catalog({'id':'shehuizuzhifengcai'})
-        memberbrains = catalog({'id':'chachujieguogonggao','object_provides':IATFolder.__identifier__})
+        memberbrains = catalog({'id':'chachujieguogonggao','object_provides':IFolder.__identifier__})
 #        import pdb
 #        pdb.set_trace()        
         top = memberbrains[0].getPath()
@@ -579,7 +579,7 @@ class addtablemarkinterface(grok.View):
         """获取行政许可列表"""       
         catalog = getToolByName(self.context, "portal_catalog")
 
-        braindata = catalog({'object_provides':IATFolder.__identifier__,
+        braindata = catalog({'object_provides':IFolder.__identifier__,
                              'path':path,                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -632,7 +632,7 @@ class reject4drafting(grok.View):
     
 class addFolderDownloadablelistmarkinterface(grok.View):
 ## mark the current folder     
-    grok.context(IATFolder)
+    grok.context(IFolder)
     grok.name('adddownloadablelist')
     grok.require('cmf.ManagePortal') 
     
@@ -647,7 +647,7 @@ class addFolderDownloadablelistmarkinterface(grok.View):
 
 class addFoldertablemarkinterface(grok.View):
 ## mark the current folder     
-    grok.context(IATFolder)
+    grok.context(IFolder)
     grok.name('addtable')
     grok.require('cmf.ManagePortal') 
     
@@ -662,7 +662,7 @@ class addFoldertablemarkinterface(grok.View):
 
 class addFolderPunishtablemarkinterface(grok.View):
 ## mark the current folder     
-    grok.context(IATFolder)
+    grok.context(IFolder)
     grok.name('addpunishtable')
     grok.require('cmf.ManagePortal') 
     
@@ -688,7 +688,7 @@ class ContainerDownloadableListView(OrgnizationsView):
     def getFolders(self):
         """获取行政许可列表"""       
 
-        braindata = self.catalog()({'object_provides':IATFolder.__identifier__,
+        braindata = self.catalog()({'object_provides':IFolder.__identifier__,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -697,7 +697,7 @@ class ContainerDownloadableListView(OrgnizationsView):
     def getFiles(self):
         """获取行政许可列表"""
 
-        braindata = self.catalog()({'object_provides':IATFile.__identifier__,
+        braindata = self.catalog()({'object_provides':IFile.__identifier__,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -710,13 +710,13 @@ class ContainerDownloadableListView(OrgnizationsView):
         """获取行政许可列表"""
        
         if size == 0:
-            braindata = self.catalog()({'object_provides':IATFile.__identifier__,
+            braindata = self.catalog()({'object_provides':IFile.__identifier__,
                              'path':"/".join(self.context.getPhysicalPath()),                                     
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               )
         else:
-            braindata = self.catalog()({'object_provides':IATFile.__identifier__,
+            braindata = self.catalog()({'object_provides':IFile.__identifier__,
                              'path':"/".join(self.context.getPhysicalPath()),                                     
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -843,7 +843,7 @@ class ContainerTableListb2View(OrgnizationsView):
     def getFolders(self):
         """获取当前目录所有文件夹对象"""       
 
-        braindata = self.catalog()({'object_provides':IATFolder.__identifier__,
+        braindata = self.catalog()({'object_provides':IFolder.__identifier__,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -852,14 +852,14 @@ class ContainerTableListb2View(OrgnizationsView):
     def allitems(self):
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -873,7 +873,7 @@ class ContainerTableListb2View(OrgnizationsView):
         if size ==0:return self.allitems()
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -882,7 +882,7 @@ class ContainerTableListb2View(OrgnizationsView):
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IATDocument.__identifier__,IPage.__identifier__],
+            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -962,7 +962,7 @@ class AdminstrativePunishTableListView(ContainerTableListView):
         """获取行政许可列表"""
        
         
-        braindata = self.catalog()({'object_provides':[IATDocument.__identifier__,IPage.__identifier__],
+        braindata = self.catalog()({'object_provides':[IDocument.__identifier__,IPage.__identifier__],
                              'path':"/".join(self.context.getPhysicalPath()),                                     
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
