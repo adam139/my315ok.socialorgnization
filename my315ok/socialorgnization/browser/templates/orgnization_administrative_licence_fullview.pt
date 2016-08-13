@@ -22,9 +22,9 @@
 							i18n:attributes="title"
 							class="btn btn-primary"
 							i18n:translate="">Edit</a>
-					</span>
+						</span>
 				</div>	 
-       </div>      
+       </div>          
        <div class="row">
        	<div class="hidden" id="ajaxdisplay" 
 					tal:attributes="data-ajax-target string:${context/absolute_url}/@@administmore">
@@ -40,9 +40,9 @@
        	<div tal:omit-tag="" tal:define="itemlist python:view.getMemberList(0,10);num python:len(itemlist)">
        		<tbody id="tablecontent" tal:condition="num" tal:content="structure python:itemlist">
        	  </tbody>
-        </div>
-    		</table>    
-    </div>
+       	</div>
+    			</table>    
+    			</div>
          <div class="row" tal:define="total python:len(view.allitems())">
          	<div class="col-sm-4 col-sm-offset-4 	col-md-3 col-md-offset-6">
          		<div class="text-info">
@@ -56,7 +56,7 @@
           	<div id="ajaxmore-link" class="col-sm-4 col-md-3 text-right" tal:condition="python:total > 10">
 		    		<div id="ajaxmore" class="btn btn-primary">更多</div>
 		    		</div>     
-      </div>      
+      		</div>      
       </section>          
     </tal:main-macro>
 </metal:main>

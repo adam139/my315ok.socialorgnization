@@ -1037,7 +1037,7 @@ class AdministrativeLicenceFolderView(AnnualSurveyFolderView):
         return mview.allitems()         
             
     def getMemberList(self,start=0,size=10):
-        """获取年检结果列表"""      
+        """获取行政许可列表"""      
         
         folder = self.getOrganizationFolder()
         mview = getMultiAdapter((folder, self.request),name=u"orgnizations_administrative_fullview")
