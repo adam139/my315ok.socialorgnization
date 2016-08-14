@@ -679,7 +679,7 @@ class addFolderPunishtablemarkinterface(grok.View):
 class ContainerDownloadableListView(OrgnizationsView):
     grok.context(IContainerdownloadablelist)
     grok.template('container_downloadable_list')
-    grok.name('view')
+    grok.name('download_view')
     grok.require('zope2.View')
     
 
@@ -929,7 +929,7 @@ class ContainerTableListb2View(OrgnizationsView):
 class ContainerTableListView(ContainerTableListb2View):
     grok.context(IContainerTablelist)
     grok.template('container_table_list')
-    grok.name('view')
+    grok.name('tableview')
 #     grok.layer(IThemeSpecific)  
          
     def outhtmlList(self,braindata):
