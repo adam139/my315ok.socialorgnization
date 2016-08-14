@@ -19,7 +19,7 @@
        		<div class="span3 offset3">
        			<span class="overlay" >
        				<!-- createObject?type_name=Document-->
-       				<a tal:attributes="href  python:context.absolute_url() + '/createObject?type_name=Document'" 
+       				<a tal:attributes="href  python:context.absolute_url() + '/++add++Document'" 
 				title="Add"
 				i18n:attributes="title"
 				i18n:domain="plone"

@@ -837,7 +837,7 @@ class favoritemoreb2(favoritemore):
 class ContainerTableListb2View(OrgnizationsView):
     grok.context(IContainerTablelist)
     grok.template('container_table_list_b2')       
-    grok.name('view')
+    grok.name('b2view')
     grok.require('zope2.View')        
 
     def getFolders(self):
@@ -929,7 +929,8 @@ class ContainerTableListb2View(OrgnizationsView):
 class ContainerTableListView(ContainerTableListb2View):
     grok.context(IContainerTablelist)
     grok.template('container_table_list')
-    grok.layer(IThemeSpecific)  
+    grok.name('view')
+#     grok.layer(IThemeSpecific)  
          
     def outhtmlList(self,braindata):
         outhtml = ""
