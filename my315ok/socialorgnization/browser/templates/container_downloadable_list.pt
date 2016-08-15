@@ -18,8 +18,7 @@
        	tal:condition="iseditable">
        		<div class="col-md-3 col-md-offset-3">
        			<span class="overlay" >
-       				<!-- http://www.xtshzz.org/dangjiangongzuo/gongzuodongtai/createObject?type_name=File-->
-       				<a tal:attributes="href  python:context.absolute_url() + '/createObject?type_name=File'" 
+       				<a tal:attributes="href  python:context.absolute_url() + '/++add++File'" 
 				title="Add"
 				i18n:attributes="title"
 				i18n:domain="plone"

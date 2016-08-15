@@ -758,9 +758,11 @@ class favoritemore(grok.View):
 #        self.portal_state = getMultiAdapter((self.context, self.request), name=u"plone_portal_state")        
         form = self.request.form
         formst = form['formstart']
+#         import pdb
+#         pdb.set_trace()
         formstart = int(formst)*10 
         nextstart = formstart + 10                
-        favorite_view = getMultiAdapter((self.context, self.request),name=u"view")
+        favorite_view = getMultiAdapter((self.context, self.request),name=u"tableview")
         favoritenum = len(favorite_view.allitems())
         
         if nextstart >= favoritenum :
