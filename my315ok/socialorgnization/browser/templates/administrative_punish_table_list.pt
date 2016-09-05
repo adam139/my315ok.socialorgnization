@@ -14,7 +14,7 @@
            <h3><span tal:content="python:context.title">社团</span></h3>           
        </div>  
        <div class="row action-bar" 
-       	tal:define="iseditable python:view.isEditable"
+       	tal:define="iseditable python:view.isAddable"
        	tal:condition="iseditable">
        		<div class="col-md-3 col-md-offset-3">
        			<span class="overlay" >

@@ -6,6 +6,7 @@ import datetime
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import permissions
+from plone.app.contenttypes.permissions import AddDocument  
 from Products.CMFCore.interfaces import ISiteRoot
 from plone.directives import dexterity
 from plone.directives import form
@@ -50,7 +51,13 @@ class Orgnizations_adminView(grok.View):
             
     @property
     def isEditable(self):
-        return self.pm().checkPermission(permissions.ManagePortal,self.context) 
+      
+        return self.pm().checkPermission(permissions.ManagePortal,self.context)
+    
+    @property
+    def isAddable(self):
+
+        return self.pm().checkPermission(permissions.AddPortalContent,self.context)     
 
     def tranVoc(self,value):
         """ translate vocabulary value to title"""

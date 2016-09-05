@@ -20,7 +20,7 @@
 			<div class="page-header">
            <h3><span tal:replace="python:context.title">Organization administration</span>年检记录</h3>           
        </div>
-       <div class="row action-bar" tal:define="iseditable python:view.isEditable">
+       <div class="row action-bar" tal:define="iseditable python:view.isAddable">
 				<div class="col-md-3 col-md-offset-3">
 					<span tal:condition="iseditable">
 						<a tal:attributes="href python:context.absolute_url() +'/edit'" 
