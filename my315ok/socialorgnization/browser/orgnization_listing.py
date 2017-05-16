@@ -36,7 +36,9 @@ class Orgnizations_adminView(grok.View):
     def update(self):
         # Hide the editable-object border
         self.request.set('disable_border', True)
-
+        self.request.set('disable_plone.rightcolumn',1)
+        self.request.set('disable_plone.leftcolumn',1)
+        
     @memoize    
     def catalog(self):
         context = aq_inner(self.context)
