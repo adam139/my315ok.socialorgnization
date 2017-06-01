@@ -727,19 +727,14 @@ class ContainerDownloadableListView(OrgnizationsView):
         outhtml = """<table class="table table-striped table-bordered table-condensed listing"><thead>
         <tr data-toggle="tooltip" title="点击排序"><th class="col-md-7">文件名称</th><th class="col-md-3" >发布时间</th><th class="col-md-2" >下载链接</th></tr>
         </thead><tbody>"""
-
         
-        for i in braindata:
-#            objurl = i.getURL()
-#            objtitle = i.Title
-#            pubtime = i.created.strftime('%Y-%m-%d')
-#            downloadlink = objurl + "/download"
-            
+        for i in braindata:            
             out = """<tr>
-            <td class="col-md-7 title">%(title)s</td>
+            <td class="col-md-7 title"><a title="%(tips)s" href="%(downloadlink)s">%(title)s</a></td>
             <td class="col-md-3 item">%(pubtime)s</td>
             <td class="col-md-2 result"><a href="%(downloadlink)s">下载</a></td></tr>""" % dict(objurl=i.getURL(),
                                             title = i.Title,
+                                            tips = u"点击下载".encode("utf-8"),
                                             pubtime = i.created.strftime('%Y-%m-%d'),
                                             downloadlink = "%s/download" % i.getURL())           
             outhtml = "%s%s" %(outhtml ,out)
