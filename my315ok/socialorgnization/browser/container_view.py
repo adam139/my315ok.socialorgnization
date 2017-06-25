@@ -4,7 +4,7 @@ import json
 from zope.interface import Interface
 from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
-from plone.app.contenttypes.interfaces import IFolder,IFile,IDocument
+from plone.app.contenttypes.interfaces import IFolder,IFile,IDocument,ILink
 from Products.Five.utilities.marker import mark
 from Products.CMFCore.interfaces import ISiteRoot
 from plone.memoize.instance import memoize
@@ -868,9 +868,15 @@ class ContainerTableListb2View(OrgnizationsView):
         """获取所有页面"""
 
         if size ==0:return self.allitems()
+        objmarks = [IYuetangquOrgnizationFolder.__identifier__,
+                    IYuhuquOrgnizationFolder.__identifier__,
+                    IDocument.__identifier__,
+                    ILink.__identifier__,
+                    IPage.__identifier__]
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
+            objmarks.append(Iproduct.__identifier__)
+            braindata = self.catalog()({'object_provides':objmarks,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
@@ -879,7 +885,7 @@ class ContainerTableListb2View(OrgnizationsView):
                                               ) 
         except:
             
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__],
+            braindata = self.catalog()({'object_provides':objmarks,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created',
