@@ -175,9 +175,11 @@
 		tal:define="navroot context/@@plone_portal_state/navigation_root_url"
      tal:attributes="src string:${navroot}/++resource++my315ok.socialorgnization/ajaxsearch.min.js">		
 	</script>
+	<!--
 	<script>
      $('[data-toggle="tooltip"]').tooltip()  		
-	</script>	
+	</script>
+	-->	
 	</metal:js>
 </body>
 </html>
