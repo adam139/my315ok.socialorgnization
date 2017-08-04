@@ -19,8 +19,12 @@ from my315ok.socialorgnization.content.orgnization import IOrgnization
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
 from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey,IOrgnization
 from my315ok.socialorgnization.content.orgnizationfolder import IOrgnizationFolder
+from my315ok.socialorgnization.content.shibenjifolder import IShibenjiOrgnizationFolder
 from my315ok.socialorgnization.content.yuhuqufolder import IYuhuquOrgnizationFolder
 from my315ok.socialorgnization.content.yuetangqufolder import IYuetangquOrgnizationFolder
+from my315ok.socialorgnization.content.shaoshanshifolder import IShaoshanshiOrgnizationFolder
+from my315ok.socialorgnization.content.xiangtanxianfolder import IXiangtanxianOrgnizationFolder
+from my315ok.socialorgnization.content.xiangxiangshifolder import IXiangxiangshiOrgnizationFolder
 from xtshzz.policy.browser.interfaces import IXtshzzThemeSpecific as IThemeSpecific
 from my315ok.socialorgnization.content.page import IPage
 import datetime
@@ -846,17 +850,30 @@ class ContainerTableListb2View(OrgnizationsView):
                              'sort_on': 'created'}                              
                                               )
  
+    def objmarks(self):
+        objmarks = [IYuetangquOrgnizationFolder.__identifier__,
+                    IYuhuquOrgnizationFolder.__identifier__,
+                    IXiangxiangshiOrgnizationFolder.__identifier__,
+                    IXiangtanxianOrgnizationFolder.__identifier__,
+                    IShaoshanshiOrgnizationFolder.__identifier__,
+                    IShibenjiOrgnizationFolder.__identifier__,
+                    IDocument.__identifier__,
+                    ILink.__identifier__,
+                    IPage.__identifier__]
+        return objmarks
+        
     def allitems(self):
+        objmarks = self.objmarks()
         try:
             from my315ok.products.product import Iproduct
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__,Iproduct.__identifier__],
+            objmarks.append(Iproduct.__identifier__)
+            braindata = self.catalog()({'object_provides':objmarks,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
                                               ) 
-        except:
-            
-            braindata = self.catalog()({'object_provides':[IYuetangquOrgnizationFolder.__identifier__,IYuhuquOrgnizationFolder.__identifier__,IDocument.__identifier__,IPage.__identifier__],
+        except:            
+            braindata = self.catalog()({'object_provides':objmarks,
                              'path':"/".join(self.context.getPhysicalPath()),                                  
                              'sort_order': 'reverse',
                              'sort_on': 'created'}                              
@@ -868,11 +885,7 @@ class ContainerTableListb2View(OrgnizationsView):
         """获取所有页面"""
 
         if size ==0:return self.allitems()
-        objmarks = [IYuetangquOrgnizationFolder.__identifier__,
-                    IYuhuquOrgnizationFolder.__identifier__,
-                    IDocument.__identifier__,
-                    ILink.__identifier__,
-                    IPage.__identifier__]
+        objmarks = self.objmarks()
         try:
             from my315ok.products.product import Iproduct
             objmarks.append(Iproduct.__identifier__)
