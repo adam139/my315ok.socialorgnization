@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.1 (2018-10-19)
+-------------------
+- add default view for annual folder that diaplay all annual report documents from 'annual_report' collection.
+- add a named "anual_report" collection,it will apply a keyword search condition. 
+
+
 1.0dev (unreleased)
 -------------------
 

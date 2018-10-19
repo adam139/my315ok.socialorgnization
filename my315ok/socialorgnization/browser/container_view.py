@@ -1008,20 +1008,17 @@ class AnnualSurveyFolderView(OrgnizationsView):
     """信息公开，年检公告"""
     grok.context(IAnnualSurveyFolder)
     grok.template('annual_survey_folder')
-    grok.name('view')
-    grok.require('zope2.View')
-    
+    grok.name('members_view')
+    grok.require('zope2.View')    
     
     def getLastYear(self):
         id = (datetime.datetime.today() + datetime.timedelta(-365)).strftime("%Y")
-        return id
-        
+        return id        
         
     def getOrganizationFolder(self):
         braindata = self.catalog()({'object_provides':IOrgnizationFolder.__identifier__})
         if len(braindata) == 0:return None
-        return braindata[0].getObject()        
-    
+        return braindata[0].getObject()           
     
     # orgnization_annual_survey_fullview
     @memoize
@@ -1032,12 +1029,24 @@ class AnnualSurveyFolderView(OrgnizationsView):
         return mview.allitems()         
             
     def getMemberList(self,start=0,size=10):
-        """获取年检结果列表"""
-       
-        
+        """获取年检结果列表"""       
+                
         folder = self.getOrganizationFolder()
         mview = getMultiAdapter((folder, self.request),name=u"orgnizations_survey_fullview")
         return mview.getMemberList(start=start,size=size)     
+
+from collective.diazotheme.bootstrap.browser.homepage import HomepageView
+class AnnualSurveyFolderDocsView(HomepageView):
+    """信息公开，年检公告,显示document 类型的年检报告.
+    用查询集提取"""
+    
+    
+    
+    def getLastYear(self):
+        id = (datetime.datetime.today() + datetime.timedelta(-365)).strftime("%Y")
+        return id        
+        
+
     
     
 class AdministrativeLicenceFolderView(AnnualSurveyFolderView):
