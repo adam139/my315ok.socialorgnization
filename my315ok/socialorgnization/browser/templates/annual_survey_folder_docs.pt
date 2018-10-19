@@ -47,10 +47,5 @@
       </section>          
     </tal:main-macro>
 </metal:main>
-  <metal:js fill-slot="javascript_bottom_slot">
-	<script>
-		     $('[data-toggle="tooltip"]').tooltip() 
-	</script>		
-	</metal:js>
 </body>
 </html>
