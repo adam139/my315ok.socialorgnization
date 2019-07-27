@@ -1,9 +1,9 @@
 from five import grok
+from my315ok.socialorgnization import _
+from plone.directives import dexterity
+from plone.directives import form
 from zope import schema
 
-from plone.directives import form, dexterity
-
-from my315ok.socialorgnization import _
 
 class IXiangxiangshiOrgnizationFolder(form.Schema):
     """

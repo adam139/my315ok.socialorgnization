@@ -1,9 +1,11 @@
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 from zope import schema
-from zope.interface import Interface
 from zope.interface import Attribute
+from zope.interface import Interface
+
 
 # event
-class  ICreateOrgEvent(Interface):
+
+
+class ICreateOrgEvent(Interface):
     """新增一个organization object"""
-    

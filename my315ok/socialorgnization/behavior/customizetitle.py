@@ -1,27 +1,26 @@
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
-from plone.app.content.interfaces import INameFromTitle
-from Products.CMFCore.utils import getToolByName
-from plone.dexterity.interfaces import IDexterityContent
-
-from zope.interface import Interface
-from zope.interface import alsoProvides, implements
-from zope.component import adapts
+from my315ok.socialorgnization.content.orgnization import ICostomTitle
 from my315ok.socialorgnization.content.orgnization import IOrgnization_administrative_licence
-from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey,ICostomTitle
-
+from my315ok.socialorgnization.content.orgnization import IOrgnization_annual_survey
+from plone.app.content.interfaces import INameFromTitle
+from plone.dexterity.interfaces import IDexterityContent
 from Products.CMFCore.utils import getToolByName
+from zope.component import adapts
+from zope.interface import alsoProvides
+from zope.interface import implements
+from zope.interface import Interface
+
 
 def get_title_from_parent(context):
-    """根据父对象id，获得对象title""" 
-           
+    """根据父对象id，获得对象title"""
+
     parent = context.getParentNode()
     title = parent.title
-    if title != "":        
+    if title != "":
         return title
     else:
         return parent.id
-
 
 
 class INameFromParentId(INameFromTitle):
@@ -44,6 +43,6 @@ class NameFromParentId(object):
 
     @property
     def title(self):
-#         import pdb
-#         pdb.set_trace()
+        #         import pdb
+        #         pdb.set_trace()
         return get_title_from_parent(self.context)
