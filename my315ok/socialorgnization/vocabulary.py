@@ -66,8 +66,9 @@ class AnnualsurveyResult(object):
 grok.global_utility(AnnualsurveyResult, IVocabularyFactory,
         name="my315ok.socialorgnization.vocabulary.annualsurvey")
 
-audit_item=[    ('chenglidengji','chenglidengji',_(u'chenglidengji')),
-                  ('biangengdengji','biangengdengji',_(u'biangengdengji')),
+audit_item=[('chenglidengji','chenglidengji',_(u'chenglidengji')),
+            ('zhuxiaodengji','zhuxiaodengji',_(u'zhuxiaodengji')),
+            ('biangengdengji','biangengdengji',_(u'biangengdengji')),
                         ]
 audit_item_terms = [SimpleTerm(value, token, title) for value, token, title in audit_item ]
 

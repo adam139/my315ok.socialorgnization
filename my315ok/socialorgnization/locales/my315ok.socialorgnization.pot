@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-08-14 00:56+0000\n"
+"POT-Creation-Date: 2019-09-20 01:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,8 +70,8 @@ msgid "Data successfully imported."
 msgstr ""
 
 #: ./browser/templates/orgnization_administrative_licence.pt:24
-#: ./browser/templates/orgnization_administrative_licence_fullview.pt:20
 #: ./browser/templates/orgnization_annual_survey.pt:26
+#: ./browser/templates/orgnization_view.pt:40
 msgid "Edit"
 msgstr ""
 
@@ -111,6 +111,10 @@ msgstr ""
 msgid "ExportXiangtanshiShetuan"
 msgstr ""
 
+#: ./configure.zcml:28
+msgid "Extension profile for a social orgnization management content type based dexterity"
+msgstr ""
+
 #: ./profiles/default/types/my315ok.socialorgnization.governmentorgnization.xml
 msgid "Government Orgnization"
 msgstr ""
@@ -119,12 +123,16 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
+#: ./behavior/configure.zcml:18
+msgid "Name from parent id"
+msgstr ""
+
 #: ./browser/ajax_view.py:105
 msgid "Not able to send notifications"
 msgstr ""
 
 #: ./browser/templates/allorgnization_listings.pt:123
-#: ./browser/templates/allorgnization_listings_b3.pt:130
+#: ./browser/templates/allorgnization_listings_b3.pt:134
 #: ./browser/templates/department_listing.pt:43
 msgid "Number"
 msgstr ""
@@ -162,10 +170,6 @@ msgstr ""
 msgid "Orgnization annual survey"
 msgstr ""
 
-#: ./profiles/default/types/my315ok.socialorgnization.page.xml
-msgid "Page"
-msgstr ""
-
 #: ./content/orgnization.py:72
 msgid "Pass Date"
 msgstr ""
@@ -199,6 +203,10 @@ msgstr ""
 #: ./browser/templates/department_listing.pt:44
 #: ./browser/templates/orgnization_listing_admin.pt:48
 msgid "Title"
+msgstr ""
+
+#: ./behavior/configure.zcml:18
+msgid "Use the full name as name (basis for the id)"
 msgstr ""
 
 #: ./browser/datainout.py:99
@@ -244,8 +252,12 @@ msgstr ""
 msgid "a image of the public sign"
 msgstr ""
 
+#: ./configure.zcml:28
+msgid "a social orgnization management content type based dexterity"
+msgstr ""
+
 #: ./browser/templates/allorgnization_listings.pt:126
-#: ./browser/templates/allorgnization_listings_b3.pt:133
+#: ./browser/templates/allorgnization_listings_b3.pt:137
 #: ./browser/templates/department_listing.pt:45
 msgid "address"
 msgstr ""
@@ -262,11 +274,11 @@ msgstr ""
 msgid "biangeng"
 msgstr ""
 
-#: ./vocabulary.py:70
+#: ./vocabulary.py:71
 msgid "biangengdengji"
 msgstr ""
 
-#: ./content/page.py:15
+#: ./content/page.py:16
 msgid "body text"
 msgstr ""
 
@@ -274,7 +286,7 @@ msgstr ""
 msgid "buhege"
 msgstr ""
 
-#: ./vocabulary.py:83
+#: ./vocabulary.py:84
 msgid "buyu"
 msgstr ""
 
@@ -294,7 +306,7 @@ msgstr ""
 msgid "civil agent comments"
 msgstr ""
 
-#: ./browser/orgnization_listing.py:1082
+#: ./browser/orgnization_listing.py:1089
 msgid "edit annual survey comments and result"
 msgstr ""
 
@@ -342,7 +354,7 @@ msgid "last status of the annual survey"
 msgstr ""
 
 #: ./browser/templates/allorgnization_listings.pt:128
-#: ./browser/templates/allorgnization_listings_b3.pt:135
+#: ./browser/templates/allorgnization_listings_b3.pt:139
 #: ./browser/templates/organizations_admin_listings_b3.pt:80
 msgid "legal person"
 msgstr ""
@@ -361,7 +373,7 @@ msgid "organization Type"
 msgstr ""
 
 #: ./browser/templates/allorgnization_listings.pt:124
-#: ./browser/templates/allorgnization_listings_b3.pt:131
+#: ./browser/templates/allorgnization_listings_b3.pt:135
 #: ./browser/templates/organizations_admin_listings_b3.pt:76
 msgid "organization name"
 msgstr ""
@@ -379,12 +391,8 @@ msgstr ""
 msgid "orgnization name"
 msgstr ""
 
-#: ./profiles/default/types/my315ok.socialorgnization.page.xml
-msgid "page content type"
-msgstr ""
-
 #: ./browser/templates/allorgnization_listings.pt:129
-#: ./browser/templates/allorgnization_listings_b3.pt:136
+#: ./browser/templates/allorgnization_listings_b3.pt:140
 #: ./browser/templates/organizations_admin_listings_b3.pt:81
 msgid "pass date"
 msgstr ""
@@ -401,7 +409,7 @@ msgid "quick search"
 msgstr ""
 
 #: ./browser/templates/allorgnization_listings.pt:125
-#: ./browser/templates/allorgnization_listings_b3.pt:132
+#: ./browser/templates/allorgnization_listings_b3.pt:136
 #: ./browser/templates/organizations_admin_listings_b3.pt:77
 msgid "register code"
 msgstr ""
@@ -423,7 +431,7 @@ msgid "shetuan"
 msgstr ""
 
 #: ./browser/templates/allorgnization_listings.pt:127
-#: ./browser/templates/allorgnization_listings_b3.pt:134
+#: ./browser/templates/allorgnization_listings_b3.pt:138
 #: ./browser/templates/organizations_admin_listings_b3.pt:79
 msgid "sponsor"
 msgstr ""
@@ -476,7 +484,7 @@ msgstr ""
 msgid "yuhuqu"
 msgstr ""
 
-#: ./vocabulary.py:82
+#: ./vocabulary.py:83
 msgid "zhunyu"
 msgstr ""
 
@@ -484,3 +492,6 @@ msgstr ""
 msgid "zhuxiao"
 msgstr ""
 
+#: ./vocabulary.py:70
+msgid "zhuxiaodengji"
+msgstr ""
